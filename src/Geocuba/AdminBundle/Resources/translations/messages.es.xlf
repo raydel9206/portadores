@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="2">
+                <source>User</source>
+                <target>Usuario</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Password</source>
+                <target>Contraseña</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Sign-in</source>
+                <target>Iniciar sesión</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Invalid credentials.</source>
+                <target>Las credenciales no son válidas.</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>User has been logout.</source>
+                <target>El usuario ha cerrado la sesión.</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Authentication request could not be processed due to a system problem.</source>
+                <target>La solicitud de autenticación no se pudo procesar debido a un problema del sistema.</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>The session has expired due to inactivity.</source>
+                <target>La sesión ha caducado por inactividad.</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>second|seconds</source>
+                <target>segundo|segundos</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>minute|minutes</source>
+                <target>minuto|minutos</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>hour|hours</source>
+                <target>hora|horas</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Account is locked.</source>
+                <target>La cuenta de usuario está bloqueada.</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Account is disabled.</source>
+                <target>La cuenta de usuario está deshabilitada.</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Account has expired.</source>
+                <target>La cuenta de usuario ha expirado.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

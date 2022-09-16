@@ -1,0 +1,315 @@
+#=======================================================================================================================
+# Grupos
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.grupo:
+    path:     /grupo
+    defaults: { _controller: AdminBundle:Grupo:view }
+    methods: [GET]
+    options:
+        text: Grupos
+        module: Administración
+#        dropdown: Seguridad
+#        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de grupos
+                files:
+                    - bundles/admin/js/Grupo/view.js
+                dependencies:
+                    - app.admin.grupo.list
+            Editar:
+                description: Editar grupos
+                dependent_of: Listado
+                files:
+                    - bundles/admin/js/Grupo/edit.js
+                dependencies:
+                    - app.admin.grupo.add
+                    - app.admin.grupo.edit
+                    - app.admin.grupo.delete
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.grupo.list:
+    path:     /grupo/list
+    defaults: { _controller: AdminBundle:Grupo:list }
+    methods: [GET]
+
+app.admin.grupo.add:
+    path:     /grupo/add
+    defaults: { _controller: AdminBundle:Grupo:add }
+    methods: [GET, POST]
+
+app.admin.grupo.edit:
+    path:     /grupo/edit
+    defaults: { _controller: AdminBundle:Grupo:edit }
+    methods: [GET, POST]
+
+app.admin.grupo.delete:
+    path:     /grupo/delete
+    defaults: { _controller: AdminBundle:Grupo:delete }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Usuarios
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.usuario:
+    path:     /usuario
+    defaults: { _controller: AdminBundle:Usuario:view }
+    methods: [GET]
+    options:
+        text: Usuarios
+        module: Administración
+#        dropdown: Seguridad
+#        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de usuarios
+                files:
+                    - bundles/admin/js/Usuario/view.js
+                dependencies:
+                    - app.admin.usuario.list
+                    - app.admin.grupo.list
+            Editar:
+                description: Editar usuarios
+                dependent_of: Listado
+                files:
+                    - bundles/admin/js/Usuario/edit.js
+                dependencies:
+                    - app.admin.usuario.add
+                    - app.admin.usuario.edit
+                    - app.admin.usuario.delete
+                    - app.admin.usuario.reset
+                    - app.portadores.unidad.loadTree
+                    - app.admin.usuario.loadDominio
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.usuario.list:
+    path:     /usuario/list
+    defaults: { _controller: AdminBundle:Usuario:list }
+    methods: [GET]
+
+app.admin.usuario.add:
+    path:     /usuario/add
+    defaults: { _controller: AdminBundle:Usuario:add }
+    methods: [GET, POST]
+
+app.admin.usuario.edit:
+    path:     /usuario/edit
+    defaults: { _controller: AdminBundle:Usuario:edit }
+    methods: [GET, POST]
+
+app.admin.usuario.reset:
+    path:     /usuario/reset
+    defaults: { _controller: AdminBundle:Usuario:reset }
+    methods: [GET, POST]
+
+app.admin.usuario.delete:
+    path:     /usuario/delete
+    defaults: { _controller: AdminBundle:Usuario:delete }
+    methods: [DELETE]
+
+app.admin.usuario.loadDominio:
+    path:     /usuario/loadDominio
+    defaults: { _controller: AdminBundle:Usuario:loadDominio }
+    methods: [GET]
+
+#=======================================================================================================================
+# Recursos
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.recurso:
+    path:     /recurso
+    defaults: { _controller: AdminBundle:Recurso:view }
+    methods: [GET]
+    options:
+        text: Recursos
+        module: Administración
+#        dropdown: Seguridad
+#        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de recursos
+                files:
+                    - bundles/admin/js/Recurso/view.js
+                dependencies:
+                    - app.admin.grupo.list
+                    - app.admin.recurso.list
+            Editar:
+                description: Editar recursos
+                dependent_of: Listado
+                files:
+                    - bundles/admin/js/Recurso/register.js
+                dependencies:
+                    - app.admin.recurso.register
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.recurso.list:
+    path:     /recurso/list
+    defaults: { _controller: AdminBundle:Recurso:list }
+    methods: [GET]
+
+app.admin.recurso.register:
+    path:     /recurso/register
+    defaults: { _controller: AdminBundle:Recurso:register }
+    methods: [GET, POST]
+
+#=======================================================================================================================
+# Notificaciones
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.notificacion:
+    path:     /notificacion
+    defaults: { _controller: AdminBundle:Notificacion:view }
+    methods: [GET]
+    options:
+        text: Notificaciones
+        module: Administración
+#        dropdown: Sistema
+#        dropdown_header: Misc.
+        resources:
+            Listado:
+                description: Listado de notificaciones
+                files:
+                    - bundles/admin/js/Notificacion/view.js
+                dependencies:
+                    - app.admin.notificacion.list
+            Editar:
+                description: Editar notificaciones
+                dependent_of: Listado
+                files:
+                    - bundles/admin/js/Notificacion/edit.js
+                dependencies:
+                    - app.admin.notificacion.add
+                    - app.admin.notificacion.edit
+                    - app.admin.notificacion.delete
+                    - app.admin.grupo.list
+                    - app.admin.usuario.list
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.notificacion.add:
+    path:     /notificacion/add
+    defaults: { _controller: AdminBundle:Notificacion:add }
+    methods: [GET, POST]
+
+app.admin.notificacion.edit:
+    path:     /notificacion/edit
+    defaults: { _controller: AdminBundle:Notificacion:edit }
+    methods: [GET, POST]
+
+app.admin.notificacion.delete:
+    path:     /notificacion/delete
+    defaults: { _controller: AdminBundle:Notificacion:delete }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Configuración
+#-----------------------------------------------------------------------------------------------------------------------
+#app.admin.setting:
+#    path:     /setting
+#    defaults: { _controller: AdminBundle:Setting:view }
+#    methods: [GET]
+#    options:
+#        text: Parámetros
+#        module: Administración
+##        dropdown: Sistema
+##        dropdown_header: Seguridad
+#        resources:
+#            Listado:
+#                description: Listado de parámetros dinámicos del sistema. Ej. parámetros de la conexión a la base de datos de SigCioR.
+#                files:
+#                    - bundles/admin/js/Setting/view.js
+#                dependencies:
+#                    - app.admin.setting.list
+#            Editar:
+#                description: Editar parámetros
+#                dependent_of: Listado
+#                files:
+#                    - bundles/admin/js/Setting/edit.js
+#                dependencies:
+#                    - app.admin.setting.add
+#                    - app.admin.setting.edit
+#                    - app.admin.setting.delete
+##-----------------------------------------------------------------------------------------------------------------------
+#app.admin.setting.list:
+#    path:     /setting/list
+#    defaults: { _controller: AdminBundle:Setting:list }
+#    methods: [GET]
+#
+#app.admin.setting.add:
+#    path:     /setting/add
+#    defaults: { _controller: AdminBundle:Setting:add }
+#    methods: [GET, POST]
+#
+#app.admin.setting.edit:
+#    path:     /setting/edit
+#    defaults: { _controller: AdminBundle:Setting:edit }
+#    methods: [GET, POST]
+#
+#app.admin.setting.delete:
+#    path:     /setting/delete
+#    defaults: { _controller: AdminBundle:Setting:delete }
+#    methods: [DELETE]
+
+#=======================================================================================================================
+# Logs
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.evento:
+    path:     /evento
+    defaults: { _controller: AdminBundle:Evento:view }
+    methods: [GET]
+    options:
+        text: Eventos
+        module: Administración
+#        dropdown: Reportes
+#        dropdown_header: Seguridad
+#        divider: true
+        resources:
+            Listado:
+                description: Listado de eventos registrados del sistema
+                files:
+                    - bundles/admin/js/Evento/view.js
+                dependencies:
+                    - app.admin.evento.list
+                    - app.admin.evento.delete
+                    - app.admin.usuario.list
+                    - app.admin.evento.entities
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.evento.entities:
+    path:     /evento/entities
+    defaults: { _controller: AdminBundle:Evento:entityList }
+    methods: [GET]
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.evento.list:
+    path:     /evento/list
+    defaults: { _controller: AdminBundle:Evento:list }
+    methods: [GET]
+#-----------------------------------------------------------------------------------------------------------------------
+app.admin.evento.delete:
+    path:     /evento/delete
+    defaults: { _controller: AdminBundle:Evento:delete }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Sesiones (disabled by default. To enable change 'framework.session.handler_id' to 'session.handler.pdo' in config.yml)
+#-----------------------------------------------------------------------------------------------------------------------
+#app.admin.session:
+#    path:     /session
+#    defaults: { _controller: AdminBundle:Session:view }
+#    methods: [GET]
+#    options:
+#        text: Sesiones
+#        module: Administración
+#        dropdown: Sistema
+#        dropdown_header: Seguridad
+#        divider: true
+#        resources:
+#            Listado:
+#                description: Listado de sesiones
+#                files:
+#                    - bundles/admin/js/Session/view.js
+#                dependencies:
+#                    - app.admin.session.list
+#                    - app.admin.session.invalidate
+##-----------------------------------------------------------------------------------------------------------------------
+#app.admin.session.list:
+#    path:     /session/list
+#    defaults: { _controller: AdminBundle:Session:listSessions }
+#    methods: [GET]
+##-----------------------------------------------------------------------------------------------------------------------
+#app.admin.session.invalidate:
+#    path:     /session/invalidate
+#    defaults: { _controller: AdminBundle:Session:invalidateSession }
+#    methods: [GET, POST]

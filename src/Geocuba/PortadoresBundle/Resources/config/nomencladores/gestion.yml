@@ -1,0 +1,801 @@
+#=======================================================================================================================
+# Unidad de Medida
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.unidad_medida:
+    path:     /unidad_medida
+    defaults: { _controller: PortadoresBundle:UnidadMedida:view }
+    methods: [GET]
+    options:
+        text: Unidad Medida
+        module: Portadores
+        dropdown: [Datos Primarios, Gestión]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de Unidades de Medida
+                files:
+                    - bundles/portadores/js/unidadMedida/unidadMedidaController.js
+                dependencies:
+                    - app.portadores.unidad_medida.load
+            Editar:
+                description: Editar Unidad de Medida
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/unidadMedida/unidadMedidaGestionar.js
+                dependencies:
+                    - app.portadores.unidad_medida.add
+                    - app.portadores.unidad_medida.mod
+                    - app.portadores.unidad_medida.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.unidad_medida.load:
+    path:     /unidad_medida/load
+    defaults: { _controller: PortadoresBundle:UnidadMedida:load }
+    methods: [GET]
+
+app.portadores.unidad_medida.add:
+    path:     /unidad_medida/add
+    defaults: { _controller: PortadoresBundle:UnidadMedida:add }
+    methods: [GET, POST]
+
+app.portadores.unidad_medida.mod:
+    path:     /unidad_medida/mod
+    defaults: { _controller: PortadoresBundle:UnidadMedida:mod }
+    methods: [GET, POST]
+
+app.portadores.unidad_medida.del:
+    path:     /unidad_medida/del
+    defaults: { _controller: PortadoresBundle:UnidadMedida:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Producto
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.producto:
+    path:     /producto
+    defaults: { _controller: PortadoresBundle:Producto:view }
+    methods: [GET]
+    options:
+        text: Producto
+        module: Portadores
+        dropdown: [Datos Primarios, Gestión]
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de Productos
+                files:
+                - bundles/portadores/js/producto/productoController.js
+                dependencies:
+                - app.portadores.producto.load
+            Editar:
+                description: Editar los Productos
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/producto/productoGestionar.js
+                dependencies:
+                - app.portadores.unidad_medida.load
+                - app.portadores.producto.add
+                - app.portadores.producto.upd
+                - app.portadores.producto.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.producto.load:
+    path:     /producto/load
+    defaults: { _controller: PortadoresBundle:Producto:load }
+    methods: [GET]
+
+app.portadores.producto.loadCombo:
+    path:     /producto/loadCombo
+    defaults: { _controller: PortadoresBundle:Producto:loadCombo }
+    methods: [GET]
+
+app.portadores.producto.add:
+    path:     /producto/add
+    defaults: { _controller: PortadoresBundle:Producto:add }
+    methods: [GET, POST]
+
+app.portadores.producto.upd:
+    path:     /producto/upd
+    defaults: { _controller: PortadoresBundle:Producto:mod }
+    methods: [GET, POST]
+
+app.portadores.producto.del:
+    path:     /producto/del
+    defaults: { _controller: PortadoresBundle:Producto:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Portador
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.portador:
+    path:     /portador
+    defaults: { _controller: PortadoresBundle:Portador:view }
+    methods: [GET]
+    options:
+        text: Portador
+        module: Portadores
+        dropdown: [Datos Primarios, Gestión]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de Portadores
+                files:
+                    - bundles/portadores/js/portador/portadorController.js
+                dependencies:
+                    - app.portadores.portador.load
+            Editar:
+                description: Editar los Portadores
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/portador/portadorGestionar.js
+                dependencies:
+                    - app.portadores.unidad_medida.load
+                    - app.portadores.portador.add
+                    - app.portadores.portador.mod
+                    - app.portadores.portador.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.portador.load:
+    path:     /portador/load
+    defaults: { _controller: PortadoresBundle:Portador:load }
+    methods: [GET]
+
+app.portadores.portador.add:
+    path:     /portador/add
+    defaults: { _controller: PortadoresBundle:Portador:add }
+    methods: [GET, POST]
+
+app.portadores.portador.mod:
+    path:     /portador/mod
+    defaults: { _controller: PortadoresBundle:Portador:mod }
+    methods: [GET, POST]
+
+app.portadores.portador.del:
+    path:     /portador/del
+    defaults: { _controller: PortadoresBundle:Portador:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# UM Nivel Actividad
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.um_nivel_actividad:
+    path:     /um_nivel_actividad
+    defaults: { _controller: PortadoresBundle:UMNivelActividad:view }
+    methods: [GET]
+    options:
+        text: UM Nivel de Actividad
+        module: Portadores
+        dropdown: [Datos Primarios, Gestión]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de Portadores
+                files:
+                    - bundles/portadores/js/umnivelActividad/umnivelActividadController.js
+                dependencies:
+                    - app.portadores.um_nivel_actividad.load
+            Editar:
+                description: Editar las UMs del Nivel de Actividad
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/umnivelActividad/umnivelActividadGestionar.js
+                dependencies:
+                    - app.portadores.um_nivel_actividad.add
+                    - app.portadores.um_nivel_actividad.mod
+                    - app.portadores.um_nivel_actividad.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.um_nivel_actividad.load:
+    path:     /um_nivel_actividad/load
+    defaults: { _controller: PortadoresBundle:UMNivelActividad:load }
+    methods: [GET]
+
+app.portadores.um_nivel_actividad.add:
+    path:     /um_nivel_actividad/add
+    defaults: { _controller: PortadoresBundle:UMNivelActividad:add }
+    methods: [GET, POST]
+
+app.portadores.um_nivel_actividad.mod:
+    path:     /um_nivel_actividad/mod
+    defaults: { _controller: PortadoresBundle:UMNivelActividad:mod }
+    methods: [GET, POST]
+
+app.portadores.um_nivel_actividad.del:
+    path:     /um_nivel_actividad/del
+    defaults: { _controller: PortadoresBundle:UMNivelActividad:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Actividad
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.actividad:
+    path:     /actividad
+    defaults: { _controller: PortadoresBundle:Actividad:view }
+    methods: [GET]
+    options:
+        text: Actividad
+        module: Portadores
+        dropdown: [Datos Primarios, Gestión]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de Actividades
+                files:
+                    - bundles/portadores/js/actividad/actividadController.js
+                dependencies:
+                    - app.portadores.actividad.load
+            Editar:
+                description: Editar las Actividades
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/actividad/actividadGestionar.js
+                dependencies:
+                    - app.portadores.portador.load
+                    - app.portadores.um_nivel_actividad.load
+                    - app.portadores.actividad.add
+                    - app.portadores.actividad.mod
+                    - app.portadores.actividad.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.actividad.load:
+    path:     /actividad/load
+    defaults: { _controller: PortadoresBundle:Actividad:load }
+    methods: [GET]
+
+app.portadores.actividad.loadCombo:
+    path:     /actividad/loadCombo
+    defaults: { _controller: PortadoresBundle:Actividad:loadCombo }
+    methods: [GET]
+
+app.portadores.actividad.add:
+    path:     /actividad/add
+    defaults: { _controller: PortadoresBundle:Actividad:add }
+    methods: [GET, POST]
+
+app.portadores.actividad.mod:
+    path:     /actividad/mod
+    defaults: { _controller: PortadoresBundle:Actividad:mod }
+    methods: [GET, POST]
+
+app.portadores.actividad.del:
+    path:     /actividad/del
+    defaults: { _controller: PortadoresBundle:Actividad:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Subactividad
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.subactividad:
+#    path:     /subactividad
+#    defaults: { _controller: PortadoresBundle:SubActividad:view }
+#    methods: [GET]
+#    options:
+#        text: Subactividad
+#        module: Portadores
+#        dropdown: [Datos Primarios, Gestión]
+##        dropdown_header: Gestión
+#        resources:
+#            Listado:
+#                description: Listado de Subactividades
+#                files:
+#                    - bundles/portadores/js/subActividad/subActividadController.js
+#                dependencies:
+#                    - app.portadores.subactividad.load
+#            Editar:
+#                description: Editar las Subactividades
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/subActividad/subActividadGestionar.js
+#                dependencies:
+#                    - app.portadores.actividad.loadCombo
+#                    - app.portadores.subactividad.add
+#                    - app.portadores.subactividad.mod
+#                    - app.portadores.subactividad.del
+#
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.subactividad.load:
+#    path:     /subactividad/load
+#    defaults: { _controller: PortadoresBundle:SubActividad:load }
+#    methods: [GET]
+#
+#app.portadores.subactividad.add:
+#    path:     /subactividad/add
+#    defaults: { _controller: PortadoresBundle:SubActividad:add }
+#    methods: [GET, POST]
+#
+#app.portadores.subactividad.mod:
+#    path:     /subactividad/mod
+#    defaults: { _controller: PortadoresBundle:SubActividad:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.subactividad.del:
+#    path:     /subactividad/del
+#    defaults: { _controller: PortadoresBundle:SubActividad:del }
+#    methods: [DELETE]
+#
+#=======================================================================================================================
+# Factor
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.factor:
+#    path:     /factor
+#    defaults: { _controller: PortadoresBundle:FactorConversion:view }
+#    methods: [GET]
+#    options:
+#        text: Factor Conversión
+#        module: Portadores
+#        dropdown: [Datos Primarios, Gestión]
+#        #        dropdown_header: Gestión
+#        resources:
+#            Listado:
+#                description: Listado de Factores de Conversión
+#                files:
+#                    - bundles/portadores/js/factorConversion/factorConversionController.js
+#                dependencies:
+#                    - app.portadores.factor.load
+#            Editar:
+#                description: Editar los Factores de Conversión
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/factorConversion/factorConversionGestionar.js
+#                dependencies:
+#                    - app.portadores.unidad_medida.load
+#                    - app.portadores.portador.load
+#                    - app.portadores.factor.add
+#                    - app.portadores.factor.upd
+#                    - app.portadores.factor.del
+#
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.factor.load:
+#    path:     /factor/load
+#    defaults: { _controller: PortadoresBundle:FactorConversion:load }
+#    methods: [GET]
+#
+#app.portadores.factor.add:
+#    path:     /factor/add
+#    defaults: { _controller: PortadoresBundle:FactorConversion:add }
+#    methods: [POST]
+#
+#app.portadores.factor.upd:
+#    path:     /factor/upd
+#    defaults: { _controller: PortadoresBundle:FactorConversion:upd }
+#    methods: [PuT]
+#
+#app.portadores.factor.del:
+#    path:     /factor/delete
+#    defaults: { _controller: PortadoresBundle:FactorConversion:del }
+#    methods: [DELETE]
+app.portadores.factor:
+    path:     /factor
+    defaults: { _controller: PortadoresBundle:Factor:view }
+    methods: [GET]
+    options:
+        text: Factor Conversión
+        module: Portadores
+        dropdown: [Datos Primarios, Gestión]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de Facttores de Conversión
+                files:
+                    - bundles/portadores/js/factor/factorController.js
+                dependencies:
+                    - app.portadores.factor.load
+            Editar:
+                description: Editar los Factores de Conversión
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/factor/factorGestionar.js
+                dependencies:
+                    - app.portadores.unidad_medida.load
+#                    - app.portadores.portador.load
+                    - app.portadores.factor.add
+                    - app.portadores.factor.mod
+                    - app.portadores.factor.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.factor.load:
+    path:     /factor/load
+    defaults: { _controller: PortadoresBundle:Factor:load }
+    methods: [GET]
+
+app.portadores.factor.add:
+    path:     /factor/add
+    defaults: { _controller: PortadoresBundle:Factor:add }
+    methods: [GET, POST]
+
+app.portadores.factor.mod:
+    path:     /factor/mod
+    defaults: { _controller: PortadoresBundle:Factor:mod }
+    methods: [GET, POST]
+
+app.portadores.factor.del:
+    path:     /factor/del
+    defaults: { _controller: PortadoresBundle:Factor:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Servicio de Agua
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.servicio_agua:
+#    path:     /servicio_agua
+#    defaults: { _controller: PortadoresBundle:ServicioAgua:view }
+#    methods: [GET]
+#    options:
+#        text: Servicio de Agua
+#        module: Portadores
+#        dropdown: [Datos Primarios, Gestión]
+##        dropdown_header: Gestión
+#        resources:
+#            Listado:
+#                description: Listado de los Servicios de Agua
+#                files:
+#                    - bundles/portadores/js/servicio_agua/servicio_aguaController.js
+#                dependencies:
+#                    - app.portadores.servicio_agua.load
+#                    - app.portadores.unidad.loadTree
+#            Editar:
+#                description: Editar los Servicios de Agua
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/servicio_agua/servicio_aguaGestionar.js
+#                dependencies:
+#                    - app.portadores.servicio_agua.add
+#                    - app.portadores.servicio_agua.mod
+#                    - app.portadores.servicio_agua.del
+#
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.servicio_agua.load:
+#    path:     /servicio_agua/load
+#    defaults: { _controller: PortadoresBundle:ServicioAgua:load }
+#    methods: [GET]
+#
+#app.portadores.servicio_agua.add:
+#    path:     /servicio_agua/add
+#    defaults: { _controller: PortadoresBundle:ServicioAgua:add }
+#    methods: [GET, POST]
+#
+#app.portadores.servicio_agua.mod:
+#    path:     /servicio_agua/mod
+#    defaults: { _controller: PortadoresBundle:ServicioAgua:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.servicio_agua.del:
+#    path:     /servicio_agua/del
+#    defaults: { _controller: PortadoresBundle:ServicioAgua:del }
+#    methods: [DELETE]
+
+#=======================================================================================================================
+# Cargo
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.cargo:
+    path:     /cargo
+    defaults: { _controller: PortadoresBundle:Cargo:view }
+    methods: [GET]
+    options:
+        text: Cargo
+        module: Portadores
+        dropdown: [Datos Primarios, Gestión]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de Cargos
+                files:
+                    - bundles/portadores/js/cargo/cargoController.js
+                dependencies:
+                    - app.portadores.cargo.load
+            Editar:
+                description: Editar los Cargos
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/cargo/cargoGestionar.js
+                dependencies:
+                    - app.portadores.cargo.add
+                    - app.portadores.cargo.mod
+                    - app.portadores.cargo.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.cargo.load:
+    path:     /cargo/load
+    defaults: { _controller: PortadoresBundle:Cargo:load }
+    methods: [GET]
+
+app.portadores.cargo.add:
+    path:     /cargo/add
+    defaults: { _controller: PortadoresBundle:Cargo:add }
+    methods: [GET, POST]
+
+app.portadores.cargo.mod:
+    path:     /cargo/mod
+    defaults: { _controller: PortadoresBundle:Cargo:mod }
+    methods: [GET, POST]
+
+app.portadores.cargo.del:
+    path:     /cargo/del
+    defaults: { _controller: PortadoresBundle:Cargo:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Persona
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.persona:
+    path:     /persona
+    defaults: { _controller: PortadoresBundle:Persona:view }
+    methods: [GET]
+    options:
+        text: Persona
+        module: Portadores
+        dropdown: [Datos Primarios, Gestión]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de las Personas
+                files:
+                    - bundles/portadores/js/persona/personaController.js
+                dependencies:
+                    - app.portadores.unidad.loadTree
+                    - app.portadores.persona.load
+            Editar:
+                description: Editar las Personas
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/persona/personaGestionar.js
+                dependencies:
+                    - app.portadores.cargo.load
+                    - app.portadores.persona.add
+                    - app.portadores.persona.mod
+                    - app.portadores.persona.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.persona.load:
+    path:     /persona/load
+    defaults: { _controller: PortadoresBundle:Persona:load }
+    methods: [GET]
+
+app.portadores.persona.loadCombo:
+    path:     /persona/loadCombo
+    defaults: { _controller: PortadoresBundle:Persona:loadCombo }
+    methods: [GET]
+
+app.portadores.persona.add:
+    path:     /persona/add
+    defaults: { _controller: PortadoresBundle:Persona:add }
+    methods: [GET, POST]
+
+app.portadores.persona.mod:
+    path:     /persona/mod
+    defaults: { _controller: PortadoresBundle:Persona:mod }
+    methods: [GET, POST]
+
+app.portadores.persona.del:
+    path:     /persona/del
+    defaults: { _controller: PortadoresBundle:Persona:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Destino
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.destino:
+  path:     /destino
+  defaults: { _controller: PortadoresBundle:Destino:view }
+  methods: [GET]
+  options:
+    text: Destino
+    module: Portadores
+    dropdown: [Datos Primarios, Gestión]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listado de Destinos
+        files:
+        - bundles/portadores/js/destino/destinoController.js
+        dependencies:
+        - app.portadores.destino.load
+      Editar:
+        description: Editar los Destinos
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/destino/destinoGestionar.js
+        dependencies:
+        - app.portadores.destino.add
+        - app.portadores.destino.mod
+        - app.portadores.destino.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.destino.load:
+  path:     /destino/load
+  defaults: { _controller: PortadoresBundle:Destino:load }
+  methods: [GET]
+
+app.portadores.destino.add:
+  path:     /destino/add
+  defaults: { _controller: PortadoresBundle:Destino:add }
+  methods: [GET, POST]
+
+app.portadores.destino.mod:
+  path:     /destino/mod
+  defaults: { _controller: PortadoresBundle:Destino:mod }
+  methods: [GET, POST]
+
+app.portadores.destino.del:
+  path:     /destino/del
+  defaults: { _controller: PortadoresBundle:Destino:del }
+  methods: [DELETE]
+
+#=======================================================================================================================
+# Trabajo/Proyecto
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.trabajo:
+    path:     /trabajo
+    defaults: { _controller: PortadoresBundle:Trabajo:view }
+    methods: [GET]
+    options:
+        text: Trabajo/Proyecto
+        module: Portadores
+        dropdown: [Datos Primarios, Gestión]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de los Trabajos/Proyectos
+                files:
+                    - bundles/portadores/js/trabajo/trabajoController.js
+                dependencies:
+                    - app.portadores.trabajo.asignacion.load
+                    - app.portadores.trabajo.load
+                    - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar las Trabajos/Proyectos
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/trabajo/trabajoGestionar.js
+                dependencies:
+                    - app.portadores.tipocombustible.loadCombo
+                    - app.portadores.moneda.loadMoneda
+                    - app.portadores.centrocosto.loadCombo
+                    - app.portadores.destino.load
+                    - app.portadores.trabajo.add
+                    - app.portadores.trabajo.mod
+                    - app.portadores.trabajo.del
+                    - app.portadores.trabajo.asignacion.add
+                    - app.portadores.trabajo.asignacion.mod
+                    - app.portadores.trabajo.asignacion.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.trabajo.load:
+    path:     /trabajo/load
+    defaults: { _controller: PortadoresBundle:Trabajo:load }
+    methods: [GET]
+
+app.portadores.trabajo.add:
+    path:     /trabajo/add
+    defaults: { _controller: PortadoresBundle:Trabajo:add }
+    methods: [GET, POST]
+
+app.portadores.trabajo.mod:
+    path:     /trabajo/mod
+    defaults: { _controller: PortadoresBundle:Trabajo:mod }
+    methods: [GET, POST]
+
+app.portadores.trabajo.del:
+    path:     /trabajo/del
+    defaults: { _controller: PortadoresBundle:Trabajo:del }
+    methods: [DELETE]
+
+app.portadores.trabajo.asignacion.load:
+    path:     /trabajo/asignacion/load
+    defaults: { _controller: PortadoresBundle:Trabajo:loadAsignacion }
+    methods: [GET]
+
+app.portadores.trabajo.asignacion.add:
+    path:     /trabajo/asignacion/add
+    defaults: { _controller: PortadoresBundle:Trabajo:addAsignacion }
+    methods: [GET, POST]
+
+app.portadores.trabajo.asignacion.mod:
+    path:     /trabajo/asignacion/mod
+    defaults: { _controller: PortadoresBundle:Trabajo:modAsignacion }
+    methods: [GET, POST]
+
+app.portadores.trabajo.asignacion.del:
+    path:     /trabajo/asignacion/del
+    defaults: { _controller: PortadoresBundle:Trabajo:delAsignacion }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Acciones
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.accion:
+#    path:     /accion
+#    defaults: { _controller: PortadoresBundle:AreaMedida:view }
+#    methods: [GET]
+#    options:
+#        text: Acción
+#        module: Portadores
+#        dropdown: [Datos Primarios, Gestión]
+##        dropdown_header: Seguridad
+#        resources:
+#            Listado:
+#                description: Listado de Acciones
+#                files:
+#                    - bundles/portadores/js/areaMedida/areaMedidaController.js
+#                dependencies:
+#                    - app.portadores.unidad.loadTree
+#                    - app.portadores.accion.load
+#            Editar:
+#                description: Editar las Acciones
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/areaMedida/areaMedidaGestionar.js
+#                dependencies:
+#                    - app.portadores.area.loadAreaCombo
+#                    - app.portadores.accion.add
+#                    - app.portadores.accion.mod
+#                    - app.portadores.accion.del
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.accion.load:
+#    path:     /accion/load
+#    defaults: { _controller: PortadoresBundle:AreaMedida:load }
+#    methods: [GET]
+#
+#app.portadores.accion.add:
+#    path:     /accion/add
+#    defaults: { _controller: PortadoresBundle:AreaMedida:add }
+#    methods: [GET, POST]
+#
+#app.portadores.accion.mod:
+#    path:     /accion/mod
+#    defaults: { _controller: PortadoresBundle:AreaMedida:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.accion.del:
+#    path:     /accion/del
+#    defaults: { _controller: PortadoresBundle:AreaMedida:del }
+#    methods: [DELETE]
+
+#=======================================================================================================================
+# Familia de Productos
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.familia:
+    path:     /familia
+    defaults: { _controller: PortadoresBundle:Familia:view }
+    methods: [GET]
+    options:
+        text: Familia de Productos
+        module: Portadores
+        dropdown: [Datos Primarios, Gestión]
+#        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Familia de Productos
+                files:
+                    - bundles/portadores/js/familia/familiaController.js
+                dependencies:
+                    - app.portadores.familia.load
+                    - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar las Familias de Productos
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/familia/familiaGestionar.js
+                dependencies:
+                    - app.portadores.familia.add
+                    - app.portadores.familia.mod
+                    - app.portadores.familia.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.familia.load:
+    path:     /familia/load
+    defaults: { _controller: PortadoresBundle:Familia:load }
+    methods: [GET]
+
+app.portadores.familia.add:
+    path:     /familia/add
+    defaults: { _controller: PortadoresBundle:Familia:add }
+    methods: [GET, POST]
+
+app.portadores.familia.mod:
+    path:     /familia/mod
+    defaults: { _controller: PortadoresBundle:Familia:mod }
+    methods: [GET, POST]
+
+app.portadores.familia.del:
+    path:     /familia/del
+    defaults: { _controller: PortadoresBundle:Familia:del }
+    methods: [DELETE]

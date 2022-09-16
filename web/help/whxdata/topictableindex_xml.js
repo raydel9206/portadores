@@ -1,0 +1,1 @@
+gXMLBuffer="<?xml version=\"1.0\" encoding=\"UTF-8\"?><cki><ck fm=\"Acción\" to=\"Interfaz Plan Recape\" num=\"44\"/><ck fm=\"Interfaz Planificación\" to=\"Área\" num=\"39\"/></cki>";

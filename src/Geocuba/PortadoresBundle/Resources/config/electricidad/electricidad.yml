@@ -1,0 +1,113 @@
+#=======================================================================================================================
+# Autolecturas Tresescalas
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.autolectura_tresescalas:
+#    path:     /autolectura_tresescalas
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:view }
+#    methods: [GET]
+#    options:
+#        text: Autolectura Tresescalas
+#        module: Portadores
+#        dropdown: Electricidad
+##        dropdown_header: Electricidad
+#        resources:
+#            Listado:
+#                description: Listado de Autolecturas Tresescalas
+#                files:
+#                    - bundles/portadores/js/autolectura/autolecturaController.js
+#                dependencies:
+#                    - app.portadores.servicio.load
+#                    - app.portadores.autolectura_tresescalas.load
+#                    - app.portadores.autolectura_tresescalas.getautolecturasbyservicios
+#            Editar:
+#                description: Editar las Autolecturas Tresescalas
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/autolectura/autolecturaGestionar.js
+#                dependencies:
+#                    - app.portadores.autolectura_tresescalas.add
+#                    - app.portadores.autolectura_tresescalas.mod
+#                    - app.portadores.autolectura_tresescalas.del
+#
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.autolectura_tresescalas.load:
+#    path:     /autolectura_tresescalas/load
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:load }
+#    methods: [GET]
+#
+#app.portadores.autolectura_tresescalas.getautolecturasbyservicios:
+#    path:     /autolectura_tresescalas/getautolecturasbyservicios
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:getautolecturasbyservicios }
+#    methods: [GET, POST]
+#
+#app.portadores.autolectura_tresescalas.add:
+#    path:     /autolectura_tresescalas/add
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:add }
+#    methods: [GET, POST]
+#
+#app.portadores.autolectura_tresescalas.mod:
+#    path:     /autolectura_tresescalas/mod
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.autolectura_tresescalas.del:
+#    path:     /autolectura_tresescalas/del
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:del }
+#    methods: [DELETE]
+#
+##=======================================================================================================================
+## Autolecturas Tresescalas
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.autolectura_tresescalas:
+#    path:     /autolectura_tresescalas
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:view }
+#    methods: [GET]
+#    options:
+#        text: Autolectura Tresescalas
+#        module: [Portadores, Electricidad]
+#        dropdown: Electricidad
+##        dropdown_header: Electricidad
+#        resources:
+#            Listado:
+#                description: Listado de Autolecturas Tresescalas
+#                files:
+#                    - bundles/portadores/js/autolectura/autolecturaController.js
+#                dependencies:
+#                    - app.portadores.servicio.load
+#                    - app.portadores.autolectura_tresescalas.load
+#                    - app.portadores.autolectura_tresescalas.getautolecturasbyservicios
+#            Editar:
+#                description: Editar las Autolecturas Tresescalas
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/autolectura/autolecturaGestionar.js
+#                dependencies:
+#                    - app.portadores.autolectura_tresescalas.add
+#                    - app.portadores.autolectura_tresescalas.mod
+#                    - app.portadores.autolectura_tresescalas.del
+#
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.autolectura_tresescalas.load:
+#    path:     /autolectura_tresescalas/load
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:load }
+#    methods: [GET]
+#
+#app.portadores.autolectura_tresescalas.getautolecturasbyservicios:
+#    path:     /autolectura_tresescalas/getautolecturasbyservicios
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:getautolecturasbyservicios }
+#    methods: [GET, POST]
+#
+#app.portadores.autolectura_tresescalas.add:
+#    path:     /autolectura_tresescalas/add
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:add }
+#    methods: [GET, POST]
+#
+#app.portadores.autolectura_tresescalas.mod:
+#    path:     /autolectura_tresescalas/mod
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.autolectura_tresescalas.del:
+#    path:     /autolectura_tresescalas/del
+#    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:del }
+#    methods: [DELETE]

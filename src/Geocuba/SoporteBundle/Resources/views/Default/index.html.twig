@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel='stylesheet' href="{{ asset('assets/vendor/ext@6.2.0/charts/crisp/resources/charts-all.css') }}"/>
+
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset(app.debug ? 'assets/vendor/ext@6.2.0/charts/charts-debug.js' : 'assets/vendor/ext@6.2.0/charts/charts.js') }}"></script>
+
+{% endblock %}

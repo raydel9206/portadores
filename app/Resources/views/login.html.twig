@@ -1,0 +1,113 @@
+{#{% if login_theme is not defined or login_theme is empty %}#}
+    {#{% set login_theme = 'default' %} #}{# 'fragments/login/default.html.twig' | web/assets/js/login/default.js | web/assets/css/login/default.css #}
+{#{% endif %}#}
+
+{#<!DOCTYPE html>#}
+{#<html class="h-100">#}
+    {#<head>#}
+        {#<meta charset='UTF-8'/>#}
+        {#<title>Iniciar sesión | {{ app_name }}</title>#}
+
+        {#<link rel="icon" type="image/x-icon" href="{{ asset('assets/img/PNG/portadores e.png') }}?skull_v2" />#}
+        {# https://gauger.io/fonticon/ (bug - rgba(189, 33, 48, 1))#}
+        {#<link rel="icon" type="image/x-icon" href="{{ asset('assets/img/ICO/favicon.ico') }}?skull_v2" />#}
+
+        {#<!-- Stylesheets -->#}
+        {#<link rel='stylesheet' href="{{ asset(app.debug ? 'build/login/vendor.css' : 'build/login/vendor.min.css') }}" /> #}{# 'build/login-vendor.css' and 'build/login-vendor.min.css' contain both bootstrap and fontawesome #}
+        {#<link rel='stylesheet' href="{{ asset(app.debug ? 'assets/css/login/' ~ login_theme ~ '.css' : 'build/login/' ~ login_theme ~ '/' ~ login_theme ~  '.min.css') }}"/> #}{# requires gulp in PROD !!! #}
+    {#</head>#}
+
+    {#<body class="h-100">#}
+        {#<!-- Page content -->#}
+        {#{% include ('fragments/login/' ~ login_theme ~ '.html.twig' ) %}#}
+
+        {#<!-- Javascripts -->#}
+        {#<script src="{{ asset(app.debug ? 'build/login/vendor.js' : 'build/login/vendor.min.js') }}"></script>  #}{# 'build/login-vendor.js' and 'build/login-vendor.min.js' contain both jquery and bootstrap #}
+        {#<script src="{{ asset(app.debug ? 'assets/js/login/' ~ login_theme ~ '.js' : 'build/login/' ~ login_theme ~ '/' ~ login_theme ~ '.min.js') }}"></script> #}{# requires gulp in PROD !!! #}
+
+        {#{% if app.debug %}#}
+            {#<script>#}
+                {#console.log('You are in dev mode.');#}
+                {#console.log(' > Theme: "' + "{{- login_theme -}}" + '"');#}
+            {#</script>#}
+        {#{% endif %}#}
+    {#</body>#}
+{#</html>#}
+
+{% if login_theme is not defined or login_theme is empty %}
+    {% set login_theme = 'default' %} {# 'fragments/login/default.html.twig' | web/assets/js/login/default.js | web/assets/css/login/default.css #}
+{% endif %}
+
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <meta charset='UTF-8'/>
+    <title>Iniciar sesión | {{ app_name }}</title>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/PNG/portadores e.png') }}?skull_v2" />
+    {# https://gauger.io/fonticon/ (bug - rgba(189, 33, 48, 1))#}
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/ICO/favicon.ico') }}?skull_v2" />
+
+    <!-- Stylesheets -->
+    <link rel='stylesheet' href="{{ asset(app.debug ? 'build/login/vendor.css' : 'build/login/vendor.min.css') }}" /> {# 'build/login-vendor.css' and 'build/login-vendor.min.css' contain both bootstrap and fontawesome #}
+    <link rel='stylesheet' href="{{ asset(app.debug ? 'assets/css/login/' ~ login_theme ~ '.css' : 'build/login/' ~ login_theme ~ '/' ~ login_theme ~  '.min.css') }}"/> {# requires gulp in PROD !!! #}
+</head>
+
+<body class="d-flex h-100 justify-content-center">
+<div class="container">
+    <form action="{{ path('login_check') }}" method="post" role="form">
+        <!-- logo section -->
+        <img alt="Brand" src="{{ asset('assets/img/PNG/login_portadores.png') }}" width="420" style="margin-top: -10px; background: rgba(221,223,222,0.38)">
+
+        {#<div style="margin-left: 5.3rem "><img src="{{ asset('assets/img/PNG/portadores e.png') }}"></div>#}
+        <!--  user name section -->
+        <div class="user-name">
+            <label for="user">{{ 'User' | trans() }}</label>
+            <div class="container-1">
+                <i class="fa fa-user user" aria-hidden="true"></i>
+                <input type="text" id="user" name='_username' placeholder="{% trans %}Escriba su usuario{% endtrans %}">
+            </div>
+        </div><!--  end user name section -->
+        <!--    password section       -->
+        <div class="password">
+            <label for="password">{% trans %}Password{% endtrans %}</label>
+            <div class="container-1">
+                <i class="fa fa-lock lock" aria-hidden="true"></i>
+                <input type="password" id="password" name='_password' placeholder="{% trans %}Escriba su contraseña{% endtrans %}">
+            </div>
+        </div><!-- end password section -->
+        <!-- sign section -->
+        <div class="sign">
+            <button type="submit"><i class="fa fa-sign-in-alt"></i> {% trans %}Sign-in{% endtrans %}</button>
+        </div><!-- end sign section -->
+        {#<div class="container-2">#}
+        {#<div class="balls"></div>#}
+        {#<div class="balls"></div>#}
+        {#</div>#}
+    </form>
+
+    <div style="height: 50px;">
+        {% if app.request.hasPreviousSession %}
+            {% set notice = app.flashes('notice') | last %}
+            {% if notice is not empty %}
+                <div align="center">
+                    <div class="alert alert-{{ notice.type }} p-2 mt-2 mb-0 border-{{ notice.type }}" style="max-width: 320px;">
+                        <small>{{ notice.message }}</small>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+<!-- Javascripts -->
+<script src="{{ asset(app.debug ? 'build/login/vendor.js' : 'build/login/vendor.min.js') }}"></script>
+<script src="{{ asset(app.debug ? 'assets/js/login/' ~ login_theme ~ '.js' : 'build/login/' ~ login_theme ~ '/' ~ login_theme ~ '.min.js') }}"></script>
+
+{#<script src="{{ asset(app.debug ? 'build/login.js' : 'build/login.min.js') }}"></script>#}
+
+{% if app.debug %}
+    <script>console.log('You are in dev mode.');</script>
+{% endif %}
+</body>
+</html>

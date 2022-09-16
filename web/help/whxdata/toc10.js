@@ -1,0 +1,1 @@
+gXMLBuffer ="<?xml version=\"1.0\" encoding=\"utf-8\" ?><data  src=\"toc9.js\"  name=\"Estructura\"><item name=\"Interfaz Provincia y Municipio\" url=\"Provincia_y_Municpio.htm\" /><item name=\"Interfaz Unidad\" url=\"Unidad.htm\" /><item name=\"Interfaz Área\" url=\"Área.htm\" /><item name=\"Interfaz Pie de Firma\" url=\"Pie_de_Firma.htm\" /></data>";

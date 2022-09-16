@@ -1,0 +1,112 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: ../../vendor/intaro/hstore-extension/config/hstore.yml }
+    - { resource: "@PortadoresBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: es
+
+framework:
+    #esi: ~
+    translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+        http_port: 83
+        https_port: 447
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id: null # You can also set it to null, to default to the handler of your PHP installation.
+#        handler_id: session.handler.native_file
+#        handler_id: app.listener.pdo_session_handler
+#        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+
+        # To avoid cookies collisions with other systems. By default, it will use the cookie name which is defined in the php.ini with the session.name directive: PHPSESSID.
+        name: '%secret%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+#        json_manifest_path: '%kernel.project_dir%/web/build/manifest.json'
+    php_errors:
+        log: true
+
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        connections:
+            default:
+                server_version: 11.0
+                driver:   pdo_pgsql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8
+
+                mapping_types:
+                    varbit: string
+
+#        driver:   pdo_pgsql
+#        host: '%database_host%'
+#        port: '%database_port%'
+#        dbname: '%database_name%'
+#        user: '%database_user%'
+#        password: '%database_password%'
+#        charset: UTF8
+
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+#        default_entity_manager: default
+        auto_generate_proxy_classes: '%kernel.debug%'
+        entity_managers:
+            default:
+                connection: default
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                auto_mapping: true
+
+                dql:
+                    string_functions:
+                        ltree_operator: Geocuba\AdminBundle\Operator\LtreeOperatorFunction # requires 'unaccent' extension in postgresql
+                        date_part: Geocuba\AdminBundle\Operator\DatePartFunction
+                        clearstr: Geocuba\AdminBundle\Util\ClearStrFunction
+
+                mappings:
+                     AdminBundle: ~
+
+                # Cache: array, apc, memcache, memcached, redis, wincache, zenddata, xcache or service
+#                metadata_cache_driver: apc
+#                result_cache_driver: apc
+#                query_cache_driver: apc
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }

@@ -1,0 +1,231 @@
+#=======================================================================================================================
+# Provincia y Municipio
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.provincia:
+    path:     /provincia
+    defaults: { _controller: PortadoresBundle:Provincia:view }
+    methods: [GET]
+    options:
+        text: Provincia y Municipio
+        module: Portadores
+        dropdown: [Datos Primarios, Estructura]
+#        dropdown_header: Estructura
+        resources:
+            Listado:
+                description: Listado de provincias y municipios
+                files:
+                    - bundles/portadores/js/provincia/provinciaController.js
+                dependencies:
+                    - app.portadores.provincia.list
+                    - app.portadores.municipio.listMunicipio
+            Editar:
+                description: Editar provincias y municipios
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/provincia/provinciaGestionar.js
+                dependencies:
+                    - app.portadores.provincia.add
+                    - app.portadores.municipio.addMunicipio
+                    - app.portadores.provincia.edit
+                    - app.portadores.municipio.editMunicipio
+                    - app.portadores.provincia.delete
+                    - app.portadores.municipio.deleteMunicipio
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.provincia.list:
+    path:     /provincia/list
+    defaults: { _controller: PortadoresBundle:Provincia:list }
+    methods: [GET]
+
+app.portadores.municipio.listMunicipio:
+    path:     /municipio/listMunicipio
+    defaults: { _controller: PortadoresBundle:Provincia:listMunicipio }
+    methods: [GET]
+
+app.portadores.provincia.add:
+    path:     /provincia/add
+    defaults: { _controller: PortadoresBundle:Provincia:add }
+    methods: [GET,POST]
+
+app.portadores.municipio.addMunicipio:
+    path:     /municipio/addMunicipio
+    defaults: { _controller: PortadoresBundle:Provincia:addMunicipio }
+    methods: [GET,POST]
+
+app.portadores.provincia.edit:
+    path:     /provincia/edit
+    defaults: { _controller: PortadoresBundle:Provincia:edit }
+    methods: [GET,POST]
+
+app.portadores.municipio.editMunicipio:
+    path:     /municipio/editMunicipio
+    defaults: { _controller: PortadoresBundle:Provincia:editMunicipio }
+    methods: [GET,POST]
+
+app.portadores.provincia.delete:
+    path:     /provincia/delete
+    defaults: { _controller: PortadoresBundle:Provincia:delete }
+    methods: [DELETE]
+
+app.portadores.municipio.deleteMunicipio:
+    path:     /municipio/deleteMunicipio
+    defaults: { _controller: PortadoresBundle:Provincia:deleteMunicipio }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Unidad
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.unidad:
+    path:     /unidad
+    defaults: { _controller: PortadoresBundle:Unidad:view }
+    methods: [GET]
+    options:
+        text: Unidad
+        module: Portadores
+        dropdown: [Datos Primarios, Estructura]
+#        dropdown_header: Estructura
+        resources:
+            Listado:
+                description: Listado de Unidades
+                files:
+                    - bundles/portadores/js/unidad/unidadController.js
+                dependencies:
+                    - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar unidad
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/unidad/unidadGestionar.js
+                dependencies:
+                    - app.portadores.provincia.list
+                    - app.portadores.municipio.listMunicipio
+                    - app.portadores.unidad.add
+                    - app.portadores.unidad.upd
+                    - app.portadores.unidad.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.unidad.loadTree:
+    path:     /unidad/loadTree
+    defaults: { _controller: PortadoresBundle:Unidad:loadTree }
+    methods: [GET]
+
+app.portadores.unidad.add:
+    path:     /unidad/add
+    defaults: { _controller: PortadoresBundle:Unidad:add }
+    methods: [GET, POST]
+
+app.portadores.unidad.upd:
+    path:     /unidad/upd
+    defaults: { _controller: PortadoresBundle:Unidad:upd }
+    methods: [GET, POST]
+
+app.portadores.unidad.del:
+    path:     /unidad/del
+    defaults: { _controller: PortadoresBundle:Unidad:del }
+    methods: [POST]
+
+#=======================================================================================================================
+# Area
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.area:
+    path:     /area
+    defaults: { _controller: PortadoresBundle:Area:view }
+    methods: [GET]
+    options:
+        text: Área
+        module: Portadores
+        dropdown: [Datos Primarios, Estructura]
+#        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de Áreas
+                files:
+                    - bundles/portadores/js/area/areaController.js
+                dependencies:
+                    - app.portadores.area.loadArea
+                    - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar las Áreas
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/area/areaGestionar.js
+                dependencies:
+                    - app.portadores.area.addArea
+                    - app.portadores.area.modArea
+                    - app.portadores.area.delArea
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.area.loadArea:
+    path:     /area/loadArea
+    defaults: { _controller: PortadoresBundle:Area:load }
+    methods: [GET]
+
+app.portadores.area.loadAreaCombo:
+    path:     /area/loadAreaCombo
+    defaults: { _controller: PortadoresBundle:Area:loadCombo }
+    methods: [GET]
+
+app.portadores.area.addArea:
+    path:     /area/addArea
+    defaults: { _controller: PortadoresBundle:Area:add }
+    methods: [GET, POST]
+
+app.portadores.area.modArea:
+    path:     /area/modArea
+    defaults: { _controller: PortadoresBundle:Area:mod }
+    methods: [GET, POST]
+
+app.portadores.area.delArea:
+    path:     /area/delArea
+    defaults: { _controller: PortadoresBundle:Area:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Pie de Firma
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.pie_firma:
+    path:     /pie_firma
+    defaults: { _controller: PortadoresBundle:PieFirma:view }
+    methods: [GET]
+    options:
+        text: Pie de Firma
+        module: Portadores
+        dropdown: [Datos Primarios, Estructura]
+#        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de Pies de Firmas
+                files:
+                    - bundles/portadores/js/pieFirma/pieFirmaController.js
+                dependencies:
+                    - app.portadores.pie_firma.load
+                    - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar los Pies de Firmas
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/pieFirma/pieFirmaGestionar.js
+                dependencies:
+                    - app.portadores.persona.loadCombo
+                    - app.portadores.pie_firma.add
+                    - app.portadores.pie_firma.mod
+                    - app.portadores.pie_firma.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.pie_firma.load:
+    path:     /pie_firma/load
+    defaults: { _controller: PortadoresBundle:PieFirma:load }
+    methods: [GET]
+
+app.portadores.pie_firma.add:
+    path:     /pie_firma/add
+    defaults: { _controller: PortadoresBundle:PieFirma:add }
+    methods: [GET, POST]
+
+app.portadores.pie_firma.mod:
+    path:     /pie_firma/mod
+    defaults: { _controller: PortadoresBundle:PieFirma:mod }
+    methods: [GET, POST]
+
+app.portadores.pie_firma.del:
+    path:     /pie_firma/del
+    defaults: { _controller: PortadoresBundle:PieFirma:del }
+    methods: [DELETE]

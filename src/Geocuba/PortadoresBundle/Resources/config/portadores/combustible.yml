@@ -1,0 +1,441 @@
+#=======================================================================================================================
+# Plan combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.plan_combustible:
+  path:     /plan_combustible
+  defaults: { _controller: PortadoresBundle:PlanCombustible:view }
+  methods: [GET]
+  options:
+    text: Planificación
+    module: Portadores
+    dropdown: [Portadores, Combustible]
+    dropdown_header: Transporte
+    resources:
+      Listado:
+        description: Mostrar plan de combustible por vehículos
+        files:
+        - bundles/portadores/js/plan_combustible/plan_combustibleController.js
+        dependencies:
+        - app.portadores.plan_combustible.load
+        - app.portadores.unidad.loadTree
+        - app.portadores.tipocombustible.loadCombo
+        - app.portadores.vehiculo.loadCombo
+      Editar:
+        description: Editar plan de combustible por vehículos
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/plan_combustible/plan_combustibleGestionar.js
+        dependencies:
+        - app.portadores.plan_combustible.crear
+        - app.portadores.plan_combustible.mod
+        - app.portadores.plan_combustible.aprobar
+        - app.portadores.plan_combustible.desaprobar
+      Exportar:
+        description: Editar plan de combustible por vehículos
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/plan_combustible/plan_combustibleExportar.js
+        dependencies:
+        - app.portadores.plan_combustible.print
+        - app.portadores.plan_combustible.export
+#            Aprobar:
+#                description: Aprobar plan de combustible por vehículos
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/plan_combustible/plan_combustibleAprobar.js
+#                dependencies:
+#                    - app.portadores.plan_combustible.aprobar
+#                    - app.portadores.plan_combustible.desaprobar
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.plan_combustible.load:
+  path:     /plan_combustible/load
+  defaults: { _controller: PortadoresBundle:PlanCombustible:load }
+  methods: [GET]
+
+app.portadores.plan_combustible.crear:
+  path:     /plan_combustible/crear
+  defaults: { _controller: PortadoresBundle:PlanCombustible:crear }
+  methods: [POST]
+
+app.portadores.plan_combustible.mod:
+  path:     /plan_combustible/mod
+  defaults: { _controller: PortadoresBundle:PlanCombustible:mod }
+  methods: [POST]
+
+app.portadores.plan_combustible.del:
+  path:     /plan_combustible/del
+  defaults: { _controller: PortadoresBundle:PlanCombustible:del }
+  methods: [POST]
+
+app.portadores.plan_combustible.print:
+  path:     /plan_combustible/print
+  defaults: { _controller: PortadoresBundle:PlanCombustible:print }
+  methods: [GET]
+
+app.portadores.plan_combustible.export:
+  path:     /plan_combustible/export
+  defaults: { _controller: PortadoresBundle:PlanCombustible:export }
+  methods: [GET]
+
+app.portadores.plan_combustible.aprobar:
+  path:     /plan_combustible/aprobar
+  defaults: { _controller: PortadoresBundle:PlanCombustible:aprobar }
+  methods: [POST]
+
+app.portadores.plan_combustible.desaprobar:
+  path:     /plan_combustible/desaprobar
+  defaults: { _controller: PortadoresBundle:PlanCombustible:desaprobar }
+  methods: [POST]
+
+#=======================================================================================================================
+# Demanda combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.demanda_combustible:
+  path:     /demanda_combustible
+  defaults: { _controller: PortadoresBundle:DemandaCombustible:view }
+  methods: [GET]
+  options:
+    text: Demanda
+    module: Portadores
+    dropdown: [Portadores, Combustible]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listado de Demandas de Combustible
+        files:
+        - bundles/portadores/js/demandaCombustible/demandaCombustibleController.js
+        dependencies:
+        - app.portadores.demanda_combustible.load
+        - app.portadores.tipocombustible.loadCombo
+        - app.portadores.demanda_combustible.loadDatos
+        - app.portadores.unidad.loadTree
+        - app.portadores.moneda.loadMoneda
+      Editar:
+        description: Editar Demandas de Combustible
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/demandaCombustible/demandaCombustibleGestionar.js
+        dependencies:
+        - app.portadores.demanda_combustible.add
+        - app.portadores.demanda_combustible.guardar
+        - app.portadores.demanda_combustible.del
+#                - app.portadores.demanda_combustible.actualizar
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.demanda_combustible.load:
+  path:     /demanda_combustible/load
+  defaults: { _controller: PortadoresBundle:DemandaCombustible:load }
+  methods: [GET]
+
+app.portadores.demanda_combustible.loadDatos:
+  path:     /demanda_combustible/loadDatos
+  defaults: { _controller: PortadoresBundle:DemandaCombustible:loadDatos }
+  methods: [GET]
+
+app.portadores.demanda_combustible.add:
+  path:     /demanda_combustible/add
+  defaults: { _controller: PortadoresBundle:DemandaCombustible:add }
+  methods: [POST]
+
+app.portadores.demanda_combustible.del:
+  path:     /demanda_combustible/del
+  defaults: { _controller: PortadoresBundle:DemandaCombustible:del }
+  methods: [GET]
+
+app.portadores.demanda_combustible.guardar:
+  path:     /demanda_combustible/guardar
+  defaults: { _controller: PortadoresBundle:DemandaCombustible:guardar }
+  methods: [POST]
+
+app.portadores.demanda_combustible.actualizar:
+  path:     /demanda_combustible/loadByCheque
+  defaults: { _controller: PortadoresBundle:DemandaCombustible:actualizar }
+  methods: [GET]
+
+#=======================================================================================================================
+# Asignación combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.asignacion:
+  path:     /asignacion
+  defaults: { _controller: PortadoresBundle:Asignacion:view }
+  methods: [GET]
+  options:
+    text: Asignación
+    module: Portadores
+    dropdown: [Portadores, Combustible]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Mostrar Asignaciones de Combustible
+        files:
+        - bundles/portadores/js/asignacion/asignacionController.js
+        dependencies:
+        - app.portadores.asignacion.load
+        - app.portadores.plan_disponible.loadDisponible
+        - app.portadores.asignacion.loadDemanda
+        - app.portadores.unidad.loadTree
+        - app.portadores.moneda.loadMoneda
+        - app.portadores.tipocombustible.loadCombo
+      Editar:
+        description: Editar Asignaciones
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/asignacion/asignacionGestionar.js
+        dependencies:
+        - app.portadores.asignacion.add
+        - app.portadores.asignacion.mod
+        - app.portadores.asignacion.del
+        - app.portadores.chequeFincimex.load_saldoChequeFincimex
+        - app.portadores.plan_disponible.modDisponible
+        - app.portadores.plan_disponible.addCantidad
+        - app.portadores.plan_disponible.subCantidad
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.asignacion.load:
+  path:     /asignacion/load
+  defaults: { _controller: PortadoresBundle:Asignacion:load }
+  methods: [GET]
+
+app.portadores.asignacion.loadDemanda:
+  path:     /asignacion/loadDemanda
+  defaults: { _controller: PortadoresBundle:Asignacion:loadDemanda }
+  methods: [GET]
+
+app.portadores.asignacion.add:
+  path:     /asignacion/add
+  defaults: { _controller: PortadoresBundle:Asignacion:add }
+  methods: [POST]
+
+app.portadores.asignacion.mod:
+  path:     /asignacion/mod
+  defaults: { _controller: PortadoresBundle:Asignacion:mod }
+  methods: [POST]
+
+app.portadores.asignacion.del:
+  path:     /asignacion/del
+  defaults: { _controller: PortadoresBundle:Asignacion:del }
+  methods: [DELETE]
+
+app.portadores.plan_disponible.loadDisponible:
+  path:     /plan_disponible/loadDisponible
+  defaults: { _controller: PortadoresBundle:Asignacion:loadDisponible }
+  methods: [GET]
+
+app.portadores.plan_disponible.modDisponible:
+  path:     /plan_disponible/modDisponible
+  defaults: { _controller: PortadoresBundle:Asignacion:modDisponible }
+  methods: [POST]
+
+app.portadores.plan_disponible.loadDisponibleTC:
+  path:     /plan_disponible/loadDisponibleTC
+  defaults: { _controller: PortadoresBundle:Asignacion:loadDisponibleTC }
+  methods: [GET]
+
+app.portadores.chequeFincimex.load_saldoChequeFincimex:
+    path:     /chequeFincimex/load_saldoChequeFincimex
+    defaults: { _controller: PortadoresBundle:ChequeFincimex:load_saldo }
+    methods: [GET]
+
+app.portadores.plan_disponible.addCantidad:
+  path:     /plan_disponible/addCantidad
+  defaults: { _controller: PortadoresBundle:Asignacion:addCantidad }
+  methods: [POST]
+
+app.portadores.plan_disponible.subCantidad:
+  path:     /plan_disponible/subCantidad
+  defaults: { _controller: PortadoresBundle:Asignacion:subCantidad }
+  methods: [POST]
+
+#=======================================================================================================================
+# Distribución combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.distribucion:
+  path:     /distribucion
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:view }
+  methods: [GET]
+  options:
+    text: Distribución
+    module: Portadores
+    dropdown: [Portadores, Combustible]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listado de Distribuciones de Combustible
+        files:
+        - bundles/portadores/js/distribucionCombustible/distribucionCombustibleController.js
+        dependencies:
+        - app.portadores.distribucion.load
+        - app.portadores.distribucion.loadDesglose
+        - app.portadores.plan_disponible.loadCantidad
+        - app.portadores.unidad.loadTree
+        - app.portadores.moneda.loadMoneda
+        - app.portadores.tipocombustible.loadCombo
+      Editar:
+        description: Editar Distribuciones de Combustible
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/distribucionCombustible/distribucionCombustibleGestionar.js
+        dependencies:
+        - app.portadores.vehiculo.loadCombo
+        - app.portadores.tarjeta.loadCombo
+        - app.portadores.persona.loadCombo
+        - app.portadores.tipocombustible.loadCombo
+        - app.portadores.distribucion.add
+        - app.portadores.distribucion.mod
+        - app.portadores.distribucion.del
+        - app.portadores.distribucion.print
+        - app.portadores.distribucion.actualizarDesglose
+        - app.portadores.distribucion.delDesglose
+        - app.portadores.distribucion.restaurarCheque
+        - app.portadores.plan_disponible.addCantidad
+        - app.portadores.plan_disponible.subCantidad
+        - app.portadores.plan_disponible.loadDisponibleTC
+        - app.portadores.distribucion.aprobar
+        - app.portadores.distribucion.desaprobar
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.distribucion.load:
+  path:     /distribucion/load
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:load }
+  methods: [GET]
+
+app.portadores.distribucion.loadSinCheque:
+  path:     /distribucion/loadSinCheque
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:loadSinCheque }
+  methods: [GET]
+
+app.portadores.distribucion.loadByCheque:
+  path:     /distribucion/loadByCheque
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:loadByCheque }
+  methods: [GET]
+
+app.portadores.distribucion.loadDesglose:
+  path:     /distribucion/loadDesglose
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:loadDesglose }
+  methods: [GET]
+
+app.portadores.distribucion.add:
+  path:     /distribucion/add
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:add }
+  methods: [POST]
+
+app.portadores.distribucion.mod:
+  path:     /distribucion/mod
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:mod }
+  methods: [POST]
+
+app.portadores.distribucion.del:
+  path:     /distribucion/del
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:del }
+  methods: [DELETE]
+
+app.portadores.distribucion.print:
+  path:     /distribucion/print
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:print }
+  methods: [GET]
+
+app.portadores.distribucion.actualizarDesglose:
+  path:     /distribucion/actualizarDesglose
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:actualizarDesglose }
+  methods: [POST]
+
+app.portadores.distribucion.delDesglose:
+  path:     /distribucion/delDesglose
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:delDesglose }
+  methods: [DELETE]
+
+app.portadores.distribucion.aprobar:
+  path:     /distribucion/aprobar
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:aprobar }
+  methods: [POST]
+
+app.portadores.distribucion.desaprobar:
+  path:     /distribucion/desaprobar
+  defaults: { _controller: PortadoresBundle:DistribucionCombustible:desaprobar }
+  methods: [POST]
+
+#=======================================================================================================================
+# Solicitud Compra
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.solicitud_compra:
+#  path:     /solicitud_compra
+#  defaults: { _controller: PortadoresBundle:SolicitudCompra:view }
+#  methods: [GET]
+#  options:
+#    text: Solicitud Compra
+#    module: Portadores
+#    dropdown: [Portadores, Combustible]
+#    #        dropdown_header: Seguridad
+#    resources:
+#      Listado:
+#        description: Listado de Demandas de Combustible
+#        files:
+#        - bundles/portadores/js/solicitudCompra/solicitudCompraController.js
+#        dependencies:
+#        - app.portadores.solicitud_compra.load
+#        - app.portadores.tipocombustible.loadCombo
+#        - app.portadores.solicitud_compra.loadDatos
+#        - app.portadores.unidad.loadTree
+#        - app.portadores.solicitud_compra.desglose.load
+#      Editar:
+#        description: Editar Demandas de Combustible
+#        dependent_of: Listado
+#        files:
+#        - bundles/portadores/js/solicitudCompra/solicitudCompraGestionar.js
+#        dependencies:
+#        - app.portadores.moneda.loadMoneda
+#        - app.portadores.solicitud_compra.add
+#        - app.portadores.solicitud_compra.mod
+#        - app.portadores.solicitud_compra.del
+#        - app.portadores.solicitud_compra.aprobar
+#        - app.portadores.solicitud_compra.desaprobar
+#        - app.portadores.solicitud_compra.desglose.guardar
+#        - app.portadores.solicitud_compra.desglose.del
+##                - app.portadores.solicitud_compra.actualizar
+#
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.solicitud_compra.load:
+#  path:     /solicitud_compra/load
+#  defaults: { _controller: PortadoresBundle:SolicitudCompra:load }
+#  methods: [GET]
+#
+#app.portadores.solicitud_compra.add:
+#  path:     /solicitud_compra/add
+#  defaults: { _controller: PortadoresBundle:SolicitudCompra:add }
+#  methods: [POST]
+#
+#app.portadores.solicitud_compra.mod:
+#  path:     /solicitud_compra/mod
+#  defaults: { _controller: PortadoresBundle:SolicitudCompra:mod }
+#  methods: [POST]
+#
+#app.portadores.solicitud_compra.del:
+#  path:     /solicitud_compra/del
+#  defaults: { _controller: PortadoresBundle:SolicitudCompra:del }
+#  methods: [DELETE]
+#
+#app.portadores.solicitud_compra.desglose.load:
+#  path:     /solicitud_compra/desglose/load
+#  defaults: { _controller: PortadoresBundle:SolicitudCompra:loadDesglose }
+#  methods: [GET]
+#
+#app.portadores.solicitud_compra.desglose.guardar:
+#  path:     /solicitud_compra/desglose/guardar
+#  defaults: { _controller: PortadoresBundle:SolicitudCompra:guardarDesglose }
+#  methods: [POST]
+#
+#app.portadores.solicitud_compra.aprobar:
+#  path:     /solicitud_compra/aprobar
+#  defaults: { _controller: PortadoresBundle:SolicitudCompra:aprobar }
+#  methods: [POST]
+#
+#app.portadores.solicitud_compra.desaprobar:
+#  path:     /solicitud_compra/desaprobar
+#  defaults: { _controller: PortadoresBundle:SolicitudCompra:desaprobar }
+#  methods: [POST]
+#
+#app.portadores.solicitud_compra.desglose.del:
+#  path:     /solicitud_compra/desglose/del
+#  defaults: { _controller: PortadoresBundle:SolicitudCompra:delDesglose }
+#  methods: [DELETE]

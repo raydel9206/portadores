@@ -1,0 +1,110 @@
+<?php
+
+namespace Geocuba\PortadoresBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * VehiculoTraslado
+ *
+ * @ORM\Table(name="nomencladores.vehiculo_traslado", indexes={@ORM\Index(name="IDX_8D15B8C9C9FA1603", columns={"vehiculo"}), @ORM\Index(name="IDX_8D15B8C9AF6CFC27", columns={"traslado"})})
+ * @ORM\Entity
+ */
+class VehiculoTraslado
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="id", type="string", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Geocuba\AdminBundle\Util\CustomIdGenerator")
+     */
+    private $id;
+
+    /**
+     * @var \Vehiculo
+     *
+     * @ORM\ManyToOne(targetEntity="Vehiculo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="vehiculo", referencedColumnName="id")
+     * })
+     */
+    private $vehiculo;
+
+    /**
+     * @var \Traslado
+     *
+     * @ORM\ManyToOne(targetEntity="Traslado")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="traslado", referencedColumnName="id")
+     * })
+     */
+    private $traslado;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="aceptado", type="boolean", nullable=false,  options={"default"="0"})
+     */
+    private $aceptado;
+
+
+    /**
+     * Get id.
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set vehiculo.
+     *
+     * @param \Geocuba\PortadoresBundle\Entity\Vehiculo|null $vehiculo
+     *
+     * @return VehiculoTraslado
+     */
+    public function setVehiculo(\Geocuba\PortadoresBundle\Entity\Vehiculo $vehiculo = null)
+    {
+        $this->vehiculo = $vehiculo;
+    
+        return $this;
+    }
+
+    /**
+     * Get vehiculo.
+     *
+     * @return \Geocuba\PortadoresBundle\Entity\Vehiculo|null
+     */
+    public function getVehiculo()
+    {
+        return $this->vehiculo;
+    }
+
+    /**
+     * Set traslado.
+     *
+     * @param \Geocuba\PortadoresBundle\Entity\Traslado|null $traslado
+     *
+     * @return VehiculoTraslado
+     */
+    public function setTraslado(\Geocuba\PortadoresBundle\Entity\Traslado $traslado = null)
+    {
+        $this->traslado = $traslado;
+    
+        return $this;
+    }
+
+    /**
+     * Get traslado.
+     *
+     * @return \Geocuba\PortadoresBundle\Entity\Traslado|null
+     */
+    public function getTraslado()
+    {
+        return $this->traslado;
+    }
+}

@@ -1,0 +1,13 @@
+doctrine:
+    dbal:
+        connections:
+            gis:
+                driver:   pdo_pgsql
+#                host:     "%database_host%"
+                host:     127.0.0.1
+#                port:     "%database_port%"
+                port:     5432
+                dbname:   GISROUTE_OSM
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8

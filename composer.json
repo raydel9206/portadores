@@ -1,0 +1,87 @@
+{
+    "name": "felix.prieto/myproject",
+    "license": "proprietary",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Geocuba\\": "src/Geocuba"
+        },
+        "classmap": [
+            "app/AppKernel.php",
+            "app/AppCache.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        },
+        "files": [
+            "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
+        ]
+    },
+    "require": {
+        "php": ">=7.2.7",
+        "CrEOF/doctrine2-spatial": "^1.2",
+        "box/spout": "^2.7",
+        "cboden/ratchet": "^0.4.0",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-fixtures-bundle": "^2.4",
+        "doctrine/orm": "^2.5",
+        "dompdf/dompdf": "^0.8.2",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "intaro/hstore-extension": "^2.0",
+        "matthiasmullie/minify": "^1.3",
+        "mpdf/mpdf": "^7.0",
+        "patchwork/jsqueeze": "^2.0",
+        "phpoffice/phpspreadsheet": "^1.2",
+        "phpoffice/phpword": "^0.14.0",
+        "sensio/distribution-bundle": "^5.0.19",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "setasign/fpdf": "^1.8",
+        "symfony/monolog-bundle": "^3.1.0",
+        "symfony/polyfill-apcu": "^1.0",
+        "symfony/swiftmailer-bundle": "^2.3.10",
+        "symfony/symfony": "3.4.*",
+        "twig/twig": "^1.0||^2.0",
+        "vanderlee/syllable": "^1.4"
+    },
+    "require-dev": {
+        "sensio/generator-bundle": "^3.0",
+        "symfony/maker-bundle": "^1.6",
+        "symfony/phpunit-bridge": "^3.0"
+    },
+    "scripts": {
+        "symfony-scripts": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ],
+        "post-install-cmd": [
+            "@symfony-scripts"
+        ],
+        "post-update-cmd": [
+            "@symfony-scripts"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "disable-tls": false,
+        "secure-http": true
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
+        "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
+        "symfony-assets-install": "relative",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        },
+        "branch-alias": null
+    }
+}

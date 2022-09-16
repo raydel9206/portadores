@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-md navbar-light bg-blue p-1">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content"
+            aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand mr-0" href="{{ url('homepage') }}">
+        {#<i class="fas fa-skull fa-fw text-danger"></i>#}
+        <img alt="Brand" src="{{ asset('assets/img/PNG/portadores e.png') }}" style="width: 40px">
+    </a>
+
+    <div class="collapse navbar-collapse" id="nav-content">
+        <ul class="navbar-nav mr-auto" id="navbar-left" hidden></ul>
+    </div><!-- /.navbar-collapse -->
+
+    <div class="collapse navbar-collapse justify-content-end">
+        <ul class="navbar-nav" id="navbar-right" hidden>
+            <li class="navbar-text pr-2 pl-2" id="chat" hidden>
+                <i class="fas fa-comment"></i>
+            </li>
+
+            <li class="navbar-text pr-2 pl-2" id="notifier" hidden>
+                <i class="fas fa-envelope"></i>
+            </li>
+
+            <li class="navbar-text pr-2 pl-2" id="userdata" hidden>
+                <i class="fas fa-user"></i>
+            </li>
+
+            {% if app.debug %}
+                <li class="navbar-text pr-2 pl-2" id="reloader" hidden>
+                    <i class="fas fa-rocket text-danger"></i>
+                </li>
+                <li class="navbar-text pr-2 pl-2" id="helper" hidden>
+                    <i class="fab fa-font-awesome text-danger"></i>
+                </li>
+            {% endif %}
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                   aria-expanded="false"></a>
+                <div class="dropdown-menu dropdown-menu-right pt-1 pb-1"></div>
+            </li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>

@@ -1,0 +1,1 @@
+gXMLBuffer ="<?xml version=\"1.0\" encoding=\"utf-8\" ?><data  src=\"toc22.js\"  name=\"Módulo Tabla de Distancia\"><item name=\"Crear Tabla de Distancia\" url=\"Crear_Tabla_de_Distancia.htm\" /><item name=\"Gestionar Tabla de Distancia\" url=\"Gestionar_Tabla_de_Distancia.htm\" /></data>";

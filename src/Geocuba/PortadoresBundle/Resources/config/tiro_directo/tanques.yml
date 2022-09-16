@@ -1,0 +1,192 @@
+#=======================================================================================================================
+# Tanques
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tanques:
+  path:     /tanques
+  defaults: { _controller: PortadoresBundle:Tanques:view }
+  methods: [GET]
+  options:
+    text: Tanques
+    module: Portadores
+    dropdown: [Datos Primarios, Tiro Directo]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listado de Tanques
+        files:
+          - bundles/portadores/js/tanques/tanquesController.js
+        dependencies:
+          - app.portadores.tanques.loadTanques
+          - app.portadores.tanques.loadMediciones
+          - app.portadores.unidad.loadTree
+          - app.portadores.tipocombustible.loadCombo
+          - app.portadores.unidad_medida.load
+      Editar:
+        description: Editar los Tanques
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/tanques/tanquesGestionar.js
+        dependencies:
+          - app.portadores.tanques.addTanque
+          - app.portadores.tanques.addMedicion
+          - app.portadores.tanques.updTanque
+          - app.portadores.tanques.updMedicion
+          - app.portadores.tanques.delTanque
+          - app.portadores.tanques.delMedicion
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tanques.loadTanques:
+  path:     /tanques/load
+  defaults: { _controller: PortadoresBundle:Tanques:load }
+  methods: [GET]
+
+app.portadores.tanques.loadMediciones:
+  path:     /tanques/loadMediciones
+  defaults: { _controller: PortadoresBundle:Tanques:loadMediciones }
+  methods: [GET]
+
+app.portadores.tanques.addTanque:
+  path:     /tanques/add
+  defaults: { _controller: PortadoresBundle:Tanques:add }
+  methods: [POST]
+
+app.portadores.tanques.addMedicion:
+  path:     /tanques/addMedicion
+  defaults: { _controller: PortadoresBundle:Tanques:addMedicion }
+  methods: [POST]
+
+app.portadores.tanques.updTanque:
+  path:     /tanques/upd
+  defaults: { _controller: PortadoresBundle:Tanques:upd }
+  methods: [PUT]
+
+app.portadores.tanques.updMedicion:
+  path:     /tanques/updMedicion
+  defaults: { _controller: PortadoresBundle:Tanques:updMedicion }
+  methods: [PUT]
+
+app.portadores.tanques.delTanque:
+  path:     /tanques/delete
+  defaults: { _controller: PortadoresBundle:Tanques:delete }
+  methods: [DELETE]
+
+app.portadores.tanques.delMedicion:
+  path:     /tanques/deleteMedicion
+  defaults: { _controller: PortadoresBundle:Tanques:deleteMedicion}
+  methods: [DELETE]
+
+
+#=======================================================================================================================
+# Mediciones Diarias
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.mediciones_diarias:
+  path:     /mediciones_diarias
+  defaults: { _controller: PortadoresBundle:Tanques:view }
+  methods: [GET]
+  options:
+    text: Mediciones Diarias
+    module: Portadores
+    dropdown: [Portadores, Combustible]
+    dropdown_header: Tanques
+    resources:
+      Listado:
+        description: Listar mediciones diarias
+        files:
+          - bundles/portadores/js/medicionesDiarias/medicionesDiariasController.js
+        dependencies:
+          - app.portadores.mediciones_diarias.load
+          - app.portadores.tanques.loadTanques
+          - app.portadores.unidad.loadTree
+      Editar:
+        description: Editar las mediciones diarias
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/medicionesDiarias/medicionesDiariasGestionar.js
+        dependencies:
+          - app.portadores.mediciones_diarias.add
+          - app.portadores.mediciones_diarias.upd
+          - app.portadores.mediciones_diarias.del
+          - app.portadores.mediciones_diarias.recalcularConsumo
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.mediciones_diarias.load:
+  path:     /mediciones_diarias/load
+  defaults: { _controller: PortadoresBundle:MedicionDiariaTanque:load }
+  methods: [GET]
+
+app.portadores.mediciones_diarias.add:
+  path:     /mediciones_diarias/add
+  defaults: { _controller: PortadoresBundle:MedicionDiariaTanque:add }
+  methods: [POST]
+
+app.portadores.mediciones_diarias.del:
+  path:     /mediciones_diarias/delete
+  defaults: { _controller: PortadoresBundle:MedicionDiariaTanque:delete }
+  methods: [DELETE]
+
+app.portadores.mediciones_diarias.recalcularConsumo:
+  path:     /mediciones_diarias/recalcularConsumo
+  defaults: { _controller: PortadoresBundle:MedicionDiariaTanque:recalcularConsumo }
+  methods: [POST]
+
+
+#=======================================================================================================================
+# Entradas/Salidas de Combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.entradas_salidas:
+  path:     /entradas_salidas
+  defaults: { _controller: PortadoresBundle:EntradaSalidaCombustible:view }
+  methods: [GET]
+  options:
+    text: Entradas/Salidas
+    module: Portadores
+    dropdown: [Portadores, Combustible]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listar entradas/salidas de combustible
+        files:
+          - bundles/portadores/js/entradasSalidasCombustible/entradasSalidasCombustibleController.js
+        dependencies:
+          - app.portadores.entradas_salidas.load
+          - app.portadores.tanques.loadTanques
+          - app.portadores.unidad.loadTree
+      Editar:
+        description: Editar las entradas/salidas de combustible
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/entradasSalidasCombustible/entradasSalidasCombustibleGestionar.js
+        dependencies:
+          - app.portadores.entradas_salidas.add
+          - app.portadores.entradas_salidas.upd
+          - app.portadores.entradas_salidas.del
+          - app.portadores.entradas_salidas.ultima_medida
+          - app.portadores.entradas_salidas.calcularNivel
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.entradas_salidas.load:
+  path:     /entradas_salidas/load
+  defaults: { _controller: PortadoresBundle:EntradaSalidaCombustible:load }
+  methods: [GET]
+
+app.portadores.entradas_salidas.ultima_medida:
+  path:     /entradas_salidas/ultima_medida
+  defaults: { _controller: PortadoresBundle:EntradaSalidaCombustible:ultimaMedida }
+  methods: [GET]
+
+app.portadores.entradas_salidas.add:
+  path:     /entradas_salidas/add
+  defaults: { _controller: PortadoresBundle:EntradaSalidaCombustible:add }
+  methods: [POST]
+
+app.portadores.entradas_salidas.upd:
+  path:     /entradas_salidas/upd
+  defaults: { _controller: PortadoresBundle:EntradaSalidaCombustible:upd }
+  methods: [PUT]
+
+app.portadores.entradas_salidas.del:
+  path:     /entradas_salidas/delete
+  defaults: { _controller: PortadoresBundle:EntradaSalidaCombustible:delete }
+  methods: [DELETE]
+
+app.portadores.entradas_salidas.calcularNivel:
+  path:     /entradas_salidas/calcularNivel
+  defaults: { _controller: PortadoresBundle:EntradaSalidaCombustible:calculateData }
+  methods: [POST]

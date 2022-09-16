@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'/>
+        <title>{% block title %}{{ app_name }}{% endblock %}</title>
+
+        {# https://gauger.io/fonticon/ (bug - rgba(189, 33, 48, 1))#}
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/ICO/favicon.ico') }}?skull" />
+
+        <!-- Stylesheets -->
+        <link rel='stylesheet' href="{{ asset(app.debug ? 'build/maintenance.css' : 'build/maintenance.min.css') }}" />
+    </head>
+
+    <body class="h-100 fixed-top">
+        <!-- Page content -->
+        <div class="d-flex flex-column justify-content-start h-100">
+            <nav class="navbar navbar-dark bg-dark p-1">
+                <a class="navbar-brand" href="{{ url('homepage') }}">
+                    <i class="fas fa-skull fa-fw text-danger"></i>
+                    {#<img alt="Brand" src="{{ asset('assets/img/old/brand_110x40.png') }}">#}
+                </a>
+            </nav>
+
+            <div class="d-flex flex-column h-75 w-75 justify-content-center text-center align-self-center">
+                <div class="border border-top-0 border-right-0 border-left-0 w-100">
+                    <h1 class="text-danger">Sitio en mantenimiento
+                        {#<strong class="text-muted" style="font-size: 40%">CÓDIGO 503</strong>#}
+                    </h1>
+                </div>
+                <div class="clock d-flex justify-content-center mt-5"></div>
+                <p>La página solicitada no está disponible temporalmente debido a labores de mantenimiento.</p>
+            </div>
+
+            <div class="mt-auto ">
+                <footer class="d-flex align-items-center p-1">
+                    <div class="d-flex justify-content-between w-100 pl-1 pr-1">
+                        <div class="">{{ app_owner }}</div>
+                        <div class="">&copy; {{ app_copyright }}</div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <!-- Javascripts -->
+        <script src="{{ asset(app.debug ? 'build/maintenance.js' : 'build/maintenance.min.js') }}"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                App.initialize({{ in_maintenance_until }});
+            });
+        </script>
+    </body>
+</html>

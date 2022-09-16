@@ -1,0 +1,635 @@
+#=======================================================================================================================
+# Tarjeta
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tarjeta:
+  path:     /tarjeta
+  defaults: { _controller: PortadoresBundle:Tarjeta:view }
+  methods: [GET]
+  options:
+    text: Tarjeta
+    module: Portadores
+    dropdown: Economía
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Tarjetas
+        files:
+        - bundles/portadores/js/tarjeta/tarjetaController.js
+        dependencies:
+        - app.portadores.tarjeta.loadTarjeta
+        - app.portadores.unidad.loadTree
+        - app.portadores.tarjeta.loadTarjetaVehiculo
+        - app.portadores.tarjeta.loadTarjetaPersona
+        - app.portadores.tarjeta.loadDispFincimex
+        - app.portadores.unidad.loadTree
+      Editar:
+        description: Editar las Tarjetas
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/tarjeta/tarjetaGestionar.js
+        dependencies:
+        - app.portadores.tipocombustible.loadCombo
+        - app.portadores.centrocosto.loadCombo
+        - app.portadores.caja.loadCajaCombo
+        - app.portadores.caja.loadRoot
+        - app.portadores.moneda.loadMoneda
+        - app.portadores.persona.loadCombo
+        - app.portadores.vehiculo.loadCombo
+        - app.portadores.tarjeta.loadbajasTarjeta
+        - app.portadores.chequeFincimex.load_saldoChequeFincimex
+        - app.portadores.tarjeta.addTarjeta
+        - app.portadores.tarjeta.modTarjeta
+        - app.portadores.tarjeta.darbajaTarjeta
+        - app.portadores.tarjeta.recargaTarjetas
+        - app.portadores.tarjeta.eliminarRecarga
+        - app.portadores.tarjeta.exportRecargaTarjeta
+        - app.portadores.tarjeta.historialTarjeta
+        - app.portadores.tarjeta.loadcanceladasTarjeta
+        - app.portadores.tarjeta.cancelTarjeta
+        - app.portadores.tarjeta.exportRecargaTarjeta
+        - app.portadores.tarjeta.addTarjetaVehiculo
+        - app.portadores.tarjeta.addTarjetaPersona
+        - app.portadores.tarjeta.delTarjetaPersona
+        - app.portadores.tarjeta.delTarjetaVehiculo
+        - app.portadores.tarjeta.exportRecargaTarjeta
+        - app.portadores.tarjeta.corregirTarjetas
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tarjeta.loadTarjeta:
+  path:     /tarjeta/loadTarjeta
+  defaults: { _controller: PortadoresBundle:Tarjeta:load }
+  methods: [GET]
+
+app.portadores.tarjeta.loadCombo:
+  path:     /tarjeta/loadCombo
+  defaults: { _controller: PortadoresBundle:Tarjeta:loadCombo }
+  methods: [GET]
+
+app.portadores.tarjeta.loadTarjetaVehiculo:
+  path:     /tarjeta/loadTarjetaVehiculo
+  defaults: { _controller: PortadoresBundle:Tarjeta:loadTarjetaVehiculo }
+  methods: [GET]
+
+app.portadores.tarjeta.loadTarjetaPersona:
+  path:     /tarjeta/loadTarjetaPersona
+  defaults: { _controller: PortadoresBundle:Tarjeta:loadTarjetaPersona }
+  methods: [GET]
+
+app.portadores.tarjeta.loadbajasTarjeta:
+  path:     /tarjeta/loadbajasTarjeta
+  defaults: { _controller: PortadoresBundle:Tarjeta:loadbajas }
+  methods: [GET]
+
+app.portadores.tarjeta.loadcanceladasTarjeta:
+  path:     /tarjeta/loadcanceladasTarjeta
+  defaults: { _controller: PortadoresBundle:Tarjeta:loadcanceladas }
+  methods: [GET]
+
+app.portadores.tarjeta.addTarjeta:
+  path:     /tarjeta/addTarjeta
+  defaults: { _controller: PortadoresBundle:Tarjeta:add }
+  methods: [GET, POST]
+
+app.portadores.tarjeta.modTarjeta:
+  path:     /tarjeta/modTarjeta
+  defaults: { _controller: PortadoresBundle:Tarjeta:mod }
+  methods: [GET, POST]
+
+app.portadores.tarjeta.darbajaTarjeta:
+  path:     /tarjeta/darbajaTarjeta
+  defaults: { _controller: PortadoresBundle:Tarjeta:darbaja }
+  methods: [POST]
+
+app.portadores.tarjeta.recargaTarjetas:
+  path:     /tarjeta/recargaTarjetas
+  defaults: { _controller: PortadoresBundle:Tarjeta:recargaTarjetas }
+  methods: [GET, POST]
+
+app.portadores.tarjeta.eliminarRecarga:
+  path:     /tarjeta/eliminarRecarga
+  defaults: { _controller: PortadoresBundle:Tarjeta:eliminarRecarga }
+  methods: [DELETE]
+
+app.portadores.tarjeta.exportRecargaTarjeta:
+  path:     /tarjeta/exportRecargaTarjeta
+  defaults: { _controller: PortadoresBundle:Tarjeta:exportRecarga }
+  methods: [GET]
+
+app.portadores.tarjeta.historialTarjeta:
+  path:     /tarjeta/historialTarjeta
+  defaults: { _controller: PortadoresBundle:Tarjeta:historialtarjeta }
+  methods: [GET]
+
+app.portadores.tarjeta.corregirTarjetas:
+  path:     /tarjeta/corregirTarjetas
+  defaults: { _controller: PortadoresBundle:Tarjeta:corregir }
+  methods: [GET, POST]
+
+app.portadores.tarjeta.cancelTarjeta:
+  path:     /tarjeta/cancelTarjeta
+  defaults: { _controller: PortadoresBundle:Tarjeta:canceltarjeta }
+  methods: [GET, POST]
+
+app.portadores.tarjeta.addTarjetaPersona:
+  path:     /tarjeta/addTarjetaPersona
+  defaults: { _controller: PortadoresBundle:Tarjeta:addTarjetaPersona }
+  methods: [GET, POST]
+
+app.portadores.tarjeta.delTarjetaPersona:
+  path:     /tarjeta/delTarjetaPersona
+  defaults: { _controller: PortadoresBundle:Tarjeta:delTarjetaPersona }
+  methods: [DELETE]
+
+app.portadores.tarjeta.addTarjetaVehiculo:
+  path:     /tarjeta/addTarjetaVehiculo
+  defaults: { _controller: PortadoresBundle:Tarjeta:addTarjetaVehiculo }
+  methods: [GET, POST]
+
+app.portadores.tarjeta.loadDispFincimex:
+  path:     /tarjeta/loadDispFincimex
+  defaults: { _controller: PortadoresBundle:Tarjeta:loadDispFincimex }
+  methods: [GET, POST]
+
+app.portadores.tarjeta.delTarjetaVehiculo:
+  path:     /tarjeta/delTarjetaVehiculo
+  defaults: { _controller: PortadoresBundle:Tarjeta:delTarjetaVehiculo }
+  methods: [DELETE]
+
+#=======================================================================================================================
+# Anticipo
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.anticipo:
+    path:     /anticipo
+    defaults: { _controller: PortadoresBundle:Anticipo:view }
+    methods: [GET]
+    options:
+        text: Anticipo y Liquidación
+        module: Portadores
+        dropdown: Economía
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de Anticipos
+                files:
+                - bundles/portadores/js/anticipo/anticipoController.js
+                dependencies:
+                - app.portadores.anticipo.loadAnticipo
+                - app.portadores.anticipo.loadAntRest
+                - app.portadores.anticipo.loadRecRest
+                - app.portadores.anticipo.loadLiqRest
+                - app.portadores.anticipo.loadAnticipoLiquidaciones
+                - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar Anticipos
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/anticipo/anticipoGestionar.js
+                dependencies:
+                - app.portadores.persona.loadCombo
+#                - app.portadores.vehiculo.loadCombo
+                - app.portadores.actividad.loadCombo
+                - app.portadores.tarjeta.recargaTarjetas
+                - app.portadores.tarjeta.exportRecargaTarjeta
+                - app.portadores.anticipo.loadTarjetaAnticipo
+                - app.portadores.anticipo.restaurar
+                - app.portadores.anticipo.restaurarRec
+                - app.portadores.anticipo.descartarAnt
+                - app.portadores.anticipo.descartarRec
+                - app.portadores.anticipo.modAntRest
+                - app.portadores.anticipo.desmarcarAnt
+                - app.portadores.anticipo.loadVehiculoAnticipo
+                - app.portadores.anticipo.loadTrabajoAnticipo
+                - app.portadores.familia.load
+                - app.portadores.anticipo.loadHistorialPrecioCombustible
+                - app.portadores.paralizacion.load
+                - app.portadores.centrocosto.loadCombo
+                - app.portadores.servicentro.load
+                - app.portadores.actividad.load
+                - app.portadores.anticipo.add
+                - app.portadores.anticipo.mod
+                - app.portadores.anticipo.del
+                - app.portadores.anticipo.addLiquidaciones
+                - app.portadores.anticipo.addLiqToRestore
+                - app.portadores.anticipo.addAnticipoLiquidaciones
+                - app.portadores.tarjeta.loadbajasTarjeta
+#                - app.portadores.anticipo.addLiquidaciones
+            Imprimir:
+                description: Imprime los Anticipos
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/anticipo/anticipoPrint.js
+                dependencies:
+                - app.portadores.anticipo.print
+                - app.portadores.anticipo.printSubmayor
+                - app.portadores.anticipo.toPDFAnticipo
+            Cerrar:
+                description: Cierra los Anticipos
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/anticipo/anticipoCerrar.js
+                dependencies:
+                - app.portadores.anticipo.cerrar
+            Liquidaciones:
+                description: Gestiona las liquidaciones del anticipo
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/anticipo/anticipoLiquidaciones.js
+                dependencies:
+                - app.portadores.anticipo.loadLiquidaciones
+                - app.portadores.anticipo.loadAnticipoLiquidaciones
+                - app.portadores.anticipo.addLiquidaciones
+                - app.portadores.anticipo.delLiquidacion
+                - app.portadores.anticipo.getCantLtsLiquidacionAnticipo
+                - app.portadores.anticipo.loadTarjetaCombo
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.anticipo.loadAnticipo:
+    path:     /anticipo/loadAnticipo
+    defaults: { _controller: PortadoresBundle:Anticipo:load }
+    methods: [GET]
+
+app.portadores.anticipo.loadAntRest:
+    path:     /anticipo/loadAntRest
+    defaults: { _controller: PortadoresBundle:Anticipo:loadAntRest }
+    methods: [GET]
+
+app.portadores.anticipo.loadRecRest:
+    path:     /anticipo/loadRecRest
+    defaults: { _controller: PortadoresBundle:Anticipo:loadRecRest }
+    methods: [GET]
+
+app.portadores.anticipo.loadLiqRest:
+    path:     /anticipo/loadLiqRest
+    defaults: { _controller: PortadoresBundle:Anticipo:loadLiqRest }
+    methods: [GET]
+
+app.portadores.anticipo.restaurar:
+    path:     /anticipo/restaurar
+    defaults: { _controller: PortadoresBundle:Anticipo:restaurar }
+    methods: [GET,POST]
+
+app.portadores.anticipo.modAntRest:
+    path:     /anticipo/modAntRest
+    defaults: { _controller: PortadoresBundle:Anticipo:modAntRest }
+    methods: [GET,POST]
+
+app.portadores.anticipo.restaurarRec:
+    path:     /anticipo/restaurarRec
+    defaults: { _controller: PortadoresBundle:Anticipo:restaurarRec }
+    methods: [GET,POST]
+
+app.portadores.anticipo.descartarAnt:
+    path:     /anticipo/descartarAnt
+    defaults: { _controller: PortadoresBundle:Anticipo:descartarAnt }
+    methods: [GET,POST]
+
+app.portadores.anticipo.desmarcarAnt:
+    path:     /anticipo/desmarcarAnt
+    defaults: { _controller: PortadoresBundle:Anticipo:desmarcarAnt }
+    methods: [GET,POST]
+
+app.portadores.anticipo.descartarRec:
+    path:     /anticipo/descartarRec
+    defaults: { _controller: PortadoresBundle:Anticipo:descartarRec }
+    methods: [GET,POST]
+
+app.portadores.anticipo.loadVehiculoAnticipo:
+    path:     /anticipo/loadVehiculoAnticipo
+    defaults: { _controller: PortadoresBundle:Anticipo:loadVehiculo }
+    methods: [GET]
+    options: {"expose": true}
+
+app.portadores.anticipo.loadTarjetaAnticipo:
+    path:     /anticipo/loadTarjetaAnticipo
+    defaults: { _controller: PortadoresBundle:Anticipo:loadTarjetaAnticipo }
+    methods: [GET]
+
+app.portadores.anticipo.loadTrabajoAnticipo:
+    path:     /anticipo/loadTrabajoAnticipo
+    defaults: { _controller: PortadoresBundle:Anticipo:loadTrabajoAnticipo }
+    methods: [GET]
+
+app.portadores.anticipo.loadCentroCostoAnticipo:
+    path:     /anticipo/loadCentroCostoAnticipo
+    defaults: { _controller: PortadoresBundle:Anticipo:loadCentroCostoAnticipo }
+    methods: [GET]
+
+app.portadores.anticipo.getCantLtsLiquidacionAnticipo:
+    path:     /anticipo/getCantLtsLiquidacionAnticipo
+    defaults: { _controller: PortadoresBundle:Anticipo:getCantLtsAnticipo }
+    methods: [GET]
+
+app.portadores.anticipo.loadLiquidaciones:
+    path:     /anticipo/loadLiquidaciones
+    defaults: { _controller: PortadoresBundle:Anticipo:loadLiquidaciones }
+    methods: [GET]
+
+app.portadores.anticipo.loadAnticipoLiquidaciones:
+    path:     /anticipo/loadAnticipoLiquidaciones
+    defaults: { _controller: PortadoresBundle:Anticipo:loadAnticipoLiquidaciones }
+    methods: [GET]
+
+app.portadores.anticipo.addLiquidaciones:
+    path:     /anticipo/addLiquidaciones
+    defaults: { _controller: PortadoresBundle:Anticipo:addLiquidaciones }
+    methods: [GET, POST]
+
+app.portadores.anticipo.addLiqToRestore:
+    path:     /anticipo/addLiqToRestore
+    defaults: { _controller: PortadoresBundle:Anticipo:addLiqToRestore }
+    methods: [GET, POST]
+
+app.portadores.anticipo.add:
+    path:     /anticipo/add
+    defaults: { _controller: PortadoresBundle:Anticipo:add }
+    methods: [GET, POST]
+
+app.portadores.anticipo.mod:
+    path:     /anticipo/mod
+    defaults: { _controller: PortadoresBundle:Anticipo:mod }
+    methods: [GET, POST]
+
+app.portadores.anticipo.del:
+    path:     /anticipo/del
+    defaults: { _controller: PortadoresBundle:Anticipo:del }
+    methods: [DELETE]
+
+app.portadores.anticipo.delLiquidacion:
+    path:     /anticipo/delLiquidacion
+    defaults: { _controller: PortadoresBundle:Anticipo:delLiquidacion }
+    methods: [DELETE]
+
+app.portadores.anticipo.cerrar:
+    path:     /anticipo/cerrar
+    defaults: { _controller: PortadoresBundle:Anticipo:cerrar }
+    methods: [GET, POST]
+
+app.portadores.anticipo.print:
+    path:     /anticipo/print
+    defaults: { _controller: PortadoresBundle:Anticipo:print }
+    methods: [GET]
+
+app.portadores.anticipo.toPDFAnticipo:
+    path:     /anticipo/toPDFAnticipo
+    defaults: { _controller: PortadoresBundle:Anticipo:toPDFAnticipo }
+    methods: [GET]
+
+app.portadores.anticipo.printSubmayor:
+    path:     /anticipo/printSubmayor
+    defaults: { _controller: PortadoresBundle:Anticipo:printSubmayor }
+    methods: [GET]
+
+app.portadores.anticipo.loadTarjetaCombo:
+    path:     /anticipo/loadTarjetaCombo
+    defaults: { _controller: PortadoresBundle:Anticipo:loadTarjetaCombo }
+    methods: [GET]
+
+app.portadores.anticipo.loadVehiculoCombo:
+    path:     /anticipo/loadVehiculoCombo
+    defaults: { _controller: PortadoresBundle:Anticipo:loadVehiculoCombo }
+    methods: [GET]
+    options: {"expose": true}
+
+#=======================================================================================================================
+# Entrega de Chips
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.chip:
+#    path:     /chip
+#    defaults: { _controller: PortadoresBundle:Anticipo:view }
+#    methods: [GET]
+#    options:
+#        text: Entrega de Chips
+#        module: Portadores
+#        dropdown: Economía
+#        #        dropdown_header: Seguridad
+#        resources:
+#            Listado:
+#                description: Listado de Entregas de Chips
+#                files:
+#                - bundles/portadores/js/chip/chipController.js
+#                dependencies:
+#                - app.portadores.unidad.loadTree
+#                - app.portadores.anticipo.loadLiquidaciones
+#                - app.portadores.anticipo.loadTarjetaAnticipoCombo
+#            Editar:
+#                description: Editar Entrega de Chips
+#                dependent_of: Listado
+#                files:
+#                - bundles/portadores/js/chip/chipGestionar.js
+#                dependencies:
+#                - app.portadores.servicentro.load
+#                - app.portadores.tipocombustible.loadCombo
+#                - app.portadores.chip.add
+#                - app.portadores.chip.mod
+#                - app.portadores.chip.del
+#            Imprimir:
+#                description: Imprime los Chips Entregados de una Tarjeta
+#                dependent_of: Listado
+#                files:
+#                - bundles/portadores/js/chip/chipPrint.js
+#                dependencies:
+#                - app.portadores.anticipo.loadTarjetaCombo
+#                - app.portadores.chip.print
+
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.chip.add:
+#    path:     /chip/add
+#    defaults: { _controller: PortadoresBundle:Anticipo:addChip }
+#    methods: [GET, POST]
+#
+#app.portadores.chip.mod:
+#    path:     /chip/mod
+#    defaults: { _controller: PortadoresBundle:Anticipo:modChip }
+#    methods: [GET, POST]
+#
+#app.portadores.chip.del:
+#  path:     /chip/del
+#  defaults: { _controller: PortadoresBundle:Anticipo:delChip }
+#  methods: [DELETE]
+#
+#app.portadores.chip.print:
+#    path:     /chip/print
+#    defaults: { _controller: PortadoresBundle:Anticipo:printEntrega }
+#    methods: [GET]
+#
+#app.portadores.anticipo.loadTarjetaAnticipoCombo:
+#  path:     /anticipo/loadTarjetaAnticipoCombo
+#  defaults: { _controller: PortadoresBundle:Anticipo:loadTarjetaAnticipoCombo }
+#  methods: [GET]
+
+#=======================================================================================================================
+# Comprobante - Recargas
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.comp_recarga:
+    path:     /comp_recarga
+    defaults: { _controller: PortadoresBundle:ComprobanteRecarga:view }
+    methods: [GET]
+    options:
+        text: Recargas
+        module: Portadores
+        dropdown: [Economía, Comprobante de Operaciones]
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Comprobante de operaciones recarga de tarjetas
+                files:
+                - bundles/portadores/js/comprobante_recarga/comprobante_recargaController.js
+                dependencies:
+                - app.portadores.comp_recarga.load
+                - app.portadores.comp_recarga.export
+                - app.portadores.moneda.loadMoneda
+                - app.portadores.unidad.loadTree
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.comp_recarga.load:
+    path:     /comp_recarga/load
+    defaults: { _controller: PortadoresBundle:ComprobanteRecarga:load }
+    methods: [GET, POST]
+
+app.portadores.comp_recarga.export:
+    path:     /comp_recarga/export
+    defaults: { _controller: PortadoresBundle:ComprobanteRecarga:export }
+    methods: [GET, POST]
+#=======================================================================================================================
+# Comprobante - Ant
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.comp_anticipo:
+    path:     /comp_anticipo
+    defaults: { _controller: PortadoresBundle:ComprobanteAnticipo:view }
+    methods: [GET]
+    options:
+        text: Anticipos
+        module: Portadores
+        dropdown: [Economía, Comprobante de Operaciones]
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Comprobante de operaciones para anticipos de combustible
+                files:
+                - bundles/portadores/js/comprobante_anticipo/comprobante_anticipoController.js
+                dependencies:
+                - app.portadores.comp_anticipo.load
+                - app.portadores.comp_anticipo.export
+                - app.portadores.moneda.loadMoneda
+                - app.portadores.unidad.loadTree
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.comp_anticipo.load:
+    path:     /comp_anticipo/load
+    defaults: { _controller: PortadoresBundle:ComprobanteAnticipo:load }
+    methods: [GET, POST]
+
+app.portadores.comp_anticipo.export:
+    path:     /comp_anticipo/export
+    defaults: { _controller: PortadoresBundle:ComprobanteAnticipo:export }
+    methods: [GET, POST]
+
+#=======================================================================================================================
+# Comprobante - Ant
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.comp_liq:
+    path:     /comp_liq
+    defaults: { _controller: PortadoresBundle:ComprobanteLiquidacion:view }
+    methods: [GET]
+    options:
+        text: Liquidaciones
+        module: Portadores
+        dropdown: [Economía, Comprobante de Operaciones]
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Comprobante de operaciones para liquidaciones de combustible
+                files:
+                - bundles/portadores/js/comprobante_liquidacion/comprobante_liquidacionController.js
+                dependencies:
+                - app.portadores.comp_liq.load
+                - app.portadores.comp_liq.export
+                - app.portadores.moneda.loadMoneda
+                - app.portadores.unidad.loadTree
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.comp_liq.load:
+    path:     /comp_liq/load
+    defaults: { _controller: PortadoresBundle:ComprobanteLiquidacion:load }
+    methods: [GET, POST]
+
+app.portadores.comp_liq.export:
+    path:     /comp_liq/export
+    defaults: { _controller: PortadoresBundle:ComprobanteLiquidacion:export }
+    methods: [GET, POST]
+
+#=======================================================================================================================
+# Acta de responsabilidad material
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.registroActaResp:
+    path:     /registroActaResp
+    defaults: { _controller: PortadoresBundle:RegistroActaResp:view }
+    methods: [GET]
+    options:
+        text: Acta de Responsabilidad Material
+        module: Portadores
+        dropdown: Economía
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de Actas de Responsabilidad Material
+                files:
+                - bundles/portadores/js/registroActaResp/registroActaRespController.js
+                dependencies:
+                - app.portadores.registroActaResp.loadRegistroActaResp
+                - app.portadores.unidad.loadTree
+                - app.portadores.registroActaResp.loadRegistroActaRespPersona
+                - app.portadores.registroActaResp.loadRegistroActaRespTarjetas
+            Editar:
+                description: Editar las Actas de Responsabilidad Material
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/registroActaResp/registroActaRespGestionar.js
+                dependencies:
+#                - app.portadores.registroActaResp.loadRegistroActaRespPersona
+#                - app.portadores.registroActaResp.loadRegistroActaRespTarjetas
+                - app.portadores.registroActaResp.addRegistroActaResp
+                - app.portadores.registroActaResp.modRegistroActaResp
+                - app.portadores.registroActaResp.delRegistroActaResp
+                - app.portadores.persona.loadCombo
+                - app.portadores.tarjeta.loadCombo
+            Imprimir:
+                description: Imprime las Actas de Responsabilidad Material
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/registroActaResp/registroActaRespImprimir.js
+                dependencies:
+                - app.portadores.registroActaResp.printRegistroActaResp
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.registroActaResp.loadRegistroActaResp:
+    path:     /registroActaResp/loadRegistroActaResp
+    defaults: { _controller: PortadoresBundle:RegistroActaResp:load }
+    methods: [GET]
+
+app.portadores.registroActaResp.loadRegistroActaRespPersona:
+    path:     /registroActaResp/loadRegistroActaRespPersona
+    defaults: { _controller: PortadoresBundle:RegistroActaResp:loadPersona }
+    methods: [GET]
+    options: {"expose": true}
+
+app.portadores.registroActaResp.loadRegistroActaRespTarjetas:
+    path:     /registroActaResp/loadRegistroActaRespTarjetas
+    defaults: { _controller: PortadoresBundle:RegistroActaResp:loadTarjetas }
+    methods: [GET]
+
+app.portadores.registroActaResp.addRegistroActaResp:
+    path:     /registroActaResp/addRegistroActaResp
+    defaults: { _controller: PortadoresBundle:RegistroActaResp:add }
+    methods: [GET, POST]
+
+app.portadores.registroActaResp.modRegistroActaResp:
+    path:     /registroActaResp/modRegistroActaResp
+    defaults: { _controller: PortadoresBundle:RegistroActaResp:mod }
+    methods: [GET, POST]
+
+app.portadores.registroActaResp.delRegistroActaResp:
+    path:     /registroActaResp/delRegistroActaResp
+    defaults: { _controller: PortadoresBundle:RegistroActaResp:del }
+    methods: [DELETE]
+
+app.portadores.registroActaResp.printRegistroActaResp:
+    path:     /registroActaResp/printRegistroActaResp
+    defaults: { _controller: PortadoresBundle:RegistroActaResp:print }
+    methods: [GET]

@@ -1,0 +1,18 @@
+1-)Mapear una tabla especifica de la BD
+	php app/console doctrine:mapping:import ContratacionBundle annotation --filter=proveedorNoEstatal --pg-strategy=table
+
+2-)Mapear toda la BD
+	php app/console doctrine:mapping:import (nombre del bundle donde se va a mapear) annotation --pg-strategy=table
+
+3-)generar los get y los set
+	3.1-)de una tabla en especifico
+		php app/console generate:doctrine:entities ContratacionBundle:ProveedorNoEstatal
+	3.2-)de todas las tablas
+		php app/console generate:doctrine:entities [nombre del bundle]
+		
+4-)poner la secuencia de las llaver primarias
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="MySecurity\MySecurityBundle\Util\CustomIdGenerator")
+		
+5-)Sincronizar la parte web
+	php app/console assets:install --symlink web

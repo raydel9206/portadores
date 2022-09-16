@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8' name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <title>{% block title %}{% if title is defined %}{{ title }}{% else %}{{ app_name }}{% endif %}{% endblock %}</title>
+
+        {# https://gauger.io/fonticon/ (bug - rgba(189, 33, 48, 1))#}
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/PNG/portadores e.png') }}?skull_v2" />
+
+        <!-- Stylesheets -->
+        <link rel='stylesheet' href="{{ asset(app.debug ? 'build/vendor.css' : 'build/vendor.min.css') }}" />
+        <link rel='stylesheet' href="{{ asset(app.debug ? 'assets/css/app.css' : 'build/app.min.css') }}" /> {# the generated file 'build/app.css' is not used directly so as not to compile it every time a change occurs. #}
+
+        {% block stylesheets %}
+            {% if stylesheets is defined %}
+                {% for stylesheet in stylesheets %}
+                    <link rel='stylesheet' href="{{ asset(stylesheet) }}"/>
+                {% endfor %}
+            {% endif %}
+        {% endblock %}
+    </head>
+
+    <body class="h-100 fixed-top">
+        <!-- Page content -->
+        <div class="d-flex flex-column justify-content-start h-100">
+            {% include 'fragments/navbar.html.twig' %}
+
+            {% block content %}
+                {% include 'fragments/content.html.twig' %}
+            {% endblock %}
+
+            {% include 'fragments/footer.html.twig' %}
+        </div>
+
+        <!-- Misc. -->
+        {% include 'fragments/spot.html.twig' %}
+        {% include 'fragments/about.html.twig' %}
+
+        <!-- Javascript -->
+        <script src="{{ asset('assets/vendor/highcharts@6.0.1/highcharts.js') }}"></script>
+        <script type="text/javascript" src="{{ asset(app.debug ? 'build/vendor.js' : 'build/vendor.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset(app.debug ? 'assets/js/app.js' : 'build/app.min.js') }}"></script> {# the generated file 'build/app.js' is not used directly so as not to compile it every time a change occurs. #}
+        {#<script src="{{ asset('assets/vendor/ext@6.2.0/ux/form/TreePicker.js') }}"></script> #}{# the generated file 'build/app.js' is not used directly so as not to compile it every time a change occurs. #}
+        {% if app.user %}
+            <script>
+                Ext.onReady(function () {
+                    App.initialize({{ app | load_data | raw }});
+                });
+            </script>
+        {% endif %}
+
+        {% block javascripts %}
+            {% if javascripts is defined %}
+                {% for script in javascripts %}
+                    <script src="{{ asset(script) }}"></script>
+                {% endfor %}
+            {% endif %}
+        {% endblock %}
+    </body>
+</html>

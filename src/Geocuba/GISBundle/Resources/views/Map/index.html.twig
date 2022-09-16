@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    {{ parent() }}
+
+    {# -------------------------------------------------------------------------------------------------------------- #}
+    <div id="toolbar_control" class="toolbar btn-group-vertical btn-group-sm mt-1 ml-1">
+        <div class="btn-group btn-group-vertical btn-group-sm" role="group">
+            <button id="list-layers" class="btn btn-info" title="Control de capas" data-placement="right" data-trigger="hover"><i class="fas fa-layer-group fa-lg"></i></button>
+        </div>
+        <div class="btn-group btn-group-vertical btn-group-sm mt-1" role="group">
+            <button id="zoom-in" class="btn btn-info" title="Acercar Mapa" data-placement="right" data-trigger="hover"><i class="fas fa-search-plus fa-lg"></i></button>
+            <button id="zoom-out" class="btn btn-info" title="Alejar Mapa" data-placement="right" data-trigger="hover"><i class="fas fa-search-minus fa-lg"></i></button>
+            <button id="zoom-reset" class="btn btn-info" title="Reestablecer Mapa" data-placement="right" data-trigger="hover"><i class="fas fa-arrows-alt fa-lg"></i></button>
+        </div>
+        <div class="btn-group btn-group-vertical btn-group-sm mt-1" role="group" hidden>
+            <button id="copy-clipboard" class="btn btn-info" title="TODO: clipboard" data-placement="right" data-trigger="hover" data-type="toggle"><i class="fas fa-crosshairs fa-lg"></i></button>
+        </div>
+        <div class="btn-group btn-group-vertical btn-group-sm mt-1" hidden role="group">
+            <button id="list-routes" class="btn btn-info" title="Mostrar Rutas" data-placement="right" data-trigger="hover" data-type="toggle"><i class="fas fa-draw-polygon fa-lg"></i></button>
+            <button id="add-route" class="btn btn-info" title="Crear Ruta" data-placement="right" data-trigger="hover" data-type="toggle"><i class="fas fa-route fa-lg"></i></button>
+        </div>
+        <div class="btn-group btn-group-vertical btn-group-sm mt-1" role="group">
+            <button id="add-point" class="btn btn-info" title="Insertar Punto de interés (POI)" data-placement="right" data-trigger="hover" data-type="toggle"><i class="fas fa-map-marked-alt fa-lg"></i></button>
+            <button id="del-point" class="btn btn-info" title="Eliminar Punto de interés (POI)" data-placement="right" data-trigger="hover" data-type="toggle">
+                <span class="fa-stack" style="font-size: 0.7em;">
+                    <i class="fas fa-map-marker-alt fa-stack-1x"></i>
+                    <i class="fas fa-ban fa-stack-2x"></i>
+                </span>
+            </button>
+        </div>
+        <div class="btn-group btn-group-vertical btn-group-sm mt-1" role="group">
+            <button id="list-tables" class="btn btn-info" title="Mostrar Tablas de distancia" data-placement="right" data-trigger="hover" data-type="toggle"><i class="fas fa-vector-square fa-lg"></i></button>
+            <button id="add-table" class="btn btn-info" title="Crear Tabla de distancia" data-placement="right" data-trigger="hover" data-type="toggle"><i class="fas fa-bezier-curve fa-lg"></i></button>
+        </div>
+    </div>
+    {# -------------------------------------------------------------------------------------------------------------- #}
+    <div id="logger_control" class="alert alert-info p-0 rounded-0">
+        <div class="px-2 py-1"></div>
+    </div>
+    {# -------------------------------------------------------------------------------------------------------------- #}
+    {# Overlays #}
+    <div id="tooltip_overlay" class="alert alert-info m-0 px-2 py-1" hidden></div>
+{% endblock %}
+
+{# ------------------------------------------------------------------------------------------------------------------ #}
+
+{% block stylesheets %}
+    <link rel='stylesheet' href="{{ asset('bundles/gis/vendor/' ~ ol_version ~ '/ol.css') }}"/>
+
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/gis/vendor/' ~ ol_version ~ '/ol.js') }}"></script>
+
+    {{ parent() }}
+
+    <script>
+        Ext.onReady(function () {
+            Map.initialize('{{ geoserver_url | raw }}', '{{ ol_version | raw }}');
+        });
+    </script>
+{% endblock %}

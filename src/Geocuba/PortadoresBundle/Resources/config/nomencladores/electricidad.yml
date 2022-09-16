@@ -1,0 +1,206 @@
+#=======================================================================================================================
+# Tarifa
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tarifa:
+    path:     /tarifa
+    defaults: { _controller: PortadoresBundle:Tarifa:view }
+    methods: [GET]
+    options:
+        text: Tarifa
+        module: Portadores
+        dropdown: [Datos Primarios, Electricidad]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de Tarifas
+                files:
+                    - bundles/portadores/js/tarifa/tarifaController.js
+                dependencies:
+                    - app.portadores.tarifa.load
+            Editar:
+                description: Editar las Tarifas
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/tarifa/tarifaGestionar.js
+                dependencies:
+                    - app.portadores.tarifa.add
+                    - app.portadores.tarifa.mod
+                    - app.portadores.tarifa.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tarifa.load:
+    path:     /tarifa/load
+    defaults: { _controller: PortadoresBundle:Tarifa:load }
+    methods: [GET]
+
+app.portadores.tarifa.add:
+    path:     /tarifa/add
+    defaults: { _controller: PortadoresBundle:Tarifa:add }
+    methods: [GET, POST]
+
+app.portadores.tarifa.mod:
+    path:     /tarifa/mod
+    defaults: { _controller: PortadoresBundle:Tarifa:mod }
+    methods: [GET, POST]
+
+app.portadores.tarifa.del:
+    path:     /tarifa/del
+    defaults: { _controller: PortadoresBundle:Tarifa:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Banco Transformadores
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.banco_transformadores:
+    path:     /banco_transformadores
+    defaults: { _controller: PortadoresBundle:BancoTransformadores:view }
+    methods: [GET]
+    options:
+        text: Banco Transformadores
+        module: Portadores
+        dropdown: [Datos Primarios, Electricidad]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de Bancos Transformadores
+                files:
+                    - bundles/portadores/js/bancoTransformadores/bancoTransformadoresController.js
+                dependencies:
+                    - app.portadores.banco_transformadores.load
+            Editar:
+                description: Editar los Bancos Transformadores
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/bancoTransformadores/bancoTransformadoresGestionar.js
+                dependencies:
+                    - app.portadores.banco_transformadores.add
+                    - app.portadores.banco_transformadores.mod
+                    - app.portadores.banco_transformadores.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.banco_transformadores.load:
+    path:     /banco_transformadores/load
+    defaults: { _controller: PortadoresBundle:BancoTransformadores:load }
+    methods: [GET]
+
+app.portadores.banco_transformadores.add:
+    path:     /banco_transformadores/add
+    defaults: { _controller: PortadoresBundle:BancoTransformadores:add }
+    methods: [GET, POST]
+
+app.portadores.banco_transformadores.mod:
+    path:     /banco_transformadores/mod
+    defaults: { _controller: PortadoresBundle:BancoTransformadores:mod }
+    methods: [GET, POST]
+
+app.portadores.banco_transformadores.del:
+    path:     /banco_transformadores/del
+    defaults: { _controller: PortadoresBundle:BancoTransformadores:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Turno
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.turno:
+    path:     /turno
+    defaults: { _controller: PortadoresBundle:TurnoTrabajo:view }
+    methods: [GET]
+    options:
+        text: Turno de Trabajo
+        module: Portadores
+        dropdown: [Datos Primarios, Electricidad]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de Turnos de Trabajo
+                files:
+                    - bundles/portadores/js/turnotrabajo/turnotrabajoController.js
+                dependencies:
+                    - app.portadores.turno.load
+            Editar:
+                description: Editar los Turnos de Trabajo
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/turnotrabajo/turnotrabajoGestionar.js
+                dependencies:
+                    - app.portadores.turno.add
+                    - app.portadores.turno.mod
+                    - app.portadores.turno.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.turno.load:
+    path:     /turno/load
+    defaults: { _controller: PortadoresBundle:TurnoTrabajo:load }
+    methods: [GET]
+
+app.portadores.turno.add:
+    path:     /turno/add
+    defaults: { _controller: PortadoresBundle:TurnoTrabajo:add }
+    methods: [GET, POST]
+
+app.portadores.turno.mod:
+    path:     /turno/mod
+    defaults: { _controller: PortadoresBundle:TurnoTrabajo:mod }
+    methods: [GET, POST]
+
+app.portadores.turno.del:
+    path:     /turno/del
+    defaults: { _controller: PortadoresBundle:TurnoTrabajo:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Servicio
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.servicio:
+    path:     /servicio
+    defaults: { _controller: PortadoresBundle:Servicio:view }
+    methods: [GET]
+    options:
+        text: Servicio
+        module: Portadores
+        dropdown: [Datos Primarios, Electricidad]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de Servicios
+                files:
+                    - bundles/portadores/js/servicio/servicioController.js
+                dependencies:
+                    - app.portadores.servicio.load
+                    - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar los Servicios
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/servicio/servicioGestionar.js
+                dependencies:
+                    - app.portadores.provincia.list
+                    - app.portadores.municipio.listMunicipio
+                    - app.portadores.turno.load
+                    - app.portadores.tarifa.load
+                    - app.portadores.actividad.load
+                    - app.portadores.banco_transformadores.load
+                    - app.portadores.servicio.add
+                    - app.portadores.servicio.mod
+                    - app.portadores.servicio.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.servicio.load:
+    path:     /servicio/load
+    defaults: { _controller: PortadoresBundle:Servicio:load }
+    methods: [GET]
+
+app.portadores.servicio.add:
+    path:     /servicio/add
+    defaults: { _controller: PortadoresBundle:Servicio:add }
+    methods: [GET, POST]
+
+app.portadores.servicio.mod:
+    path:     /servicio/mod
+    defaults: { _controller: PortadoresBundle:Servicio:mod }
+    methods: [GET, POST]
+
+app.portadores.servicio.del:
+    path:     /servicio/del
+    defaults: { _controller: PortadoresBundle:Servicio:del }
+    methods: [DELETE]

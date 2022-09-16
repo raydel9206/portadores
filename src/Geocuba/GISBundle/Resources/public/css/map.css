@@ -1,0 +1,40 @@
+.ol-scale-line, .ol-mouse-position {
+    /*background: rgba(0, 60, 136, .5);*/
+    background: #17a2b8;
+    bottom: -50px;
+}
+
+.ol-scale-line-inner {
+    color: rgb(255, 255, 255);
+}
+
+.ol-mouse-position {
+    /*background: rgba(0, 60, 136, .5);*/
+    /*background: #17a2b8;*/
+    border-radius: 4px;
+    /*bottom: 8px;*/
+    padding: 4px;
+    top: auto;
+    right: 8px;
+    position: absolute;
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    text-align: center;
+    margin: 1px;
+}
+
+#toolbar_control {
+    top: 8px;
+    left: -50px;
+    position: absolute;
+}
+
+#logger_control {
+    top: 8px;
+    /*right: 8px;*/
+    right: -200px;
+    position: absolute;
+    /*font-size: .875rem;*/
+    font-size: 90%;
+    /*display: none;*/
+}

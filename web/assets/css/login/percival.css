@@ -1,0 +1,54 @@
+body > div {
+    position: absolute;
+}
+
+.gradient1 {
+    background: linear-gradient(to right, #556270, #4ECDC4);
+}
+
+.gradient2 {
+    background: linear-gradient(to left, #E5E5BE, #003973);
+}
+
+.gradient3 {
+    background: linear-gradient(to left, #E7E9BB, #403B4A);
+}
+
+.gradient4 {
+    background: linear-gradient(to left, #E4E5E6, #00416A);
+}
+
+@font-face {
+    font-family: 'Amaranth';
+    src: url('../../fonts/Amaranth-Regular.otf') ;
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Amaranth';
+    src: url('../../fonts/Amaranth-Italic.otf') ;
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Amaranth';
+    src: url('../../fonts/Amaranth-Bold.otf') ;
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Amaranth';
+    src: url('../../fonts/Amaranth-BoldItalic.otf');
+    font-weight: bold;
+    font-style: italic;
+}
+
+label, button {
+    font-family: "Amaranth", sans-serif !important;
+    font-size: 1rem !important;
+    font-weight: normal !important;
+    /*font-style: italic !important;*/
+}

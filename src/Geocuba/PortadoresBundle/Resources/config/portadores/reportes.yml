@@ -1,0 +1,160 @@
+#=======================================================================================================================
+# CDA001
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.cda001:
+    path:     /cda001
+    defaults: { _controller: PortadoresBundle:CDA001:view }
+    methods: [GET]
+    options:
+        text: CDA001
+        module: Portadores
+        dropdown: Portadores
+#        dropdown_header: Electricidad
+        resources:
+            Listado:
+                description: CDA001
+                files:
+                    - bundles/portadores/js/cda001/cda001Controller.js
+                dependencies:
+                    - app.portadores.cda001.load
+                    - app.portadores.unidad.loadTree
+                    - app.portadores.portador.load
+            Editar:
+                description: Editar Modelo CDA001
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/cda001/cda001Gestionar.js
+                dependencies:
+                    - app.portadores.actividad.load
+                    - app.portadores.cda001.generar
+                    - app.portadores.cda001.guardarCambios
+                    - app.portadores.cda001.print
+                    - app.portadores.cda001.export
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.cda001.load:
+    path:     /cda001/load
+    defaults: { _controller: PortadoresBundle:CDA001:load }
+    methods: [GET]
+
+app.portadores.cda001.print:
+    path:     /cda001/print
+    defaults: { _controller: PortadoresBundle:CDA001:print }
+    methods: [GET]
+
+app.portadores.cda001.guardarCambios:
+    path:     /cda001/guardarCambios
+    defaults: { _controller: PortadoresBundle:CDA001:guardarCambios }
+    methods: [GET]
+
+app.portadores.cda001.generar:
+    path:     /cda001/generar
+    defaults: { _controller: PortadoresBundle:CDA001:generar }
+    methods: [GET]
+
+app.portadores.cda001.export:
+    path:     /cda001/export
+    defaults: { _controller: PortadoresBundle:CDA001:export }
+    methods: [GET]
+
+#=======================================================================================================================
+# CDA002
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.cda002:
+    path:     /cda002
+    defaults: { _controller: PortadoresBundle:CDA002:view }
+    methods: [GET]
+    options:
+        text: CDA002
+        module: Portadores
+        dropdown: Portadores
+#        dropdown_header: Electricidad
+        resources:
+            Listado:
+                description: CDA002
+                files:
+                    - bundles/portadores/js/cda002/cda002Controller.js
+                dependencies:
+                    - app.portadores.cda002.load
+                    - app.portadores.unidad.loadTree
+                    - app.portadores.portador.load
+            Exportar:
+                description: Exportar Modelo CDA002
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/cda002/cda002Gestionar.js
+                dependencies:
+                    - app.portadores.actividad.loadCombo
+                    - app.portadores.cda002.generar
+                    - app.portadores.cda002.guardarCambios
+                    - app.portadores.cda002.print
+                    - app.portadores.cda002.export
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.cda002.load:
+    path:     /cda002/load
+    defaults: { _controller: PortadoresBundle:CDA002:load }
+    methods: [GET]
+
+app.portadores.cda002.print:
+    path:     /cda002/print
+    defaults: { _controller: PortadoresBundle:CDA002:print }
+    methods: [GET]
+
+app.portadores.cda002.generar:
+    path:     /cda002/generar
+    defaults: { _controller: PortadoresBundle:CDA002:generar }
+    methods: [GET]
+
+app.portadores.cda002.export:
+    path:     /cda002/export
+    defaults: { _controller: PortadoresBundle:CDA002:export }
+    methods: [GET]
+
+#=======================================================================================================================
+# Modelo 5073
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.modelo5073:
+    path:     /modelo5073
+    defaults: { _controller: PortadoresBundle:Modelo5073:view }
+    methods: [GET]
+    options:
+        text: Modelo 5073
+        module: Portadores
+        dropdown: [Portadores, Información 5073]
+#        dropdown_header: Electricidad
+        resources:
+            Listado:
+                description: Modelo 5073
+                files:
+                    - bundles/portadores/js/modelo5073/modelo5073Controller.js
+                dependencies:
+                    - app.portadores.modelo5073.load
+                    - app.portadores.unidad.loadTree
+            Exportar:
+                description: Exportar Modelo 5073
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/modelo5073/modelo5073Exportar.js
+                dependencies:
+                    - app.portadores.modelo5073.print
+                    - app.portadores.modelo5073.export
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.modelo5073.load:
+    path:     /modelo5073/load
+    defaults: { _controller: PortadoresBundle:Modelo5073:load }
+    methods: [GET]
+
+app.portadores.modelo5073.print:
+    path:     /modelo5073/print
+    defaults: { _controller: PortadoresBundle:Modelo5073:print }
+    methods: [GET]
+
+app.portadores.modelo5073.export:
+    path:     /modelo5073/export
+    defaults: { _controller: PortadoresBundle:Modelo5073:export }
+    methods: [GET]
+
+
+

@@ -1,0 +1,154 @@
+parameters:
+    app_name: Portadores
+    app_prefix: app.
+    app_version: '1.0'
+    app_owner: 'Grupo Empresarial GEOCUBA'
+    app_copyright: '2019 Agencia Soluciones Informáticas, GEOCUBA Pinar del Río'
+
+
+    # Load minified CSS and JS files for each BUNDLE
+    # $ php bin\console app:minify <BUNDLENAME>
+    # $ php bin\console app:jsqueeze <BUNDLENAME>
+    minified_files: false
+
+    # The interval in seconds for querying notifications. (5 min by default)
+    notifications_interval: 300
+
+    # The timeout in seconds for inactivity. (10 min by default)
+    session_timeout: 600
+
+    # The timeout in seconds for Ajax requests. (10 min by default) (ExtJS defaults is 30000 ms (30 sec))
+    ajax_timeout: 600
+
+    # ExtJS version: ext@5.1.1.451 | ext@6.2.0.981    (Si se cambia la versión entonces se TIENE que actualizar 'extjs_toolkit' y 'extjs_theme'.)
+    extjs_version: ext@5.1.1.451
+#    extjs_version: ext@6.2.0.981
+#    extjs_version: ext@6.2.0
+
+    # ExtJS toolkit (only for ExtJS 6.x)
+    #   ExtJS 5.1.1.451: ~
+    #   ExtJS 6.2.0.981: classic | modern
+    extjs_toolkit: ~
+#    extjs_toolkit: classic
+
+    # ExtJS theme:
+    #   ExtJS 5.1.1.451: ext-theme-crisp | ext-theme-neptune | my-custom-theme
+    #   ExtJS 6.2.0.981 (classic): theme-crisp | theme-gray | theme-neptune | theme-triton
+    extjs_theme: ext-theme-crisp
+#    extjs_theme: theme-neptune
+
+    # http://www.4webhelp.net/us/timestamp.php
+    # $ php app\console cache:clear --env=prod
+    in_maintenance: false
+    invalidate_session_in_maintenance: false
+    in_maintenance_until: 1592508656 #2020-06-18 23:59:59
+
+    # Modificar el campo 'activo' de una entidad a FALSE se considera un evento 'DELETE'
+    audited_entities:
+        - Geocuba\AdminBundle\Entity\Grupo
+        - Geocuba\AdminBundle\Entity\Usuario
+        - Geocuba\PortadoresBundle\Entity\Familia
+        - Geocuba\PortadoresBundle\Entity\Moneda
+        - Geocuba\PortadoresBundle\Entity\Anticipo
+        - Geocuba\PortadoresBundle\Entity\Autolecturaprepago
+        - Geocuba\PortadoresBundle\Entity\AutolecturaTresescalas
+        - Geocuba\PortadoresBundle\Entity\Vehiculo
+        - Geocuba\PortadoresBundle\Entity\Tarjeta
+        - Geocuba\PortadoresBundle\Entity\Liquidacion
+        - Geocuba\PortadoresBundle\Entity\LiquidacionesEliminadas
+        - Geocuba\PortadoresBundle\Entity\AnticiposEliminados
+        - Geocuba\PortadoresBundle\Entity\Asignacion
+        - Geocuba\PortadoresBundle\Entity\DemandaCombustible
+        - Geocuba\PortadoresBundle\Entity\DistribucionCombustible
+        - Geocuba\PortadoresBundle\Entity\DistribucionCombustibleDesglose
+        - Geocuba\PortadoresBundle\Entity\DistribucionCombustibleDesgloseEdit
+        - Geocuba\PortadoresBundle\Entity\RegistroCombustible
+        - Geocuba\PortadoresBundle\Entity\Portador
+        - Geocuba\PortadoresBundle\Entity\TipoCombustible
+        - Geocuba\PortadoresBundle\Entity\RegistroCombustibleAnalisis
+
+    # TEMA de la página de acceso (login).
+    # DEV: 'app/Resources/views/fragments/login/<login_theme>.html.twig' | 'web/assets/css/<login_theme>.css' | 'web/assets/js/<login_theme>.js'
+    # PROD: 'app/Resources/views/fragments/login/<login_theme>.html.twig' | 'build/login/<login_theme>/<login_theme>.css' | 'build/login/<login_theme>/<login_theme>.js' (require $ gulp build-login-theme --compressed)
+    # Temas: default, percival, laika
+    login_theme: 'default'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: true
+
+    #-------------------------------------------------------------------------------------------------------------------
+
+    app.listener.authentication_handler:
+        class: Geocuba\AdminBundle\EventListener\AuthenticationHandler
+        arguments: ["@router", "@logger", "@security.token_storage", "@translator", "@app.service.security"]
+
+    app.listener.user_checker:
+        class: Geocuba\AdminBundle\EventListener\UserChecker
+        arguments: ["@service_container"]
+
+    app.listener.request_handler:
+        class: Geocuba\AdminBundle\EventListener\RequestHandler
+        arguments: ["@session", "@logger", "@security.token_storage", "@app.service.security", "@app.service.notifier", "@service_container", "@templating"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
+    app.listener.view_handler:
+        class: Geocuba\AdminBundle\EventListener\KernelViewHandler
+        arguments: ["@logger", "@security.token_storage", "@app.service.security", "@templating", "@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onView }
+
+    #-------------------------------------------------------------------------------------------------------------------
+
+    app.service.security:
+        class: Geocuba\AdminBundle\Service\SecurityService
+        arguments: ["@router", "@doctrine.orm.entity_manager", "@security.token_storage", "@logger", "@session", "@app.service.notifier" , '%app_prefix%', '%minified_files%']
+
+    app.service.notifier:
+        class: Geocuba\AdminBundle\Service\NotifierService
+        arguments: ["@doctrine.orm.entity_manager", "@security.token_storage", "@logger"]
+
+    #-------------------------------------------------------------------------------------------------------------------
+
+    app.twig.extension.filter.session_data:
+        class: Geocuba\AdminBundle\Twig\LoadSessionDataFilterExtension
+        public: false
+        arguments: ["@router", "@logger", "@app.service.notifier", "@service_container"]
+        tags:
+            - { name: twig.extension }
+
+    app.twig.extension.globals:
+        class: Geocuba\AdminBundle\Twig\RegisterGlobalsExtension
+        public: false
+        arguments: ["@service_container"]
+        tags:
+            - { name: twig.extension }
+
+    #-------------------------------------------------------------------------------------------------------------------
+
+    app.listener.doctrine_event:
+        class: Geocuba\AdminBundle\EventListener\DoctrineEventsSuscriber
+        arguments: ["@logger", "@security.token_storage", "@request_stack", "%audited_entities%"]
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    #-------------------------------------------------------------------------------------------------------------------
+
+    AdminBundle\Command\:
+        resource: 'Geocuba\AdminBundle\Command*'
+        tags: ['console.command']
+
+    #-------------------------------------------------------------------------------------------------------------------
+
+    app.service.file.helper:
+        class: Geocuba\AdminBundle\Service\FileHelperService
+        arguments: ["@service_container"]
+

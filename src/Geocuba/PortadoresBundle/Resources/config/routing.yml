@@ -1,0 +1,82 @@
+#Nomencladores
+estructura:
+    resource: "@PortadoresBundle/Resources/config/nomencladores/estructura.yml"
+    prefix:   /
+
+gestion:
+    resource: "@PortadoresBundle/Resources/config/nomencladores/gestion.yml"
+    prefix:   /
+
+ntransporte:
+    resource: "@PortadoresBundle/Resources/config/nomencladores/transporte.yml"
+    prefix:   /
+
+neconomia:
+    resource: "@PortadoresBundle/Resources/config/nomencladores/economia.yml"
+    prefix:   /
+
+nelectricidad:
+    resource: "@PortadoresBundle/Resources/config/nomencladores/electricidad.yml"
+    prefix:   /
+
+#Portadores
+portadores_combustible:
+    resource: "@PortadoresBundle/Resources/config/portadores/combustible.yml"
+    prefix:   /
+
+portadores_electricidad:
+    resource: "@PortadoresBundle/Resources/config/portadores/electricidad.yml"
+    prefix:   /
+
+#Transporte
+transporte:
+    resource: "@PortadoresBundle/Resources/config/transporte/transporte.yml"
+    prefix:   /
+
+#Economia
+economia:
+    resource: "@PortadoresBundle/Resources/config/economia/economia.yml"
+    prefix:   /
+
+#Electricidad
+electricidad:
+    resource: "@PortadoresBundle/Resources/config/electricidad/electricidad.yml"
+    prefix:   /
+
+tiro_directo:
+    resource: "@PortadoresBundle/Resources/config/tiro_directo/tiro_directo.yml"
+    prefix: /
+
+#Reportes
+resportes_portador:
+    resource: "@PortadoresBundle/Resources/config/reportes/portadores.yml"
+    prefix:   /
+
+resportes_combustible:
+    resource: "@PortadoresBundle/Resources/config/reportes/combustible.yml"
+    prefix:   /
+
+resportes_transporte:
+    resource: "@PortadoresBundle/Resources/config/reportes/transporte.yml"
+    prefix:   /
+
+#Utiles
+global.portadores.utiles.cambiarPeriodo:
+    path:     /utiles/cambiarPeriodo
+    defaults: { _controller: PortadoresBundle:Utiles:cambiarPeriodo }
+    methods: [GET,POST]
+
+global.portadores.utiles.getCurrentPeriodo:
+    path:     /utiles/getCurrentPeriodo
+    defaults: { _controller: PortadoresBundle:Utiles:getCurrentPeriodo }
+    methods: [GET,POST]
+
+global.portadores.utiles.cerrarPeriodo:
+    path:     /utiles/cerrarPeriodo
+    defaults: { _controller: PortadoresBundle:Utiles:cerrarPeriodo }
+    methods: [GET,POST]
+
+global.portadores.utiles.loadTree:
+    path:     /utiles/loadTree
+    defaults: { _controller: PortadoresBundle:Utiles:loadTree }
+    methods: [GET,POST]

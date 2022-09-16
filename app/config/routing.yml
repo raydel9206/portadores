@@ -1,0 +1,75 @@
+homepage:
+    path: /
+    defaults: { _controller: AdminBundle:Default:view }
+
+login:
+    path: /login
+    defaults: { _controller: AdminBundle:Default:login }
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+
+
+
+#=======================================================================================================================
+# Global
+#-----------------------------------------------------------------------------------------------------------------------
+global.help:
+    path: /help{page}
+    defaults: { _controller: AdminBundle:Default:help, page: .+}
+    requirements:
+        page: .+
+    methods: [GET]
+
+global.notificacion.list:
+    path:     /notificacion/list
+    defaults: { _controller: AdminBundle:Notificacion:list }
+    methods: [GET]
+
+global.notificacion.read:
+    path:     /notification/read
+    defaults: { _controller: AdminBundle:Notificacion:read }
+    methods: [GET, POST]
+
+# Only for dev!!!
+global.routes.reload:
+    path:     /routes/reload
+    defaults: { _controller: AdminBundle:Default:reloadRoutes }
+    methods: [POST]
+
+# Only for dev!!!
+global.maintenance:
+    path:     /_maintenance
+    defaults: { _controller: AdminBundle:Default:showMaintenance }
+    methods: [GET]
+
+# Only for dev!!!
+global.docs.fontawesome:
+    path:     /_docs/fontawesome
+    defaults: { _controller: AdminBundle:Default:loadFontAwesomeIcons }
+    methods: [GET]
+
+#=======================================================================================================================
+# Bundles
+#-----------------------------------------------------------------------------------------------------------------------
+portadores:
+    resource: "@PortadoresBundle/Resources/config/routing.yml"
+    prefix:   /portadores
+
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+#gis:
+#    resource: "@GISBundle/Resources/config/routing.yml"
+#    prefix:   /gis
+
+soporte:
+    resource: "@SoporteBundle/Resources/config/routing.yml"
+    prefix:   /soporte
+
+
+

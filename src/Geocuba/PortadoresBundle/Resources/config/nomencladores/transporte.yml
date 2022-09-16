@@ -1,0 +1,461 @@
+#=======================================================================================================================
+# Denominación de la Técnica
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.denominacionvehiculo:
+  path:     /denominacionvehiculo
+  defaults: { _controller: PortadoresBundle:DenominacionVehiculo:view }
+  methods: [GET]
+  options:
+    text: Denominación de la Técnica
+    module: Portadores
+    dropdown: [Datos Primarios, Transporte]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Denominaciones de la Técnica
+        files:
+        - bundles/portadores/js/denominacionVehiculo/denominacionVehiculoController.js
+        dependencies:
+        - app.portadores.denominacionvehiculo.load
+      Editar:
+        description: Editar las denominaciones de la Técnica
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/denominacionVehiculo/denominacionVehiculoGestionar.js
+        dependencies:
+        - app.portadores.denominacionvehiculo.add
+        - app.portadores.denominacionvehiculo.upd
+        - app.portadores.denominacionvehiculo.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.denominacionvehiculo.load:
+  path:     /denominacionvehiculo/load
+  defaults: { _controller: PortadoresBundle:DenominacionVehiculo:load }
+  methods: [GET]
+
+app.portadores.denominacionvehiculo.loadCombo:
+  path:     /denominacionvehiculo/loadCombo
+  defaults: { _controller: PortadoresBundle:DenominacionVehiculo:loadCombo }
+  methods: [GET]
+
+app.portadores.denominacionvehiculo.add:
+  path:     /denominacionvehiculo/add
+  defaults: { _controller: PortadoresBundle:DenominacionVehiculo:add }
+  methods: [GET, POST]
+
+app.portadores.denominacionvehiculo.upd:
+  path:     /denominacionvehiculo/upd
+  defaults: { _controller: PortadoresBundle:DenominacionVehiculo:mod }
+  methods: [GET, POST]
+
+app.portadores.denominacionvehiculo.del:
+  path:     /denominacionvehiculo/del
+  defaults: { _controller: PortadoresBundle:DenominacionVehiculo:del }
+  methods: [DELETE]
+
+
+#=======================================================================================================================
+# Marcas y Modelos
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.marcavehiculo:
+  path:     /marcavehiculo
+  defaults: { _controller: PortadoresBundle:MarcaVehiculo:view }
+  methods: [GET]
+  options:
+    text: Marcas y Modelos
+    module: Portadores
+    dropdown: [Datos Primarios, Transporte]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Marcas
+        files:
+        - bundles/portadores/js/marcaVehiculo/marcaVehiculoController.js
+        dependencies:
+        - app.portadores.marcavehiculo.load
+        - app.portadores.modelovehiculo.load
+      Editar:
+        description: Editar las marcas y modelos de los vehículos
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/marcaVehiculo/marcaVehiculoGestionar.js
+        dependencies:
+        - app.portadores.marcavehiculo.add
+        - app.portadores.marcavehiculo.upd
+        - app.portadores.marcavehiculo.del
+        - app.portadores.modelovehiculo.add
+        - app.portadores.modelovehiculo.upd
+        - app.portadores.modelovehiculo.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.marcavehiculo.load:
+  path:     /marcavehiculo/load
+  defaults: { _controller: PortadoresBundle:MarcaVehiculo:load }
+  methods: [GET]
+
+app.portadores.marcavehiculo.loadCombo:
+  path:     /marcavehiculo/loadCombo
+  defaults: { _controller: PortadoresBundle:MarcaVehiculo:loadCombo }
+  methods: [GET]
+
+app.portadores.marcavehiculo.add:
+  path:     /marcavehiculo/add
+  defaults: { _controller: PortadoresBundle:MarcaVehiculo:add }
+  methods: [GET, POST]
+
+app.portadores.marcavehiculo.upd:
+  path:     /marcavehiculo/upd
+  defaults: { _controller: PortadoresBundle:MarcaVehiculo:upd }
+  methods: [GET, POST]
+
+app.portadores.marcavehiculo.del:
+  path:     /marcavehiculo/del
+  defaults: { _controller: PortadoresBundle:MarcaVehiculo:del }
+  methods: [DELETE]
+
+app.portadores.modelovehiculo.load:
+  path:     /modelovehiculo/load
+  defaults: { _controller: PortadoresBundle:ModeloVehiculo:load }
+  methods: [GET]
+
+app.portadores.modelovehiculo.loadCombo:
+  path:     /modelovehiculo/loadCombo
+  defaults: { _controller: PortadoresBundle:ModeloVehiculo:loadCombo }
+  methods: [GET]
+
+app.portadores.modelovehiculo.add:
+  path:     /modelovehiculo/add
+  defaults: { _controller: PortadoresBundle:ModeloVehiculo:add }
+  methods: [GET, POST]
+
+app.portadores.modelovehiculo.upd:
+  path:     /modelovehiculo/upd
+  defaults: { _controller: PortadoresBundle:ModeloVehiculo:upd }
+  methods: [GET, POST]
+
+app.portadores.modelovehiculo.del:
+  path:     /modelovehiculo/del
+  defaults: { _controller: PortadoresBundle:ModeloVehiculo:del }
+  methods: [DELETE]
+
+#=======================================================================================================================
+# Estado Técnico
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.estadotecnico:
+  path:     /estadotecnico
+  defaults: { _controller: PortadoresBundle:EstadoTecnico:view }
+  methods: [GET]
+  options:
+    text: Estado Técnico
+    module: Portadores
+    dropdown: [Datos Primarios, Transporte]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Estados Técnicos
+        files:
+        - bundles/portadores/js/estadoTecnico/estadoTecnicoController.js
+        dependencies:
+        - app.portadores.estadotecnico.load
+      Editar:
+        description: Editar los estados técnicos
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/estadoTecnico/estadoTecnicoGestionar.js
+        dependencies:
+        - app.portadores.estadotecnico.add
+        - app.portadores.estadotecnico.upd
+        - app.portadores.estadotecnico.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.estadotecnico.load:
+  path:     /estadotecnico/load
+  defaults: { _controller: PortadoresBundle:EstadoTecnico:load }
+  methods: [GET]
+
+app.portadores.estadotecnico.add:
+  path:     /estadotecnico/add
+  defaults: { _controller: PortadoresBundle:EstadoTecnico:add }
+  methods: [GET, POST]
+
+app.portadores.estadotecnico.upd:
+  path:     /estadotecnico/upd
+  defaults: { _controller: PortadoresBundle:EstadoTecnico:upd }
+  methods: [GET, POST]
+
+app.portadores.estadotecnico.del:
+  path:     /estadotecnico/del
+  defaults: { _controller: PortadoresBundle:EstadoTecnico:del }
+  methods: [DELETE]
+
+#=======================================================================================================================
+# Tipo de Mantenimiento
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tipoMantenimiento:
+  path:     /tipoMantenimiento
+  defaults: { _controller: PortadoresBundle:TipoMantenimiento:view }
+  methods: [GET]
+  options:
+    text: Tipo de Mantenimiento
+    module: Portadores
+    dropdown: [Datos Primarios, Transporte]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listado de Tipos de Mantenimiento
+        files:
+        - bundles/portadores/js/tipoMantenimiento/tipoMantenimientoController.js
+        dependencies:
+        - app.portadores.estadotecnico.loadTipoMantenimiento
+        - app.portadores.tipoMantenimiento.loadTipoMantenimiento
+        - app.portadores.tipoMantenimiento.loadTipoMantenimientoCombo
+      Editar:
+        description: Editar los Tipos de Mantenimiento
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/tipoMantenimiento/tipoMantenimientoGestionar.js
+        dependencies:
+        - app.portadores.tipoMantenimiento.addTipoMantenimiento
+        - app.portadores.tipoMantenimiento.modTipoMantenimiento
+        - app.portadores.tipoMantenimiento.delTipoMantenimiento
+        - app.portadores.tipoMantenimiento.loadNormaMarca
+        - app.portadores.tipoMantenimiento.loadTipoMantenimientoClasificacion
+        - app.portadores.tipoMantenimiento.modMarcaNorma
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tipoMantenimiento.loadTipoMantenimiento:
+  path:     /tipoMantenimiento/loadTipoMantenimiento
+  defaults: { _controller: PortadoresBundle:TipoMantenimiento:load }
+  methods: [GET]
+
+app.portadores.tipoMantenimiento.loadTipoMantenimientoCombo:
+  path:     /tipoMantenimiento/loadTipoMantenimientoCombo
+  defaults: { _controller: PortadoresBundle:TipoMantenimiento:loadCombo }
+  methods: [GET]
+
+app.portadores.tipoMantenimiento.loadNormaMarca:
+  path:     /tipoMantenimiento/loadNormaMarca
+  defaults: { _controller: PortadoresBundle:TipoMantenimiento:loadNormaMarca }
+  methods: [GET,POST]
+
+app.portadores.tipoMantenimiento.loadTipoMantenimientoClasificacion:
+  path:     /tipoMantenimiento/loadTipoMantenimientoClasificacion
+  defaults: { _controller: PortadoresBundle:TipoMantenimiento:loadTipoMantenimientoClasificacion }
+  methods: [GET]
+
+app.portadores.tipoMantenimiento.addTipoMantenimiento:
+  path:     /tipoMantenimiento/addTipoMantenimiento
+  defaults: { _controller: PortadoresBundle:TipoMantenimiento:add }
+  methods: [GET, POST]
+
+app.portadores.tipoMantenimiento.modTipoMantenimiento:
+  path:     /tipoMantenimiento/modTipoMantenimiento
+  defaults: { _controller: PortadoresBundle:TipoMantenimiento:mod }
+  methods: [GET, POST]
+
+app.portadores.tipoMantenimiento.delTipoMantenimiento:
+  path:     /tipoMantenimiento/delTipoMantenimiento
+  defaults: { _controller: PortadoresBundle:TipoMantenimiento:del }
+  methods: [DELETE]
+
+app.portadores.tipoMantenimiento.modMarcaNorma:
+  path:     /tipoMantenimiento/modMarcaNorma
+  defaults: { _controller: PortadoresBundle:TipoMantenimiento:modMarcaNorma }
+  methods: [GET, POST]
+
+#=======================================================================================================================
+# Vehiculo
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.vehiculo:
+    path:     /vehiculo
+    defaults: { _controller: PortadoresBundle:Vehiculo:view }
+    methods: [GET]
+    options:
+        text: Técnica general
+        module: Portadores
+        dropdown: [Datos Primarios, Transporte]
+#        dropdown_header: Gestión
+        resources:
+            Listado:
+                description: Listado de la Técnica
+                files:
+                    - bundles/portadores/js/vehiculo/vehiculoController.js
+                dependencies:
+                    - app.portadores.vehiculo.load
+                    - app.portadores.vehiculo.asignacion.load
+                    - app.portadores.vehiculo.mantenimiento.load
+                    - app.portadores.denominacionvehiculo.loadCombo
+                    - app.portadores.producto.loadCombo
+                    - app.portadores.vehiculo.readyTraslate
+                    - app.portadores.vehiculo.listTraslate
+                    - app.portadores.tipocombustible.load
+                    - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar la Técnica
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/vehiculo/vehiculoGestionar.js
+                dependencies:
+                    - app.portadores.vehiculo.add
+                    - app.portadores.vehiculo.mod
+                    - app.portadores.vehiculo.del
+                    - app.portadores.vehiculo.printPage
+                    - app.portadores.vehiculo.trasladar
+                    - app.portadores.vehiculo.printAll
+                    - app.portadores.vehiculo.asignacion.add
+                    - app.portadores.vehiculo.asignacion.mod
+                    - app.portadores.vehiculo.confirmarTraslate
+                    - app.portadores.vehiculo.asignacion.del
+                    - app.portadores.vehiculo.mantenimiento.add
+                    - app.portadores.vehiculo.mantenimiento.mod
+                    - app.portadores.vehiculo.mantenimiento.del
+                    - app.portadores.persona.loadCombo
+                    - app.portadores.marcavehiculo.loadCombo
+                    - app.portadores.modelovehiculo.loadCombo
+                    - app.portadores.tipocombustible.load
+                    - app.portadores.estadotecnico.load
+                    - app.portadores.actividad.loadCombo
+                    - app.portadores.denominacionvehiculo.loadCombo
+                    - app.portadores.tipoMantenimiento.loadTipoMantenimientoCombo
+                    - app.portadores.area.loadArea
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.vehiculo.load:
+    path:     /vehiculo/load
+    defaults: { _controller: PortadoresBundle:Vehiculo:load }
+    methods: [GET]
+
+app.portadores.vehiculo.loadCombo:
+    path:     /vehiculo/loadCombo
+    defaults: { _controller: PortadoresBundle:Vehiculo:loadCombo }
+    methods: [GET]
+
+app.portadores.vehiculo.add:
+    path:     /vehiculo/add
+    defaults: { _controller: PortadoresBundle:Vehiculo:add }
+    methods: [GET, POST]
+
+app.portadores.vehiculo.mod:
+    path:     /vehiculo/mod
+    defaults: { _controller: PortadoresBundle:Vehiculo:mod }
+    methods: [GET, POST]
+
+app.portadores.vehiculo.confirmarTraslate:
+    path:     /vehiculo/confirmarTraslate
+    defaults: { _controller: PortadoresBundle:Vehiculo:confirmarTraslate }
+    methods: [GET, POST]
+
+app.portadores.vehiculo.readyTraslate:
+    path:     /vehiculo/readyTraslate
+    defaults: { _controller: PortadoresBundle:Vehiculo:readyTraslate }
+    methods: [GET]
+
+app.portadores.vehiculo.listTraslate:
+    path:     /vehiculo/listTraslate
+    defaults: { _controller: PortadoresBundle:Vehiculo:listTraslate }
+    methods: [GET]
+
+app.portadores.vehiculo.del:
+    path:     /vehiculo/del
+    defaults: { _controller: PortadoresBundle:Vehiculo:del }
+    methods: [DELETE]
+
+app.portadores.vehiculo.printPage:
+    path:     /vehiculo/printPage
+    defaults: { _controller: PortadoresBundle:Vehiculo:printPage }
+    methods: [GET, POST]
+
+app.portadores.vehiculo.trasladar:
+    path:     /vehiculo/trasladar
+    defaults: { _controller: PortadoresBundle:Vehiculo:trasladar }
+    methods: [GET, POST]
+
+app.portadores.vehiculo.printAll:
+    path:     /vehiculo/printAll
+    defaults: { _controller: PortadoresBundle:Vehiculo:printAll }
+    methods: [GET, POST]
+
+app.portadores.vehiculo.asignacion.load:
+    path:     /vehiculo/asignacion/load
+    defaults: { _controller: PortadoresBundle:Vehiculo:loadAsignacionVehiculo }
+    methods: [GET]
+
+app.portadores.vehiculo.asignacion.add:
+    path:     /vehiculo/asignacion/add
+    defaults: { _controller: PortadoresBundle:Vehiculo:addAsignacionVehiculo }
+    methods: [GET, POST]
+
+app.portadores.vehiculo.asignacion.mod:
+    path:     /vehiculo/asignacion/mod
+    defaults: { _controller: PortadoresBundle:Vehiculo:modAsignacionVehiculo }
+    methods: [GET, POST]
+
+app.portadores.vehiculo.asignacion.del:
+    path:     /vehiculo/asignacion/del
+    defaults: { _controller: PortadoresBundle:Vehiculo:delAsignacionVehiculo }
+    methods: [DELETE]
+
+app.portadores.vehiculo.mantenimiento.load:
+    path:     /vehiculo/mantenimiento/load
+    defaults: { _controller: PortadoresBundle:Vehiculo:loadMantenimiento }
+    methods: [GET]
+
+app.portadores.vehiculo.mantenimiento.add:
+    path:     /vehiculo/mantenimiento/add
+    defaults: { _controller: PortadoresBundle:Vehiculo:addMantenimiento }
+    methods: [GET, POST]
+
+app.portadores.vehiculo.mantenimiento.mod:
+    path:     /vehiculo/mantenimiento/mod
+    defaults: { _controller: PortadoresBundle:Vehiculo:modMantenimiento }
+    methods: [GET, POST]
+
+app.portadores.vehiculo.mantenimiento.del:
+    path:     /vehiculo/mantenimiento/del
+    defaults: { _controller: PortadoresBundle:Vehiculo:delMantenimiento }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Pieza
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.pieza:
+#  path:     /pieza
+#  defaults: { _controller: PortadoresBundle:Pieza:view }
+#  methods: [GET]
+#  options:
+#    text: Pieza
+#    module: Portadores
+#    dropdown: [Datos Primarios, Transporte]
+#    #        dropdown_header: Seguridad
+#    resources:
+#      Listado:
+#        description: Listado de Piezas
+#        files:
+#        - bundles/portadores/js/pieza/piezaController.js
+#        dependencies:
+#        - app.portadores.pieza.load
+#      Editar:
+#        description: Editar las Piezas
+#        dependent_of: Listado
+#        files:
+#        - bundles/portadores/js/pieza/piezaGestionar.js
+#        dependencies:
+#        - app.portadores.pieza.add
+#        - app.portadores.pieza.mod
+#        - app.portadores.pieza.del
+#
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.pieza.load:
+#  path:     /pieza/load
+#  defaults: { _controller: PortadoresBundle:Pieza:load }
+#  methods: [GET]
+#
+#app.portadores.pieza.add:
+#  path:     /pieza/add
+#  defaults: { _controller: PortadoresBundle:Pieza:add }
+#  methods: [GET, POST]
+#
+#app.portadores.pieza.mod:
+#  path:     /pieza/mod
+#  defaults: { _controller: PortadoresBundle:Pieza:mod }
+#  methods: [GET, POST]
+#
+#app.portadores.pieza.del:
+#  path:     /pieza/del
+#  defaults: { _controller: PortadoresBundle:Pieza:del }
+#  methods: [DELETE]

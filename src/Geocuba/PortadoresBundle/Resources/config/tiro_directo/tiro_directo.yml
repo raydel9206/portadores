@@ -1,0 +1,7 @@
+tanques:
+  resource: "@PortadoresBundle/Resources/config/tiro_directo/tanques.yml"
+  prefix: /
+
+equipos_tecnologicos:
+  resource: "@PortadoresBundle/Resources/config/tiro_directo/equipos_tecnologicos.yml"
+  prefix: /

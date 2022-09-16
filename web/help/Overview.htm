@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="generator" content="Adobe RoboHelp 2017" />
+<title>Overview</title>
+
+<script type="text/javascript" language="JavaScript">
+//<![CDATA[
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//]]>
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute;
+left:0px;
+top:0px;
+z-index:4;
+visibility:hidden; }
+p.WebHelpNavBar { text-align:right; }
+-->
+</style>
+
+<script type="text/javascript" src="template/scripts/rh.min.js"></script>
+<script type="text/javascript" src="template/scripts/common.min.js"></script>
+<script type="text/javascript" src="template/scripts/topic.min.js"></script>
+<script type="text/javascript" src="template/scripts/constants.js"></script>
+<script type="text/javascript" src="template/scripts/utils.js"></script>
+<script type="text/javascript" src="template/scripts/mhutils.js"></script>
+<script type="text/javascript" src="template/scripts/mhlang.js"></script>
+<script type="text/javascript" src="template/scripts/mhver.js"></script>
+<script type="text/javascript" src="template/scripts/settings.js"></script>
+<script type="text/javascript" src="template/scripts/XmlJsReader.js"></script>
+<script type="text/javascript" src="template/scripts/loadparentdata.js"></script>
+<script type="text/javascript" src="template/scripts/loadscreen.js"></script>
+<script type="text/javascript" src="template/scripts/loadprojdata.js"></script>
+<script type="text/javascript" src="template/scripts/mhtopic.js"></script>
+ <link rel="stylesheet" type="text/css" href="template/styles/widgets.min.css">
+ <link rel="stylesheet" type="text/css" href="template/styles/topic.min.css">
+<script type="text/javascript" >
+gRootRelPath = ".";
+gCommonRootRelPath = ".";
+gTopicId = "";
+</script>
+</head>
+
+<body>
+<script type="text/javascript" src="./ehlpdhtm.js"></script>
+
+<h1>erview</h1>
+<p>This project is a Template that may be used to create help for an application 
+ that is used across the internet.</p>
+<p>Before embarking on an application help project, you may wish to review 
+ the Adobe Developer Center. The following link should display an article 
+ devoted to creating this type of help. Preview this topic and <a href="http://www.adobe.com/devnet/robohelp/articles/online_help.html" 
+	 target="_blank">Click here to view the article.</a> (Internet connection 
+ is required)</p>
+<p>It is worth noting that there is nothing mysterious about creating such 
+ help systems. The process is identical to creating help for an application 
+ that runs on the local PC. The same topics are used. The same Table of 
+ Contents, Index, Search and Glossary are presented. The only real difference 
+ is that the help exists on a web server as opposed to the local file system. 
+ The other main difference is that for locally installed help, the output 
+ is typically a single file with a .CHM file extension while WebHelp exists 
+ as many files and folders with different file extensions.</p>
+<p>The authoring process is nearly identical. The main difference occurs 
+ when it is time to make the output available. Consider the table below:</p>
+<table class="MyStyle" cellspacing="0">
+	<col />
+	<col />
+	<tr class="t1st">
+		<td style="border: Solid 1px #000000;" bgcolor="#C0C0C0"><p style="font-weight: bold;">Locally 
+		 installed help</p></td>
+		<td style="border-top: Solid 1px #000000; border-right: Solid 1px #000000; 
+			 border-bottom: Solid 1px #000000;" bgcolor="#C0C0C0"><p style="font-weight: bold;">WebHelp 
+		 on a server</p></td>
+	</tr>
+	<tr class="t2Row">
+		<td style="border-left: Solid 1px #000000; border-right: Solid 1px #000000; 
+			 border-bottom: Solid 1px #000000;"><p>Author content using 
+		 RoboHelp</p></td>
+		<td style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;"><p>Author 
+		 content using RoboHelp</p></td>
+	</tr>
+	<tr class="t1Row">
+		<td style="border-left: Solid 1px #000000; border-right: Solid 1px #000000; 
+			 border-bottom: Solid 1px #000000;"><p>Assign topics to appropriate 
+		 identifiers</p></td>
+		<td style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;"><p>Choose 
+		 mapping type:</p>
+		<ul style="list-style: disc;">
+			<li><p>Simple URL</p></li>
+			<li><p>Map IDs</p></li>
+		</ul></td>
+	</tr>
+	<tr class="t2Row">
+		<td style="border-left: Solid 1px #000000; border-right: Solid 1px #000000; 
+			 border-bottom: Solid 1px #000000;"><p>Compile content to package 
+		 in a single .CHM file.</p></td>
+		<td style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;"><p>Generate 
+		 WebHelp output to create all the output files</p></td>
+	</tr>
+	<tr class="t1Row">
+		<td style="border-left: Solid 1px #000000; border-right: Solid 1px #000000; 
+			 border-bottom: Solid 1px #000000;"><p>Make .CHM available 
+		 to build team</p></td>
+		<td style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;"><p>Place 
+		 contents of WebHelp output folders on Web Server</p></td>
+	</tr>
+</table>
+<p>There is often confusion over what needs to happen to get the WebHelp 
+ to the server. Exactly how that happens will depend on the way it is done 
+ at your company.</p>
+<p>For example, you may find that you are supposed to copy the WebHelp 
+ files and folders to a known location determined by your IT staff or Web 
+ Development team. A third party is then notified. That party then takes 
+ over and copies the files to the Web Server.</p>
+<p>Or you may be given direct access to the Web Server. In this case, you 
+ have full ability to copy the WebHelp files directly from the output folder 
+ on your PC to the Web Server location.</p>
+</body>
+</html>

@@ -1,0 +1,602 @@
+#=======================================================================================================================
+# Denominaciones Tecnologicas
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.denominaciones_tecn:
+  path:     /denominaciones_tecn
+  defaults: { _controller: PortadoresBundle:DenominacionTecnologica:view }
+  methods: [GET]
+  options:
+    text: Denominaciones tecnólogicas
+    module: Portadores
+    dropdown: [Datos Primarios, Equipos Tecnológicos]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listar Denominaciones tecnólogicas
+        files:
+          - bundles/portadores/js/denominacionesTecn/denominacionesTecnController.js
+        dependencies:
+          - app.portadores.denominaciones_tecn.load
+      Editar:
+        description: Editar las Denominaciones tecnólogicas
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/denominacionesTecn/denominacionesTecnGestionar.js
+        dependencies:
+          - app.portadores.denominaciones_tecn.add
+          - app.portadores.denominaciones_tecn.upd
+          - app.portadores.denominaciones_tecn.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.denominaciones_tecn.load:
+  path:     /denominaciones_tecn/load
+  defaults: { _controller: PortadoresBundle:DenominacionTecnologica:load }
+  methods: [GET]
+
+app.portadores.denominaciones_tecn.add:
+  path:     /denominaciones_tecn/add
+  defaults: { _controller: PortadoresBundle:DenominacionTecnologica:add }
+  methods: [POST]
+
+app.portadores.denominaciones_tecn.upd:
+  path:     /denominaciones_tecn/upd
+  defaults: { _controller: PortadoresBundle:DenominacionTecnologica:upd }
+  methods: [PUT]
+
+app.portadores.denominaciones_tecn.del:
+  path:     /denominaciones_tecn/delete
+  defaults: { _controller: PortadoresBundle:DenominacionTecnologica:del }
+  methods: [DELETE]
+
+
+#=======================================================================================================================
+# Marcas Tecnologicas
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.marcas_tecn:
+  path:     /marcas_tecn
+  defaults: { _controller: PortadoresBundle:MarcaTecnologica:view }
+  methods: [GET]
+  options:
+    text: Marcas y Modelos tecnólogicos
+    module: Portadores
+    dropdown: [Datos Primarios, Equipos Tecnológicos]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listar marcas y modelos tecnólogicos
+        files:
+          - bundles/portadores/js/marcasTecn/marcasTecnController.js
+        dependencies:
+          - app.portadores.marcas_tecn.load
+          - app.portadores.modelos_tecn.load
+      Editar:
+        description: Editar marcas y modelos tecnólogicos
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/marcasTecn/marcasTecnGestionar.js
+        dependencies:
+          - app.portadores.marcas_tecn.add
+          - app.portadores.marcas_tecn.upd
+          - app.portadores.marcas_tecn.del
+          - app.portadores.modelos_tecn.add
+          - app.portadores.modelos_tecn.upd
+          - app.portadores.modelos_tecn.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.marcas_tecn.load:
+  path:     /marcas_tecn/load
+  defaults: { _controller: PortadoresBundle:MarcaTecnologica:load }
+  methods: [GET]
+
+app.portadores.marcas_tecn.add:
+  path:     /marcas_tecn/add
+  defaults: { _controller: PortadoresBundle:MarcaTecnologica:add }
+  methods: [POST]
+
+app.portadores.marcas_tecn.upd:
+  path:     /marcas_tecn/upd
+  defaults: { _controller: PortadoresBundle:MarcaTecnologica:upd }
+  methods: [PUT]
+
+app.portadores.marcas_tecn.del:
+  path:     /marcas_tecn/delete
+  defaults: { _controller: PortadoresBundle:MarcaTecnologica:del }
+  methods: [DELETE]
+
+#=======================================================================================================================
+# Modelos Tecnologicos
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.modelos_tecn.load:
+  path:     /modelos_tecn/load
+  defaults: { _controller: PortadoresBundle:ModeloTecnologico:load }
+  methods: [GET]
+
+app.portadores.modelos_tecn.add:
+  path:     /modelos_tecn/add
+  defaults: { _controller: PortadoresBundle:ModeloTecnologico:add }
+  methods: [POST]
+
+app.portadores.modelos_tecn.upd:
+  path:     /modelos_tecn/upd
+  defaults: { _controller: PortadoresBundle:ModeloTecnologico:upd }
+  methods: [PUT]
+
+app.portadores.modelos_tecn.del:
+  path:     /modelos_tecn/delete
+  defaults: { _controller: PortadoresBundle:ModeloTecnologico:del }
+  methods: [DELETE]
+
+#=======================================================================================================================
+# Equipos Tecnologicos
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.equipos_tecn:
+  path:     /equipos_tecn
+  defaults: { _controller: PortadoresBundle:EquipoTecnologico:view }
+  methods: [GET]
+  options:
+    text: Equipos
+    module: Portadores
+    dropdown: [Datos Primarios, Equipos Tecnológicos]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listar equipos tecnólogicos
+        files:
+          - bundles/portadores/js/equiposTecn/equiposTecnController.js
+        dependencies:
+          - app.portadores.equipos_tecn.load
+          - app.portadores.unidad.loadTree
+          - app.portadores.modelos_tecn.load
+          - app.portadores.marcas_tecn.load
+          - app.portadores.denominaciones_tecn.load
+          - app.portadores.actividad.loadCombo
+          - app.portadores.tipocombustible.loadCombo
+      Editar:
+        description: Editar equipos tecnólogicos
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/equiposTecn/equiposTecnGestionar.js
+        dependencies:
+          - app.portadores.equipos_tecn.add
+          - app.portadores.equipos_tecn.upd
+          - app.portadores.equipos_tecn.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.equipos_tecn.load:
+  path:     /equipos_tecn/load
+  defaults: { _controller: PortadoresBundle:EquipoTecnologico:load }
+  methods: [GET]
+
+app.portadores.equipos_tecn.add:
+  path:     /equipos_tecn/add
+  defaults: { _controller: PortadoresBundle:EquipoTecnologico:add }
+  methods: [POST]
+
+app.portadores.equipos_tecn.upd:
+  path:     /equipos_tecn/upd
+  defaults: { _controller: PortadoresBundle:EquipoTecnologico:upd }
+  methods: [PUT]
+
+app.portadores.equipos_tecn.del:
+  path:     /equipos_tecn/delete
+  defaults: { _controller: PortadoresBundle:EquipoTecnologico:delete }
+  methods: [DELETE]
+
+
+#=======================================================================================================================
+# Registro Operaciones
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.registro_operaciones:
+  path:     /registro_operaciones
+  defaults: { _controller: PortadoresBundle:RegistroOperaciones:view }
+  methods: [GET]
+  options:
+    text: Registro Operaciones
+    module: Portadores
+    dropdown: Equipos Tecnológicos
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listar registro de operaciones
+        files:
+          - bundles/portadores/js/registroOperaciones/registroOperacionesController.js
+        dependencies:
+          - app.portadores.registro_operaciones.load
+          - app.portadores.unidad.loadTree
+          - app.portadores.equipos_tecn.load
+          - app.portadores.actividad.loadCombo
+      Editar:
+        description: Editar equipos tecnólogicos
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/registroOperaciones/registroOperacionesGestionar.js
+        dependencies:
+          - app.portadores.registro_operaciones.add
+          - app.portadores.registro_operaciones.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.registro_operaciones.load:
+  path:     /registro_operaciones/load
+  defaults: { _controller: PortadoresBundle:RegistroOperaciones:load }
+  methods: [GET]
+
+app.portadores.registro_operaciones.add:
+  path:     /registro_operaciones/add
+  defaults: { _controller: PortadoresBundle:RegistroOperaciones:add }
+  methods: [POST]
+
+app.portadores.registro_operaciones.del:
+  path:     /registro_operaciones/delete
+  defaults: { _controller: PortadoresBundle:RegistroOperaciones:delete }
+  methods: [DELETE]
+
+
+#=======================================================================================================================
+# Planificacion de Combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.planificacion_combustible_tecn:
+  path:     /planificacion_combustible_tecn
+  defaults: { _controller: PortadoresBundle:PlanificacionCombustibleTecn:view }
+  methods: [GET]
+  options:
+    text: Planificación
+    module: Portadores
+    dropdown: [Portadores, Combustible]
+    dropdown_header: Equipos Tecnológicos
+    resources:
+      Listado:
+        description: Listar planificación de combustible de equipos tecnológicos
+        files:
+          - bundles/portadores/js/planificacionCombustibleTecn/planificacionCombustibleTecnController.js
+        dependencies:
+          - app.portadores.planificacion_combustible_tecn.load
+          - app.portadores.unidad.loadTree
+          - app.portadores.tipocombustible.loadCombo
+      Editar:
+        description: Editar planificación de combustible
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/planificacionCombustibleTecn/planificacionCombustibleTecnGestionar.js
+        dependencies:
+          - app.portadores.planificacion_combustible_tecn.generate
+          - app.portadores.planificacion_combustible_tecn.save
+          - app.portadores.planificacion_combustible_tecn.aprobar
+          - app.portadores.planificacion_combustible_tecn.desaprobar
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.planificacion_combustible_tecn.load:
+  path:     /planificacion_combustible_tecn/load
+  defaults: { _controller: PortadoresBundle:PlanificacionCombustibleTecn:load }
+  methods: [GET]
+
+app.portadores.planificacion_combustible_tecn.generate:
+  path:     /planificacion_combustible_tecn/generate
+  defaults: { _controller: PortadoresBundle:PlanificacionCombustibleTecn:generate }
+  methods: [POST]
+
+app.portadores.planificacion_combustible_tecn.save:
+  path:     /planificacion_combustible_tecn/save
+  defaults: { _controller: PortadoresBundle:PlanificacionCombustibleTecn:save }
+  methods: [PUT]
+
+app.portadores.planificacion_combustible_tecn.aprobar:
+  path:     /planificacion_combustible_tecn/aprobar
+  defaults: { _controller: PortadoresBundle:PlanificacionCombustibleTecn:aprobar }
+  methods: [PUT]
+
+app.portadores.planificacion_combustible_tecn.desaprobar:
+  path:     /planificacion_combustible_tecn/desaprobar
+  defaults: { _controller: PortadoresBundle:PlanificacionCombustibleTecn:desaprobar }
+  methods: [PUT]
+
+
+#=======================================================================================================================
+# Asignacion de Combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.asignacion_tecnologicos:
+  path:     /asignacion_tecnologicos
+  defaults: { _controller: PortadoresBundle:AsignacionTecnologicos:view }
+  methods: [GET]
+  options:
+    text: Asignación
+    module: Portadores
+    dropdown: [Portadores, Combustible]
+    resources:
+      Listado:
+        description: Listar asignaciones de combustible para equipos tecnológicos
+        files:
+          - bundles/portadores/js/asignacionTecnologicos/asignacionTecnologicosController.js
+        dependencies:
+          - app.portadores.asignacion_tecnologicos.load
+          - app.portadores.unidad.loadTree
+          - app.portadores.tipocombustible.loadCombo
+      Editar:
+        description: Editar asignaciones de combustible para equipos tecnológicos
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/asignacionTecnologicos/asignacionTecnologicosGestionar.js
+        dependencies:
+          - app.portadores.asignacion_tecnologicos.add
+          - app.portadores.asignacion_tecnologicos.upd
+          - app.portadores.asignacion_tecnologicos.delete
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.asignacion_tecnologicos.load:
+  path:     /asignacion_tecnologicos/load
+  defaults: { _controller: PortadoresBundle:AsignacionTecnologicos:load }
+  methods: [GET]
+
+app.portadores.asignacion_tecnologicos.add:
+  path:     /asignacion_tecnologicos/add
+  defaults: { _controller: PortadoresBundle:AsignacionTecnologicos:add }
+  methods: [POST]
+
+app.portadores.asignacion_tecnologicos.upd:
+  path:     /asignacion_tecnologicos/upd
+  defaults: { _controller: PortadoresBundle:AsignacionTecnologicos:upd }
+  methods: [PUT]
+
+app.portadores.asignacion_tecnologicos.delete:
+  path:     /asignacion_tecnologicos/delete
+  defaults: { _controller: PortadoresBundle:AsignacionTecnologicos:delete }
+  methods: [DELETE]
+
+
+#=======================================================================================================================
+# Distribucion de Combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.distribucion_tecnologicos:
+  path:     /distribucion_tecnologicos
+  defaults: { _controller: PortadoresBundle:DistribucionCombustibleTecnologicos:view }
+  methods: [GET]
+  options:
+    text: Distribución
+    module: Portadores
+    dropdown: [Portadores, Combustible]
+    resources:
+      Listado:
+        description: Listar distribuciones de combustible para equipos tecnológicos
+        files:
+          - bundles/portadores/js/distribucionCombustibleTecnologicos/distribucionCombustibleTecnologicosController.js
+        dependencies:
+          - app.portadores.distribucion_tecnologicos.load
+          - app.portadores.unidad.loadTree
+          - app.portadores.tipocombustible.loadCombo
+      Editar:
+        description: Editar distribuciones de combustible para equipos tecnológicos
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/distribucionCombustibleTecnologicos/distribucionCombustibleTecnologicosGestionar.js
+        dependencies:
+          - app.portadores.distribucion_tecnologicos.generate
+          - app.portadores.distribucion_tecnologicos.save
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.distribucion_tecnologicos.load:
+  path:     /distribucion_tecnologicos/load
+  defaults: { _controller: PortadoresBundle:DistribucionCombustibleTecnologicos:load }
+  methods: [GET]
+
+app.portadores.distribucion_tecnologicos.generate:
+  path:     /distribucion_tecnologicos/generate
+  defaults: { _controller: PortadoresBundle:DistribucionCombustibleTecnologicos:generate }
+  methods: [POST]
+
+app.portadores.distribucion_tecnologicos.save:
+  path:     /distribucion_tecnologicos/save
+  defaults: { _controller: PortadoresBundle:DistribucionCombustibleTecnologicos:save }
+  methods: [PUT]
+
+
+#=======================================================================================================================
+# Anexo 3
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.anexo3:
+  path:     /anexo3
+  defaults: { _controller: PortadoresBundle:Anexo3Tecnologicos:view }
+  methods: [GET]
+  options:
+    text: Anexo 3
+    module: Portadores
+    dropdown: Equipos Tecnológicos
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listar anexos 3 de cada equipo tecnológico
+        files:
+          - bundles/portadores/js/anexo3Tecnologicos/anexo3TecnologicosController.js
+        dependencies:
+          - app.portadores.anexo3.load
+          - app.portadores.unidad.loadTree
+          - app.portadores.persona.load
+          - app.portadores.area.loadArea
+          - app.portadores.equipos_tecn.load
+      Editar:
+        description: Editar anexos 3 de cada equipo tecnológico
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/anexo3Tecnologicos/anexo3TecnologicosGestionar.js
+        dependencies:
+          - app.portadores.anexo3.generate
+          - app.portadores.anexo3.save
+          - app.portadores.anexo3.extra_data
+          - app.portadores.anexo3.export
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.anexo3.load:
+  path:     /anexo3/load
+  defaults: { _controller: PortadoresBundle:Anexo3Tecnologicos:load }
+  methods: [GET]
+
+app.portadores.anexo3.generate:
+  path:     /anexo3/generate
+  defaults: { _controller: PortadoresBundle:Anexo3Tecnologicos:generate }
+  methods: [POST]
+
+app.portadores.anexo3.save:
+  path:     /anexo3/save
+  defaults: { _controller: PortadoresBundle:Anexo3Tecnologicos:save }
+  methods: [PUT]
+
+app.portadores.anexo3.extra_data:
+  path:     /anexo3/extra_data
+  defaults: { _controller: PortadoresBundle:Anexo3Tecnologicos:updExtraData }
+  methods: [PUT]
+
+app.portadores.anexo3.export:
+  path:     /anexo3/export
+  defaults: { _controller: PortadoresBundle:Anexo3Tecnologicos:export }
+  methods: [GET]
+  #=======================================================================================================================
+# Grupos Electrogenos Motores
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.grupos_electrogenos_motores:
+  path:     /grupos_electrogenos_motores
+  defaults: { _controller: PortadoresBundle:GrupoElectrogenoMotor:view }
+  methods: [GET]
+  options:
+    text: GEE - Motores
+    module: Portadores
+    dropdown: [Datos Primarios, Tiro Directo]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listar motores de grupos electrógenos
+        files:
+          - bundles/portadores/js/grupoElectrogenoMotor/grupoElectrogenoMotorController.js
+        dependencies:
+          - app.portadores.grupos_electrogenos_motores.load
+          - app.portadores.marcas_tecn.load
+          - app.portadores.modelos_tecn.load
+      Editar:
+        description: Editar motores de grupos electrógenos
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/grupoElectrogenoMotor/grupoElectrogenoMotorGestionar.js
+        dependencies:
+          - app.portadores.grupos_electrogenos_motores.add
+          - app.portadores.grupos_electrogenos_motores.upd
+          - app.portadores.grupos_electrogenos_motores.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.grupos_electrogenos_motores.load:
+  path:     /grupos_electrogenos_motores/load
+  defaults: { _controller: PortadoresBundle:GrupoElectrogenoMotor:load }
+  methods: [GET]
+
+app.portadores.grupos_electrogenos_motores.add:
+  path:     /grupos_electrogenos_motores/add
+  defaults: { _controller: PortadoresBundle:GrupoElectrogenoMotor:add }
+  methods: [POST]
+
+app.portadores.grupos_electrogenos_motores.upd:
+  path:     /grupos_electrogenos_motores/upd
+  defaults: { _controller: PortadoresBundle:GrupoElectrogenoMotor:upd }
+  methods: [PUT]
+
+app.portadores.grupos_electrogenos_motores.del:
+  path:     /grupos_electrogenos_motores/delete
+  defaults: { _controller: PortadoresBundle:GrupoElectrogenoMotor:del }
+  methods: [DELETE]
+
+
+#=======================================================================================================================
+# Grupos Electrogenos Generadores
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.grupos_electrogenos_generadores:
+  path:     /grupos_electrogenos_generadores
+  defaults: { _controller: PortadoresBundle:GrupoElectrogenoGenerador:view }
+  methods: [GET]
+  options:
+    text: GEE - Generadores
+    module: Portadores
+    dropdown: [Datos Primarios, Tiro Directo]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listar generadores de grupos electrógenos
+        files:
+        - bundles/portadores/js/grupoElectrogenoGenerador/grupoElectrogenoGeneradorController.js
+        dependencies:
+        - app.portadores.grupos_electrogenos_generadores.load
+        - app.portadores.marcas_tecn.load
+        - app.portadores.modelos_tecn.load
+      Editar:
+        description: Editar generadores de grupos electrógenos
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/grupoElectrogenoGenerador/grupoElectrogenoGeneradorGestionar.js
+        dependencies:
+        - app.portadores.grupos_electrogenos_generadores.add
+        - app.portadores.grupos_electrogenos_generadores.upd
+        - app.portadores.grupos_electrogenos_generadores.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.grupos_electrogenos_generadores.load:
+  path:     /grupos_electrogenos_generadores/load
+  defaults: { _controller: PortadoresBundle:GrupoElectrogenoGenerador:load }
+  methods: [GET]
+
+app.portadores.grupos_electrogenos_generadores.add:
+  path:     /grupos_electrogenos_generadores/add
+  defaults: { _controller: PortadoresBundle:GrupoElectrogenoGenerador:add }
+  methods: [POST]
+
+app.portadores.grupos_electrogenos_generadores.upd:
+  path:     /grupos_electrogenos_generadores/upd
+  defaults: { _controller: PortadoresBundle:GrupoElectrogenoGenerador:upd }
+  methods: [PUT]
+
+app.portadores.grupos_electrogenos_generadores.del:
+  path:     /grupos_electrogenos_generadores/delete
+  defaults: { _controller: PortadoresBundle:GrupoElectrogenoGenerador:del }
+  methods: [DELETE]
+
+
+#=======================================================================================================================
+# Anexo 3 GEE
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.anexo3gee:
+  path:     /anexo3gee
+  defaults: { _controller: PortadoresBundle:Anexo3Gee:view }
+  methods: [GET]
+  options:
+    text: Anexo 3 GEE
+    module: Portadores
+    dropdown: Equipos Tecnológicos
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Listar anexo 3 de los grupos electrógenos
+        files:
+          - bundles/portadores/js/anexo3Gee/anexo3GeeController.js
+        dependencies:
+          - app.portadores.anexo3gee.load
+          - app.portadores.unidad.loadTree
+          - app.portadores.persona.load
+          - app.portadores.area.loadArea
+      Editar:
+        description: Editar anexo 3 de los grupos electrógenos
+        dependent_of: Listado
+        files:
+          - bundles/portadores/js/anexo3Gee/anexo3GeeGestionar.js
+        dependencies:
+          - app.portadores.anexo3gee.generate
+          - app.portadores.anexo3gee.save
+          - app.portadores.anexo3gee.extra_data
+          - app.portadores.anexo3gee.export
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.anexo3gee.load:
+  path:     /anexo3gee/load
+  defaults: { _controller: PortadoresBundle:Anexo3Gee:load }
+  methods: [GET]
+
+app.portadores.anexo3gee.generate:
+  path:     /anexo3gee/generate
+  defaults: { _controller: PortadoresBundle:Anexo3Gee:generate }
+  methods: [POST]
+
+app.portadores.anexo3gee.save:
+  path:     /anexo3gee/save
+  defaults: { _controller: PortadoresBundle:Anexo3Gee:save }
+  methods: [PUT]
+
+app.portadores.anexo3gee.extra_data:
+  path:     /anexo3gee/extra_data
+  defaults: { _controller: PortadoresBundle:Anexo3Gee:updExtraData }
+  methods: [PUT]
+
+app.portadores.anexo3gee.export:
+  path:     /anexo3gee/export
+  defaults: { _controller: PortadoresBundle:Anexo3Gee:export }
+  methods: [GET]

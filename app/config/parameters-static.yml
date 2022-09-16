@@ -1,0 +1,13 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: localhost
+    database_port: 5433
+    database_name: portadores_ch
+    database_user: postgres
+    database_password: postgres
+    mailer_transport: smtp
+    mailer_host: null
+    mailer_port: 25
+    mailer_user: null
+    mailer_password: null
+    secret: 0e7cbf33ded3df40cb6f4359a4d92e0c98529c44

@@ -1,0 +1,9 @@
+parameters:
+    ol_version: ol@5.3.0
+
+    # https://<HOST>:<PORT>/geoserver/<WORKSPACE>
+    # NOTA IMPORTANTE:
+    #   Se recomienda utilizar el mismo certificado para la App y GeoServer, ya que el certificado de GeoServer debe ser válido
+    #   (emitido por CA de confianza o que el usuario haya aprobado previamente) para que Openlayers pueda obtener las capas vectoriales.
+    #   La variente más sencilla (o no) es utilizar Nginx como proxy reverso para GeoServer:  :) good luck!!!
+    geoserver_url: 'https://127.0.0.1:8083/geoserver/GISROUTE/'

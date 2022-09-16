@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8' name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <title>{% block title %}{{ app_name }}{% endblock %}</title>
+
+        {# https://gauger.io/fonticon/ (bug - rgba(189, 33, 48, 1))#}
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/ICO/favicon.ico') }}?skull_vs" />
+
+        <!-- Stylesheets -->
+        <link rel='stylesheet' href="{{ asset(app.debug ? 'build/error.css' : 'build/error.min.css') }}" />
+    </head>
+
+    <body class="h-100 fixed-top">
+        <!-- Page content -->
+        <div class="d-flex flex-column justify-content-start h-100">
+            <nav class="navbar navbar-dark bg-dark p-1">
+                <a class="navbar-brand mr-0" href="{{ url('homepage') }}">
+                    <i class="fas fa-skull fa-fw text-danger"></i>
+                    {#<img alt="Brand" src="{{ asset('assets/img/PNG/favicon.png') }}" style="width: 34px">#}
+                </a>
+
+                {#<a class="navbar-brand" href="{{ url('homepage') }}">#}
+                    {#<img alt="Brand" src="{{ asset('assets/img/old/brand_110x40.png') }}">#}
+                {#</a>#}
+            </nav>
+
+            <div class="d-flex flex-column h-75 w-75 justify-content-center text-center align-self-center">
+                {% if status_code == 400 %}
+                    {#{% set status_text = 'SOLICITUD NO VÁLIDA' %}#}
+                    {% set description = 'El servidor no pudo entender la solicitud debido a una sintaxis no válida.' %}
+                {% elseif status_code == 403 %}
+                    {#{% set status_text = 'RECURSO NO ENCONTRADO' %}#}
+                    {% set description = 'La página o recurso que está intentando acceder está absolutamente prohibido por alguna razón.' %}
+                {% elseif status_code == 404 %}
+                    {#{% set status_text = 'RECURSO NO ENCONTRADO' %}#}
+                    {% set description = 'El recurso solicitado no se pudo encontrar.' %}
+                {% elseif status_code == 500 %}
+                    {#{% set status_text = 'ERROR INTERNO' %}#}
+                    {% set description = 'El servidor encontró una condición inesperada que le impidió cumplir con la solicitud.' %}
+                {% elseif status_code == 503 %}
+                    {#{% set status_text = 'ERROR INTERNO' %}#}
+                    {% set description = 'La página solicitada no está disponible.' %}
+                {% else %}
+                    {% set status_text = 'ERROR DESCONOCIDO' %}
+                    {% set description = 'Ha ocurrido un error.' %}
+                {% endif %}
+
+                <div class="border border-top-0 border-right-0 border-left-0 align-self-center w-100">
+                    <h1 class="text-danger">{{ status_text }}
+                        <strong class="text-muted" style="font-size: 40%">ERROR {{ status_code }}</strong>
+                    </h1>
+                </div>
+                <p class="mt-3">{{ description }}</p>
+
+                {#  You **must not** use ``is_granted`` in your error pages, because the router runs before the firewall.
+                    If the router throws an exception (for instance, when the route does not match), the error page is
+                    not behind a firewall and ``app.user`` is not defined.#}
+
+                {#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
+                    {#<a href="#" onclick="window.history.back();">Regrese a la página anterior</a>#}
+                    {#<a href="{{ url('homepage') }}"><strong>Regrese a la página principal</strong></a>#}
+                {#{% else %}#}
+                    {#<a href="{{ url('login') }}"><strong>Iniciar sesión</strong></a>#}
+                {#{% endif %}#}
+            </div>
+
+            <div class="mt-auto ">
+                <footer class="d-flex align-items-center p-1">
+                    <div class="d-flex justify-content-between w-100 pl-1 pr-1">
+                        <div class="">{{ app_owner }}</div>
+                        <div class="">&copy; {{ app_copyright }}</div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </body>
+</html>
+

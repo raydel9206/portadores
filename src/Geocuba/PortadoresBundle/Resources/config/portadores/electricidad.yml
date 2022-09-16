@@ -1,0 +1,324 @@
+#=======================================================================================================================
+# Desglose Plan
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.desglosePlan:
+    path:     /desglosePlan
+    defaults: { _controller: PortadoresBundle:DesgloseElectricidad:view }
+    methods: [GET]
+    options:
+        text: Desglose del Plan
+        module: Portadores
+        dropdown: [Portadores, Electricidad]
+#        dropdown_header: Electricidad
+        resources:
+            Listado:
+                description: Listado de Planes realizados
+                files:
+                    - bundles/portadores/js/desglosePlan/desglosePlanController.js
+                dependencies:
+                    - app.portadores.servicio.load
+                    - app.portadores.unidad.loadTree
+                    - app.portadores.desglosePlan.load
+                    - app.portadores.desglosePlan.loaddesglose
+                    - app.portadores.desglosePlan.loaddesglosemes
+                    - app.portadores.desglosePlan.loaddesgloseservicios
+                    - app.portadores.desglosePlan.desgloseservicios
+                    - app.portadores.desglosePlan.desgloselectricidad
+                    - app.portadores.desglosePlan.desgloselectricidadMod
+            Editar:
+                description: Editar los planes realizados
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/desglosePlan/desglosePlanGestionar.js
+                dependencies:
+                    - app.portadores.desglosePlan.add
+                    - app.portadores.desglosePlan.mod
+                    - app.portadores.desglosePlan.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.desglosePlan.load:
+    path:     /desglosePlan/load
+    defaults: { _controller: PortadoresBundle:DesgloseElectricidad:load }
+    methods: [GET]
+
+app.portadores.desglosePlan.loaddesgloseservicios:
+    path:     /desglosePlan/loaddesgloseservicios
+    defaults: { _controller: PortadoresBundle:DesgloseElectricidad:loaddesgloseservicios }
+    methods: [GET]
+
+app.portadores.desglosePlan.loaddesglosemes:
+    path:     /desglosePlan/loaddesglosemes
+    defaults: { _controller: PortadoresBundle:DesgloseElectricidad:loaddesglosemes }
+    methods: [GET]
+
+app.portadores.desglosePlan.desgloselectricidad:
+    path:     /desglosePlan/desgloselectricidad
+    defaults: { _controller: PortadoresBundle:DesgloseElectricidad:desgloselectricidad }
+    methods: [GET]
+
+app.portadores.desglosePlan.desgloselectricidadMod:
+    path:     /desglosePlan/desgloselectricidadMod
+    defaults: { _controller: PortadoresBundle:DesgloseElectricidad:desgloselectricidadMod }
+    methods: [GET,POST]
+
+app.portadores.desglosePlan.desgloseservicios:
+    path:     /desglosePlan/desgloseservicios
+    defaults: { _controller: PortadoresBundle:DesgloseElectricidad:desgloseservicios }
+    methods: [POST]
+
+app.portadores.desglosePlan.loaddesglose:
+    path:     /desglosePlan/loaddesglose
+    defaults: { _controller: PortadoresBundle:DesgloseElectricidad:loaddesglose }
+    methods: [GET]
+
+#=======================================================================================================================
+# Autolecturas Tresescalas
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.autolectura_tresescalas:
+    path:     /autolectura_tresescalas
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:view }
+    methods: [GET]
+    options:
+        text: Autolectura Servicio Mayor
+        module: Portadores
+        dropdown: [Portadores, Electricidad]
+#        dropdown_header: Electricidad
+        resources:
+            Listado:
+                description: Listado de Autolecturas Tresescalas
+                files:
+                    - bundles/portadores/js/autolectura/autolecturaController.js
+                dependencies:
+                    - app.portadores.servicio.load
+                    - app.portadores.unidad.loadTree
+                    - app.portadores.autolectura_tresescalas.load
+                    - app.portadores.autolectura_tresescalas.getautolecturasbyservicios
+            Editar:
+                description: Editar las Autolecturas Tresescalas
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/autolectura/autolecturaGestionar.js
+                dependencies:
+                    - app.portadores.autolectura_tresescalas.existedesglose
+                    - app.portadores.autolectura_tresescalas.addAutolecturaTresescalas
+                    - app.portadores.autolectura_tresescalas.modAutolecturaTresescalas
+                    - app.portadores.autolectura_tresescalas.cleanautolecturas
+                    - app.portadores.autolectura_tresescalas.printBitacora
+                    - app.portadores.autolectura_tresescalas.printBitacoraAutoinspeccion
+                    - app.portadores.autolectura_tresescalas.loadAutoinspeccion
+                    - app.portadores.autolectura_tresescalas.getIsLastLectMayor
+                    - app.portadores.autolectura_tresescalas.addAutoinspeccion
+                    - app.portadores.autolectura_tresescalas.bitacora
+                    - app.portadores.autolectura_tresescalas.acumulados
+                    - app.portadores.autolectura_tresescalas.mod
+                    - app.portadores.autolectura_tresescalas.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.autolectura_tresescalas.load:
+    path:     /autolectura_tresescalas/load
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:load }
+    methods: [GET]
+
+app.portadores.autolectura_tresescalas.getIsLastLectMayor:
+    path:     /autolectura_tresescalas/getIsLastLectMayor
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:getIsLastLectMayor }
+    methods: [GET]
+
+app.portadores.autolectura_tresescalas.getautolecturasbyservicios:
+    path:     /autolectura_tresescalas/getautolecturasbyservicios
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:getautolecturasbyservicios }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.addAutolecturaTresescalas:
+    path:     /autolectura_tresescalas/addAutolecturaTresescalas
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:addAutolecturaTresescalas }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.modAutolecturaTresescalas:
+    path:     /autolectura_tresescalas/modAutolecturaTresescalas
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:modAutolecturaTresescalas }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.existedesglose:
+    path:     /autolectura_tresescalas/existedesglose
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:existedesglose }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.cleanautolecturas:
+    path:     /autolectura_tresescalas/cleanautolecturas
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:cleanautolecturas }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.addAutoinspeccion:
+    path:     /autolectura_tresescalas/addAutoinspeccion
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:addAutoinspeccion }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.printBitacoraAutoinspeccion:
+    path:     /autolectura_tresescalas/printBitacoraAutoinspeccion
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:printBitacoraAutoinspeccion }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.acumulados:
+    path:     /autolectura_tresescalas/acumulados
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:acumulados }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.printBitacora:
+    path:     /autolectura_tresescalas/printBitacora
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:printBitacora }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.loadAutoinspeccion:
+    path:     /autolectura_tresescalas/loadAutoinspeccion
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:loadAutoinspeccion }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.bitacora:
+    path:     /autolectura_tresescalas/bitacora
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:bitacora }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.mod:
+    path:     /autolectura_tresescalas/mod
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:mod }
+    methods: [GET, POST]
+
+app.portadores.autolectura_tresescalas.del:
+    path:     /autolectura_tresescalas/del
+    defaults: { _controller: PortadoresBundle:AutolecturaTresescalas:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Autolecturas prepago
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.autolectura_prepago:
+    path:     /autolectura_prepago
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:view }
+    methods: [GET]
+    options:
+        text: Autolectura Servicio Menor
+        module: Portadores
+        dropdown: [Portadores, Electricidad]
+#        dropdown_header: Electricidad
+        resources:
+            Listado:
+                description: Listado de Autolecturas Prepago
+                files:
+                    - bundles/portadores/js/autolecturaPrepago/autolecturaController.js
+                dependencies:
+                    - app.portadores.servicio.load
+                    - app.portadores.unidad.loadTree
+                    - app.portadores.autolectura_prepago.load
+                    - app.portadores.autolectura_prepago.existedesgloseAutolecturaPrepago
+                    - app.portadores.autolectura_prepago.VerificaPicoAutolecturaPrepago
+                    - app.portadores.autolectura_prepago.getautolecturasbyservicios
+            Editar:
+                description: Editar las Autolecturas Prepago
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/autolecturaPrepago/autolecturaGestionar.js
+                dependencies:
+                    - app.portadores.autolectura_prepago.addAutolecturaPrepago
+                    - app.portadores.autolectura_prepago.modAutolecturaPrepago
+                    - app.portadores.autolectura_prepago.acumulados
+                    - app.portadores.autolectura_prepago.getIsLastLect
+                    - app.portadores.autolectura_prepago.cleanautolecturas
+                    - app.portadores.autolectura_prepago.printBitacoraPrepago
+                    - app.portadores.autolectura_prepago.bitacoraPrepago
+                    - app.portadores.autolectura_prepago.del
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.autolectura_prepago.load:
+    path:     /autolectura_prepago/load
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:load }
+    methods: [GET]
+
+app.portadores.autolectura_prepago.existedesgloseAutolecturaPrepago:
+    path:     /autolectura_prepago/existedesgloseAutolecturaPrepago
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:existedesgloseAutolecturaPrepago }
+    methods: [GET]
+
+app.portadores.autolectura_prepago.VerificaPicoAutolecturaPrepago:
+    path:     /autolectura_prepago/VerificaPicoAutolecturaPrepago
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:VerificaPicoAutolecturaPrepago }
+    methods: [GET]
+
+app.portadores.autolectura_prepago.getautolecturasbyservicios:
+    path:     /autolectura_prepago/getautolecturasbyservicios
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:getautolecturasbyservicios }
+    methods: [GET, POST]
+
+app.portadores.autolectura_prepago.getIsLastLect:
+    path:     /autolectura_prepago/getIsLastLect
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:getIsLastLect }
+    methods: [GET, POST]
+
+app.portadores.autolectura_prepago.bitacoraPrepago:
+    path:     /autolectura_prepago/bitacoraPrepago
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:bitacoraPrepago }
+    methods: [GET, POST]
+
+app.portadores.autolectura_prepago.addAutolecturaPrepago:
+    path:     /autolectura_prepago/addAutolecturaPrepago
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:addAutolecturaPrepago }
+    methods: [GET, POST]
+
+app.portadores.autolectura_prepago.cleanautolecturas:
+    path:     /autolectura_prepago/cleanautolecturas
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:cleanautolecturas }
+    methods: [GET, POST]
+
+app.portadores.autolectura_prepago.printBitacoraPrepago:
+    path:     /autolectura_prepago/printBitacoraPrepago
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:printBitacoraPrepago }
+    methods: [GET, POST]
+
+app.portadores.autolectura_prepago.modAutolecturaPrepago:
+    path:     /autolectura_prepago/modAutolecturaPrepago
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:modAutolecturaPrepago }
+    methods: [GET, POST]
+
+app.portadores.autolectura_prepago.acumulados:
+    path:     /autolectura_prepago/acumulados
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:acumulados }
+    methods: [GET, POST]
+
+app.portadores.autolectura_prepago.del:
+    path:     /autolectura_prepago/del
+    defaults: { _controller: PortadoresBundle:AutolecturaPrepago:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Parte diario de electricidad
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.parte_diario:
+    path:     /parte_diario
+    defaults: { _controller: PortadoresBundle:ParteDiarioElectricidad:view }
+    methods: [GET]
+    options:
+        text: Parte diario
+        module: Portadores
+        dropdown: [Portadores, Electricidad]
+        resources:
+            Listado:
+                description: Parte diario de electricidad
+                files:
+                    - bundles/portadores/js/parte_diario_electricidad/parte_diario_electricidadController.js
+                dependencies:
+                    - app.portadores.servicio.load
+                    - app.portadores.unidad.loadTree
+                    - app.portadores.parte_diario.getParte
+                    - app.portadores.provincia.list
+                    - app.portadores.parte_diario.print
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.parte_diario.getParte:
+    path:     /parte_diario/getParte
+    defaults: { _controller: PortadoresBundle:ParteDiarioElectricidad:getParte }
+    methods: [GET]
+
+app.portadores.parte_diario.print:
+    path:     /parte_diario/print
+    defaults: { _controller: PortadoresBundle:ParteDiarioElectricidad:print }
+    methods: [GET, POST]

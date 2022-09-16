@@ -1,0 +1,15 @@
+<div id="container" class="h-100 d-flex align-items-center justify-content-center">
+    {% block content %}
+        <div class="alert-notifier alert alert-dismissible alert-info align-self-start text-justify mb-0 mt-1 p-0"
+             role="alert"></div>
+
+        {#<i class="fab fa-php fa-10x text-danger"></i>#}
+        {#<object id="my-svg" type="image/svg+xml" data="{{ asset('assets/img/SVG/brand.svg') }}" class="align-self-center w-50"></object>#}
+        {#<object id="my-svg" type="image/svg+xml" data="{{ asset('assets/img/SVG/brand_plus.svg') }}"#}
+        {#class="align-self-center w-75"></object>#}
+
+        {#https://placeholdit.imgix.net/~text?txtsize=45&txt=350%C3%97150&w=350&h=150#}
+        <img class="align-self-center" width="35%" src="{{ asset('assets/img/PNG/portadores_ee.png') }}">
+    {% endblock %}
+</div>
+

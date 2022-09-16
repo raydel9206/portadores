@@ -1,0 +1,14 @@
+services:
+#    portadores.example:
+#        class: Geocuba\PortadoresBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    portadores.piefirma:
+        class: Geocuba\PortadoresBundle\Util\PieFirmaGtr
+        arguments: ["@doctrine.orm.entity_manager"]
+    phpexcel:
+        class: %phpexcel.class%
+
+parameters:
+    phpexcel.class:  Liuggio\ExcelBundle\Factory
+

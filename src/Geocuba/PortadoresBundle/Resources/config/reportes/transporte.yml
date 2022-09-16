@@ -1,0 +1,221 @@
+#=======================================================================================================================
+# Análisis Equipo a Equipo
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.analisis_equipo_equipo:
+    path:     /analisis_equipo_equipo
+    defaults: { _controller: PortadoresBundle:AnalisisEquipoEquipo:view }
+    methods: [GET]
+    options:
+        text: Análisis Equipo a Equipo
+        module: Portadores
+        dropdown: [Reportes, Transporte]
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Analisis Equipo a Equipo
+                files:
+                - bundles/portadores/js/analisis_equipo_equipo/analisis_equipo_equipoController.js
+                dependencies:
+                - app.portadores.unidad.loadTree
+                - app.portadores.portador.load
+                - app.portadores.analisis_equipo_equipo.load
+                - app.portadores.analisis_equipo_equipo.loadAcumulado
+                - app.portadores.analisis_equipo_equipo.loadResumen
+                - app.portadores.tipocombustible.loadCombo
+            Exportar:
+                description: Exportar Análisis Equipo a Equipo
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/analisis_equipo_equipo/analisis_equipo_equipoExportar.js
+                dependencies:
+                - app.portadores.analisis_equipo_equipo.print
+                - app.portadores.analisis_equipo_equipo.export
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.analisis_equipo_equipo.load:
+    path:     /analisis_equipo_equipo/load
+    defaults: { _controller: PortadoresBundle:AnalisisEquipoEquipo:load }
+    methods: [GET]
+
+app.portadores.analisis_equipo_equipo.loadAcumulado:
+    path:     /analisis_equipo_equipo/loadAcumulado
+    defaults: { _controller: PortadoresBundle:AnalisisEquipoEquipo:loadAcumulado }
+    methods: [GET]
+
+app.portadores.analisis_equipo_equipo.loadResumen:
+    path:     /analisis_equipo_equipo/loadResumen
+    defaults: { _controller: PortadoresBundle:AnalisisEquipoEquipo:loadResumen }
+    methods: [GET]
+
+app.portadores.analisis_equipo_equipo.print:
+    path:     /analisis_equipo_equipo/print
+    defaults: { _controller: PortadoresBundle:AnalisisEquipoEquipo:print }
+    methods: [GET]
+
+app.portadores.analisis_equipo_equipo.export:
+    path:     /analisis_equipo_equipo/export
+    defaults: { _controller: PortadoresBundle:AnalisisEquipoEquipo:export }
+    methods: [GET]
+
+#=======================================================================================================================
+# Cierre Mensual
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.cierre_mensual:
+    path:     /cierre_mensual
+    defaults: { _controller: PortadoresBundle:CierreMensual:view }
+    methods: [GET]
+    options:
+        text: Cierre Mensual
+        module: Portadores
+        dropdown: [Reportes, Transporte]
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Cierres Mensuales
+                files:
+                - bundles/portadores/js/cierre_mensual/cierre_mensualController.js
+                dependencies:
+                - app.portadores.tipocombustible.loadCombo
+                - app.portadores.unidad.loadTree
+                - app.portadores.portador.load
+                - app.portadores.cierre_mensual.load
+            Exportar:
+                description: Exportar Cierre Mensual
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/cierre_mensual/cierre_mensualExportar.js
+                dependencies:
+                - app.portadores.cierre_mensual.print
+                - app.portadores.cierre_mensual.export
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.cierre_mensual.load:
+    path:     /cierre_mensual/load
+    defaults: { _controller: PortadoresBundle:CierreMensual:load }
+    methods: [GET]
+
+app.portadores.cierre_mensual.print:
+    path:     /cierre_mensual/print
+    defaults: { _controller: PortadoresBundle:CierreMensual:print }
+    methods: [POST]
+
+app.portadores.cierre_mensual.export:
+    path:     /cierre_mensual/export
+    defaults: { _controller: PortadoresBundle:CierreMensual:export }
+    methods: [GET]
+
+#=======================================================================================================================
+# Consumo Motorrecurso y Combustible x Vehiculos
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.consumo_motorrecurso:
+    path:     /consumo_motorrecurso
+    defaults: { _controller: PortadoresBundle:ReporteConsumoMotorrecursosCombustibleVehiculo:view }
+    methods: [GET]
+    options:
+        text: Consumo Motorrecurso y Combustible x Vehiculos
+        module: Portadores
+        dropdown: [Reportes, Transporte]
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Reporte Consumo Motorrecurso y Combustible x Vehiculos
+                files:
+                - bundles/portadores/js/reporteConsumoMotorrecursosCombustibleVehiculo/reporteConsumoMotorrecursosCombustibleVehiculoController.js
+                dependencies:
+                - app.portadores.unidad.loadTree
+                - app.portadores.portador.load
+                - app.portadores.consumo_motorrecurso.load
+                - app.portadores.tipocombustible.loadCombo
+            Exportar:
+                description: Exportar Reporte Consumo Motorrecurso y Combustible x Vehiculos
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/reporteConsumoMotorrecursosCombustibleVehiculo/reporteConsumoMotorrecursosCombustibleVehiculoExportar.js
+                dependencies:
+                - app.portadores.consumo_motorrecurso.print
+                - app.portadores.consumo_motorrecurso.export
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.consumo_motorrecurso.load:
+    path:     /consumo_motorrecurso/load
+    defaults: { _controller: PortadoresBundle:ReporteConsumoMotorrecursosCombustibleVehiculo:load }
+    methods: [GET]
+
+app.portadores.consumo_motorrecurso.print:
+    path:     /consumo_motorrecurso/print
+    defaults: { _controller: PortadoresBundle:ReporteConsumoMotorrecursosCombustibleVehiculo:print }
+    methods: [POST]
+
+app.portadores.consumo_motorrecurso.export:
+    path:     /consumo_motorrecurso/export
+    defaults: { _controller: PortadoresBundle:ReporteConsumoMotorrecursosCombustibleVehiculo:export }
+    methods: [POST]
+
+#=======================================================================================================================
+# Resumen de la Eficiencia del Transporte
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.resumen_eficiencia:
+    path:     /resumen_eficiencia
+    defaults: { _controller: PortadoresBundle:ReporteResumenEficiencia:view }
+    methods: [GET]
+    options:
+        text: Resumen de la Eficiencia del Transporte
+        module: Portadores
+        dropdown: [Reportes, Transporte]
+        #        dropdown_header: Electricidad
+        resources:
+            Listado:
+                description: Resumen de la Eficiencia del Transporte
+                files:
+                - bundles/portadores/js/reporteResumenEficiencia/reporteResumenEficienciaController.js
+                dependencies:
+                - app.portadores.resumen_eficiencia.load
+                - app.portadores.unidad.loadTree
+                - app.portadores.tipocombustible.loadCombo
+
+            Exportar:
+                description: Exportar Resumen de la Eficiencia del Transporte
+                files:
+                - bundles/portadores/js/reporteResumenEficiencia/reporteResumenEficienciaExportar.js
+                dependencies:
+                - app.portadores.resumen_eficiencia.print
+                - app.portadores.resumen_eficiencia.export
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.resumen_eficiencia.load:
+    path:     /resumen_eficiencia/load
+    defaults: { _controller: PortadoresBundle:ReporteResumenEficiencia:load }
+    methods: [GET]
+
+app.portadores.resumen_eficiencia.print:
+    path:     /resumen_eficiencia/print
+    defaults: { _controller: PortadoresBundle:ReporteResumenEficiencia:print }
+    methods: [POST]
+
+app.portadores.resumen_eficiencia.export:
+    path:     /resumen_eficiencia/export
+    defaults: { _controller: PortadoresBundle:ReporteResumenEficiencia:print }
+    methods: [POST]
+
+#=======================================================================================================================
+# Conciliacion de Motorrecursos
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.conciliacion_motorrecursos:
+    path:     /conciliacion_motorrecursos
+    defaults: { _controller: PortadoresBundle:ConciliacionMotorrecursos:view }
+    methods: [GET]
+    options:
+        text: Conciliación de Motorerecursos
+        module: Portadores
+        dropdown: [Reportes, Transporte]
+        resources:
+            Listado:
+                description: Conciliacion de Motorerecursos
+                files:
+                - bundles/portadores/js/conciliacion_motorrecursos/conciliacionMotorrecursosController.js
+                dependencies:
+                - app.portadores.unidad.loadTree
+                - app.portadores.conciliacion_motorrecursos.load
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.conciliacion_motorrecursos.load:
+    path:     /conciliacion_motorrecursos/load
+    defaults: { _controller: PortadoresBundle:ConciliacionMotorrecursos:load }
+    methods: [GET]

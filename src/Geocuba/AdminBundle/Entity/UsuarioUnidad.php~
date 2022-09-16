@@ -1,0 +1,46 @@
+<?php
+
+namespace Geocuba\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * UsuarioUnidad
+ *
+ * @ORM\Table(name="admin.usuario_unidad", indexes={@ORM\Index(name="IDX_655B0446F3E6D02F", columns={"unidad"}), @ORM\Index(name="IDX_655B04462265B05D", columns={"usuario"})})
+ * @ORM\Entity
+ */
+class UsuarioUnidad
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="id", type="string", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="admin.usuario_unidad_id_seq", allocationSize=1, initialValue=1)
+     */
+    private $id;
+
+    /**
+     * @var \Unidad
+     *
+     * @ORM\ManyToOne(targetEntity="Unidad")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="unidad", referencedColumnName="id")
+     * })
+     */
+    private $unidad;
+
+    /**
+     * @var \Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="usuario", referencedColumnName="id")
+     * })
+     */
+    private $usuario;
+
+
+}

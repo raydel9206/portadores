@@ -1,0 +1,33 @@
+{# Autor: Camilo A. Hernández #}
+
+<div class="row w-100">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+            <div class="card-body">
+                <div style="font-size: 2rem" class="soldi-gothic text-dark text-center mb-2">
+                    {{ app_name }} <i class="fas fa-skull fa-lg text-danger"></i>
+                </div>
+
+                <form class="form-signin" style="align-items: center" action="{{ path('login_check') }}"
+                      method="post">
+                    <div class="form-label-group">
+                        <input type="text" id="inputEmail" class="form-control" name='_username'
+                               placeholder="{{ 'User' | trans() }}" required autofocus>
+                        <label for="inputEmail">Usuario</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input type="password" id="inputPassword" class="form-control" name='_password'
+                               placeholder="{% trans %}Password{% endtrans %}" required/>
+                        <label for="inputPassword">Contraseña</label>
+                    </div>
+                    <div class="w-100 d-flex justify-content-center" style="font-size: 1.5rem">
+                        <button class="btn btn-dark text-uppercase" type="submit">
+                            <i class="fas fa-paper-plane"> Iniciar sesión</i>
+                            <!-- {% trans %}Sign-in{% endtrans %} -->
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+{# Autor: Felix A. Prieto #}
+
+<div class="card border-dark rounded-0">
+    {#<div class="card-header pb-2 pt-3 bg-blue rounded-0">#}
+    <div class="card-header p-0 bg-blue rounded-0">
+        {# DEV #}
+        {#<div class="w-100 text-center text-danger font-weight-bold">#}
+            {#<img alt="Brand" src="{{ asset('assets/img/PNG/logo.png') }}" style="width: 190px">#}
+        {#</div>#}
+        <img alt="Brand" src="{{ asset('assets/img/PNG/login_portadores.png') }}" width="420" style="margin-top: -5px; margin-bottom: -15px;">
+
+        {# PROD #}
+        {#<object id="my-svg" type="image/svg+xml" data="{{ asset('assets/img/SVG/brand.svg') }}" class="w-100" height="40px"></object>#}
+    </div>
+
+    <div class="card-body pb-0">
+        <form action="{{ path('login_check') }}" method="post" role="form">
+            <div class="form-group input-group">
+                <div class="input-group-prepend p-0 pt-2 pr-2 pb-2 d-flex align-items-center"><i
+                            class="fas fa-user fa-fw text-primary"></i></div>
+                <input class="form-control" type="text" name='_username' placeholder="{{ 'User' | trans() }}"
+                       required/>
+            </div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend p-0 pt-2 pr-2 pb-2 d-flex align-items-center"><i
+                            class="fas fa-key fa-fw text-primary"></i></div>
+                <input class="form-control" type="password" name='_password'
+                       placeholder="{% trans %}Password{% endtrans %}" required/>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-block btn-outline-secondary" data-toggle="tooltip"
+                        data-placement="right" title="{{ 'Sign-in' | trans() }}">
+                    <i class="fas fa-sign-in-alt text-primary"></i> <!-- {% trans %}Sign-in{% endtrans %} -->
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {% if app.request.hasPreviousSession %}
+        {% set notice = app.flashes('notice') | last %}
+        {% if notice is not empty %}
+            <div class="alert alert-{{ notice.type }} text-justify p-2 mt-3 mb-0 rounded-0 border-{{ notice.type }}">
+                <small>{{ notice.message }}</small>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

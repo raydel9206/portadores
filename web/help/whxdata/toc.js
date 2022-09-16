@@ -1,0 +1,1 @@
+gXMLBuffer ="<?xml version=\"1.0\" encoding=\"utf-8\" ?><data ><book name=\"Introducción\" src=\"toc1.js\" /><book name=\"Subsistema Administración\" src=\"toc2.js\" /><book name=\"Subsistema Portadores Energéticos\" src=\"toc8.js\" /><book name=\"Subsistema Mapa\" src=\"toc22.js\" /></data>";

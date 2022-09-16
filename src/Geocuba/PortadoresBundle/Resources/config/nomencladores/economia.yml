@@ -1,0 +1,585 @@
+#=======================================================================================================================
+# Moneda
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.moneda:
+    path:     /moneda
+    defaults: { _controller: PortadoresBundle:Moneda:view }
+    methods: [GET]
+    options:
+        text: Proveedor
+        module: Portadores
+        dropdown: [Datos Primarios, Economía]
+#        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Centros de Costo
+                files:
+                    - bundles/portadores/js/moneda/monedaController.js
+                dependencies:
+                    - app.portadores.moneda.loadMoneda
+            Editar:
+                description: Editar los Centros de Costo
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/moneda/monedaGestionar.js
+                dependencies:
+                    - app.portadores.moneda.addMoneda
+                    - app.portadores.moneda.modMoneda
+                    - app.portadores.moneda.delMoneda
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.moneda.loadMoneda:
+    path:     /moneda/loadMoneda
+    defaults: { _controller: PortadoresBundle:Moneda:load }
+    methods: [GET]
+
+app.portadores.moneda.addMoneda:
+    path:     /moneda/addMoneda
+    defaults: { _controller: PortadoresBundle:Moneda:add }
+    methods: [GET, POST]
+
+app.portadores.moneda.modMoneda:
+    path:     /moneda/modMoneda
+    defaults: { _controller: PortadoresBundle:Moneda:mod }
+    methods: [GET, POST]
+
+app.portadores.moneda.delMoneda:
+    path:     /moneda/delMoneda
+    defaults: { _controller: PortadoresBundle:Moneda:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Tipo de Combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tipocombustible:
+  path:     /tipocombustible
+  defaults: { _controller: PortadoresBundle:TipoCombustible:view }
+  methods: [GET]
+  options:
+    text: Tipo Combustible
+    module: Portadores
+    dropdown: [Datos Primarios, Economía]
+    #        dropdown_header: Seguridad
+    resources:
+      Listado:
+        description: Tipos de Combustible
+        files:
+            - bundles/portadores/js/tipoCombustible/tipoCombustibleController.js
+        dependencies:
+            - app.portadores.tipocombustible.load
+      Editar:
+        description: Editar los Tipos de Combustible
+        dependent_of: Listado
+        files:
+            - bundles/portadores/js/tipoCombustible/tipoCombustibleGestionar.js
+        dependencies:
+            - app.portadores.portador.load
+            - app.portadores.tipocombustible.add
+            - app.portadores.tipocombustible.upd
+            - app.portadores.tipocombustible.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tipocombustible.load:
+  path:     /tipocombustible/load
+  defaults: { _controller: PortadoresBundle:TipoCombustible:load }
+  methods: [GET]
+
+app.portadores.tipocombustible.loadCombo:
+  path:     /tipocombustible/loadCombo
+  defaults: { _controller: PortadoresBundle:TipoCombustible:loadCombo }
+  methods: [GET]
+
+app.portadores.tipocombustible.add:
+  path:     /tipocombustible/add
+  defaults: { _controller: PortadoresBundle:TipoCombustible:add }
+  methods: [GET, POST]
+
+app.portadores.tipocombustible.upd:
+  path:     /tipocombustible/upd
+  defaults: { _controller: PortadoresBundle:TipoCombustible:mod }
+  methods: [GET, POST]
+
+app.portadores.tipocombustible.del:
+  path:     /tipocombustible/del
+  defaults: { _controller: PortadoresBundle:TipoCombustible:del }
+  methods: [DELETE]
+
+#=======================================================================================================================
+# Caja
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.caja:
+    path:     /caja
+    defaults: { _controller: PortadoresBundle:Caja:view }
+    methods: [GET]
+    options:
+        text: Caja
+        module: Portadores
+        dropdown: [Datos Primarios, Economía]
+#        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Cajas
+                files:
+                    - bundles/portadores/js/caja/cajaController.js
+                dependencies:
+                    - app.portadores.caja.loadCaja
+                    - app.portadores.caja.loadRoot
+                    - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar los Cajas
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/caja/cajaGestionar.js
+                dependencies:
+                    - app.portadores.caja.addCaja
+                    - app.portadores.caja.modCaja
+                    - app.portadores.caja.delCaja
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.caja.loadCaja:
+    path:     /caja/loadCaja
+    defaults: { _controller: PortadoresBundle:Caja:load }
+    methods: [GET]
+
+app.portadores.caja.loadRoot:
+    path:     /caja/loadRoot
+    defaults: { _controller: PortadoresBundle:Caja:loadRoot }
+    methods: [GET]
+
+app.portadores.caja.loadCajaCombo:
+    path:     /caja/loadCajaCombo
+    defaults: { _controller: PortadoresBundle:Caja:loadCombo }
+    methods: [GET]
+
+app.portadores.caja.addCaja:
+    path:     /caja/addCaja
+    defaults: { _controller: PortadoresBundle:Caja:add }
+    methods: [GET, POST]
+
+app.portadores.caja.modCaja:
+    path:     /caja/modCaja
+    defaults: { _controller: PortadoresBundle:Caja:mod }
+    methods: [GET, POST]
+
+app.portadores.caja.delCaja:
+    path:     /caja/delCaja
+    defaults: { _controller: PortadoresBundle:Caja:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Centro de Costo
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.centrocosto:
+    path:     /centrocosto
+    defaults: { _controller: PortadoresBundle:CentroCosto:view }
+    methods: [GET]
+    options:
+        text: Centro de Costo
+        module: Portadores
+        dropdown: [Datos Primarios, Economía]
+#        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Centros de Costo
+                files:
+                    - bundles/portadores/js/centroCosto/centroCostoController.js
+                dependencies:
+                    - app.portadores.centrocosto.load
+                    - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar los Centros de Costo
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/centroCosto/centroCostoGestionar.js
+                dependencies:
+                    - app.portadores.centrocosto.add
+                    - app.portadores.centrocosto.mod
+                    - app.portadores.centrocosto.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.centrocosto.load:
+    path:     /centrocosto/load
+    defaults: { _controller: PortadoresBundle:CentroCosto:load }
+    methods: [GET]
+
+app.portadores.centrocosto.loadCombo:
+    path:     /centrocosto/loadCombo
+    defaults: { _controller: PortadoresBundle:CentroCosto:loadCombo }
+    methods: [GET]
+
+app.portadores.centrocosto.add:
+    path:     /centrocosto/add
+    defaults: { _controller: PortadoresBundle:CentroCosto:add }
+    methods: [GET, POST]
+
+app.portadores.centrocosto.mod:
+    path:     /centrocosto/mod
+    defaults: { _controller: PortadoresBundle:CentroCosto:mod }
+    methods: [GET, POST]
+
+app.portadores.centrocosto.del:
+    path:     /centrocosto/del
+    defaults: { _controller: PortadoresBundle:CentroCosto:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Elemento de Gasto
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.elementogasto:
+#    path:     /elementogasto
+#    defaults: { _controller: PortadoresBundle:ElementoGasto:view }
+#    methods: [GET]
+#    options:
+#        text: Elemento de Gasto
+#        module: Portadores
+#        dropdown: [Datos Primarios, Economía]
+##        dropdown_header: Seguridad
+#        resources:
+#            Listado:
+#                description: Elementos de Gasto
+#                files:
+#                    - bundles/portadores/js/elementoGasto/elementoGastoController.js
+#                dependencies:
+#                    - app.portadores.elementogasto.load
+#                    - app.portadores.unidad.loadTree
+#            Editar:
+#                description: Editar los Elementos/Detalles del Gasto
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/elementoGasto/elementoGastoGestionar.js
+#                dependencies:
+#                    - app.portadores.elementogasto.loadPortadores
+#                    - app.portadores.moneda.loadMoneda
+#                    - app.portadores.centrocosto.loadCombo
+#                    - app.portadores.elementogasto.add
+#                    - app.portadores.elementogasto.mod
+#                    - app.portadores.elementogasto.del
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.elementogasto.load:
+#    path:     /elementogasto/load
+#    defaults: { _controller: PortadoresBundle:ElementoGasto:load }
+#    methods: [GET]
+#
+#app.portadores.elementogasto.loadPortadores:
+#    path:     /elementogasto/loadPortadores
+#    defaults: { _controller: PortadoresBundle:ElementoGasto:loadPortadores }
+#    methods: [GET]
+#
+#app.portadores.elementogasto.add:
+#    path:     /elementogasto/add
+#    defaults: { _controller: PortadoresBundle:ElementoGasto:add }
+#    methods: [GET, POST]
+#
+#app.portadores.elementogasto.mod:
+#    path:     /elementogasto/mod
+#    defaults: { _controller: PortadoresBundle:ElementoGasto:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.elementogasto.del:
+#    path:     /elementogasto/del
+#    defaults: { _controller: PortadoresBundle:ElementoGasto:del }
+#    methods: [DELETE]
+
+#=======================================================================================================================
+# Detalle del Gasto
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.detallegasto:
+#    path:     /detallegasto
+#    defaults: { _controller: PortadoresBundle:DetalleGasto:view }
+#    methods: [GET]
+#    options:
+#        text: Detalle del Gasto
+#        module: Portadores
+#        dropdown: [Datos Primarios, Economía]
+##        dropdown_header: Seguridad
+#        resources:
+#            Listado:
+#                description: Detalles del Gasto
+#                files:
+#                    - bundles/portadores/js/detalleGasto/detalleGastoController.js
+#                dependencies:
+#                    - app.portadores.detallegasto.load
+#                    - app.portadores.unidad.loadTree
+#            Editar:
+#                description: Editar los Detalles del Gasto
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/detalleGasto/detalleGastoGestionar.js
+#                dependencies:
+#                    - app.portadores.tipocombustible.loadCombo
+#                    - app.portadores.moneda.loadMoneda
+#                    - app.portadores.detallegasto.add
+#                    - app.portadores.detallegasto.mod
+#                    - app.portadores.detallegasto.del
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.detallegasto.load:
+#    path:     /detallegasto/load
+#    defaults: { _controller: PortadoresBundle:DetalleGasto:load }
+#    methods: [GET]
+#
+#app.portadores.detallegasto.add:
+#    path:     /detallegasto/add
+#    defaults: { _controller: PortadoresBundle:DetalleGasto:add }
+#    methods: [GET, POST]
+#
+#app.portadores.detallegasto.mod:
+#    path:     /detallegasto/mod
+#    defaults: { _controller: PortadoresBundle:DetalleGasto:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.detallegasto.del:
+#    path:     /detallegasto/del
+#    defaults: { _controller: PortadoresBundle:DetalleGasto:del }
+#    methods: [DELETE]
+
+##=======================================================================================================================
+## Cuenta de Gasto
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.cuentagasto:
+#    path:     /cuentagasto
+#    defaults: { _controller: PortadoresBundle:CuentaGasto:view }
+#    methods: [GET]
+#    options:
+#        text: Cuenta de Gasto
+#        module: Portadores
+#        dropdown: [Datos Primarios, Economía]
+##        dropdown_header: Seguridad
+#        resources:
+#            Listado:
+#                description: Cuentas de Gasto
+#                files:
+#                    - bundles/portadores/js/cuentaGasto/cuentaGastoController.js
+#                dependencies:
+#                    - app.portadores.cuentagasto.load
+#                    - app.portadores.unidad.loadTree
+#            Editar:
+#                description: Editar las Cuentas de Gastos
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/cuentaGasto/cuentaGastoGestionar.js
+#                dependencies:
+#                    - app.portadores.centrocosto.loadCombo
+#                    - app.portadores.elementogasto.load
+#                    - app.portadores.detallegasto.load
+#                    - app.portadores.cuentagasto.add
+#                    - app.portadores.cuentagasto.mod
+#                    - app.portadores.cuentagasto.del
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.cuentagasto.load:
+#    path:     /cuentagasto/load
+#    defaults: { _controller: PortadoresBundle:CuentaGasto:load }
+#    methods: [GET]
+#
+##app.portadores.cuentagasto.loadCombo:
+##    path:     /cuentagasto/loadCombo
+##    defaults: { _controller: PortadoresBundle:CuentaGasto:loadCombo }
+##    methods: [GET]
+#
+#app.portadores.cuentagasto.add:
+#    path:     /cuentagasto/add
+#    defaults: { _controller: PortadoresBundle:CuentaGasto:add }
+#    methods: [GET, POST]
+#
+#app.portadores.cuentagasto.mod:
+#    path:     /cuentagasto/mod
+#    defaults: { _controller: PortadoresBundle:CuentaGasto:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.cuentagasto.del:
+#    path:     /cuentagasto/del
+#    defaults: { _controller: PortadoresBundle:CuentaGasto:del }
+#    methods: [DELETE]
+
+#=======================================================================================================================
+# Cuenta/Subcuenta
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.cuenta:
+    path:     /cuenta
+    defaults: { _controller: PortadoresBundle:Cuenta:view }
+    methods: [GET]
+    options:
+        text: Cuenta
+        module: Portadores
+        dropdown: [Datos Primarios, Economía]
+        resources:
+            Listado:
+                description: Cuentas
+                files:
+                    - bundles/portadores/js/cuenta/cuentaController.js
+                dependencies:
+                    - app.portadores.cuenta.load
+                    - app.portadores.cuenta.loadSub
+                    - app.portadores.unidad.loadTree
+                    - app.portadores.clasificador.load
+            Editar:
+                description: Editar las Cuentas
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/cuenta/cuentaGestionar.js
+                dependencies:
+                    - app.portadores.cuenta.add
+                    - app.portadores.moneda.loadMoneda
+                    - app.portadores.cuenta.mod
+                    - app.portadores.cuenta.del
+                    - app.portadores.cuenta.addSub
+                    - app.portadores.cuenta.modSub
+                    - app.portadores.cuenta.delSub
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.cuenta.load:
+    path:     /cuenta/load
+    defaults: { _controller: PortadoresBundle:Cuenta:load }
+    methods: [GET]
+
+app.portadores.cuenta.add:
+    path:     /cuenta/add
+    defaults: { _controller: PortadoresBundle:Cuenta:add }
+    methods: [POST]
+
+app.portadores.cuenta.mod:
+    path:     /cuenta/mod
+    defaults: { _controller: PortadoresBundle:Cuenta:mod }
+    methods: [POST]
+
+app.portadores.cuenta.del:
+    path:     /cuenta/del
+    defaults: { _controller: PortadoresBundle:Cuenta:del }
+    methods: [DELETE]
+
+app.portadores.cuenta.loadSub:
+    path:     /cuenta/loadSub
+    defaults: { _controller: PortadoresBundle:Cuenta:loadSub }
+    methods: [GET]
+
+app.portadores.cuenta.addSub:
+    path:     /cuenta/addSub
+    defaults: { _controller: PortadoresBundle:Cuenta:addSub }
+    methods: [POST]
+
+app.portadores.cuenta.modSub:
+    path:     /cuenta/modSub
+    defaults: { _controller: PortadoresBundle:Cuenta:modSub }
+    methods: [POST]
+
+app.portadores.cuenta.delSub:
+    path:     /cuenta/delSub
+    defaults: { _controller: PortadoresBundle:Cuenta:delSub }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Clasificador
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.clasificador:
+    path:     /clasificador
+    defaults: { _controller: PortadoresBundle:Clasificador:view }
+    methods: [GET]
+    options:
+        text: Clasificador
+        module: Portadores
+        dropdown: [Datos Primarios, Economía]
+        resources:
+            Listado:
+                description: Clasificador de cuenta
+                files:
+                    - bundles/portadores/js/clasificador_cuenta/clasificador_cuentaController.js
+                dependencies:
+                    - app.portadores.clasificador.load
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.clasificador.load:
+    path:     /clasificador/load
+    defaults: { _controller: PortadoresBundle:Clasificador:load }
+    methods: [GET]
+
+#=======================================================================================================================
+# Servicentro
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.servicentro:
+  path:     /servicentro
+  defaults: { _controller: PortadoresBundle:Servicentro:view }
+  methods: [GET]
+  options:
+    text: Servicentro
+    module: Portadores
+    dropdown: [Datos Primarios, Economía]
+    #        dropdown_header: Economía
+    resources:
+      Listado:
+        description: Servicentros
+        files:
+        - bundles/portadores/js/servicentro/servicentroController.js
+        dependencies:
+        - app.portadores.servicentro.load
+      Editar:
+        description: Editar los Servicentros
+        dependent_of: Listado
+        files:
+        - bundles/portadores/js/servicentro/servicentroGestionar.js
+        dependencies:
+        - app.portadores.servicentro.add
+        - app.portadores.servicentro.upd
+        - app.portadores.servicentro.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.servicentro.load:
+  path:     /servicentro/load
+  defaults: { _controller: PortadoresBundle:Servicentro:load }
+  methods: [GET]
+
+app.portadores.servicentro.add:
+  path:     /servicentro/add
+  defaults: { _controller: PortadoresBundle:Servicentro:add }
+  methods: [GET, POST]
+
+app.portadores.servicentro.upd:
+  path:     /servicentro/upd
+  defaults: { _controller: PortadoresBundle:Servicentro:mod }
+  methods: [GET, POST]
+
+app.portadores.servicentro.del:
+  path:     /servicentro/del
+  defaults: { _controller: PortadoresBundle:Servicentro:del }
+  methods: [DELETE]
+
+#=======================================================================================================================
+# Responsabilidad Acta Material
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.responsabilidad:
+    path:     /responsabilidad
+    defaults: { _controller: PortadoresBundle:ResponsabilidadActaMaterial:view }
+    methods: [GET]
+    options:
+        text: Responsabilidad Acta Material
+        module: Portadores
+        dropdown: [Datos Primarios, Economía]
+#        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Responsabilidades de Acta Material
+                files:
+                    - bundles/portadores/js/responsabilidadActaMaterial/responsabilidadActaMaterialController.js
+                dependencies:
+                    - app.portadores.responsabilidad.load
+                    - app.portadores.unidad.loadTree
+            Editar:
+                description: Editar las Responsabilidades de Acta Material
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/responsabilidadActaMaterial/responsabilidadActaMaterialGestionar.js
+                dependencies:
+                    - app.portadores.responsabilidad.add
+                    - app.portadores.responsabilidad.mod
+                    - app.portadores.responsabilidad.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.responsabilidad.load:
+    path:     /responsabilidad/load
+    defaults: { _controller: PortadoresBundle:ResponsabilidadActaMaterial:load }
+    methods: [GET]
+
+app.portadores.responsabilidad.add:
+    path:     /responsabilidad/add
+    defaults: { _controller: PortadoresBundle:ResponsabilidadActaMaterial:add }
+    methods: [GET, POST]
+
+app.portadores.responsabilidad.mod:
+    path:     /responsabilidad/mod
+    defaults: { _controller: PortadoresBundle:ResponsabilidadActaMaterial:mod }
+    methods: [GET, POST]
+
+app.portadores.responsabilidad.del:
+    path:     /responsabilidad/del
+    defaults: { _controller: PortadoresBundle:ResponsabilidadActaMaterial:del }
+    methods: [DELETE]

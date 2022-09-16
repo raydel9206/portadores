@@ -1,0 +1,4 @@
+(function() {
+var toc =  [{"type":"item","name":"Interfaz Moneda","url":"Interfaz_Moneda.htm"},{"type":"item","name":"Interfaz Tipo Combustible","url":"Interfaz_Tipo_Combustible.htm"},{"type":"item","name":"Interfaz Caja","url":"Interfaz_Caja.htm"},{"type":"item","name":"Interfaz Centro de costo","url":"Interfaz_Centro_de_costo.htm"},{"type":"item","name":"Interfaz Elemento de Gasto","url":"Interfaz_Elemento_de_gasto.htm"},{"type":"item","name":"Interfaz Detalle del Gasto","url":"Interfaz_Detalle_del_gasto.htm"},{"type":"item","name":"Interfaz Cuenta de Gasto","url":"Interfaz_Cuenta_de_gasto.htm"},{"type":"item","name":"Interfaz Servicentro","url":"Interfaz_Servicentro.htm"},{"type":"item","name":"Interfaz Responsabilidad Acta Material","url":"Interfaz_Responsabilidad_Acta_Material.htm"}];
+window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });
+})();

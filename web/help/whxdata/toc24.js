@@ -1,0 +1,1 @@
+gXMLBuffer ="<?xml version=\"1.0\" encoding=\"utf-8\" ?><data  src=\"toc22.js\"  name=\"Módulo Puntos de Interés\"><item name=\"Insertar Puntos\" url=\"Insertar_Puntos.htm\" /><item name=\"Eliminar Puntos\" url=\"Eliminar_Puntos.htm\" /></data>";

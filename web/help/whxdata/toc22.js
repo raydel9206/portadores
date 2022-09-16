@@ -1,0 +1,1 @@
+gXMLBuffer ="<?xml version=\"1.0\" encoding=\"utf-8\" ?><data  src=\"toc.js\"  name=\"Subsistema Mapa\"><item name=\"Subsistema Mapa\" url=\"Subsistema_Mapa.htm\" /><book name=\"Módulo Rutas\" src=\"toc23.js\" /><book name=\"Módulo Puntos de Interés\" src=\"toc24.js\" /><book name=\"Módulo Tabla de Distancia\" src=\"toc25.js\" /></data>";

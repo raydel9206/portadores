@@ -1,0 +1,40 @@
+{# Autor: Felix A. Prieto #}
+
+<div class="{{ 'w-100 h-100 d-flex justify-content-center align-items-center' ~ ' gradient' ~ random (range(1, 4)) }}">
+    <div class="d-flex w-100 h-50">
+        <div class="col-sm-6 d-flex align-items-center justify-content-end border-right border-dark">
+            <div style="font-size: 5rem">
+                <i class="fas fa-skull fa-lg text-dark fa-5x"></i>
+            </div>
+        </div>
+
+        <div class="col-sm-6 d-flex align-items-center">
+            <form style="min-width: 350px; min-height: 315px; max-width: 350px;" action="{{ path('login_check') }}"
+                  method="post" role="form">
+                <div class="form-group">
+                    <label class="font-weight-bold small text-uppercase" for="_username">{{ 'User' | trans() }}</label>
+                    <input type="text" class="form-control" id="_username" name='_username' aria-describedby="emailHelp"
+                           placeholder="{{ 'User' | trans() }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="font-weight-bold small text-uppercase"
+                           for="_password">{{ 'Password' | trans() }}</label>
+                    <input type="password" class="form-control" id="_password" name='_password'
+                           placeholder="{{ 'Password' | trans() }}" required>
+                </div>
+
+                <button type="submit" class="btn btn-outline-dark mt-3 text-uppercase">{{ 'Sign-in' | trans() }}</button>
+
+                {% if app.request.hasPreviousSession %}
+                    {% set notice = app.flashes('notice') | last %}
+                    {% if notice is not empty %}
+                        <div class="alert alert-{{ notice.type }} text-justify p-2 mt-3 mb-0">
+                            <small>{{ notice.message }}</small>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>

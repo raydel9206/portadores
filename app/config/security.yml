@@ -1,0 +1,67 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        in_memory:
+            memory:
+                users:
+                    # php app\console security:encode-password   =>  adminpass
+                    admin: { password: g2vGOX0G3l9jVoPP8BgiVkaDtXxSmMOL04lihoXZzp10y6lS/ICsMFpt0dEiuwQd+pM3eIDUePJ7mdo/r8Bb9g==, roles: [ 'ROLE_ADMIN' ] }
+        user_db:
+            entity: { class: AdminBundle:Usuario, property: usuario } # property: username (property must be null to invoke loadUserByUsername (see \Symfony\Bridge\Doctrine\Security\User\EntityUserProvider::loadUserByUsername))
+
+        chain_provider:
+            chain:
+                providers: [in_memory, user_db]
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: sha512
+            encode_as_base64: true
+            iterations: 1
+
+        Geocuba\AdminBundle\Entity\Usuario:
+            algorithm: sha512
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern:  ^/login$
+            anonymous:  ~
+            logout_on_user_change: true # Not setting "logout_on_user_change" to true on firewall "secured_area" is deprecated as of 3.4, it will always be true in 4.0.
+
+        # secures part of the application
+        secured_area:
+            pattern: ^/
+            provider: chain_provider # the first tested provided is in_memory (for admin) and then user_db
+            user_checker: app.listener.user_checker # introduced in 2.8
+            logout_on_user_change: true # Not setting "logout_on_user_change" to true on firewall "secured_area" is deprecated as of 3.4, it will always be true in 4.0.
+            form_login:
+                check_path: login_check
+                login_path: login
+                success_handler: app.listener.authentication_handler # this is a service
+                failure_handler: app.listener.authentication_handler # this is a service
+            logout:
+                path:   /logout
+                target: /login
+                invalidate_session: false #false to produce an error message
+                success_handler: app.listener.authentication_handler # this is a service
+
+        main:
+            anonymous: ~
+            logout_on_user_change: true # Not setting "logout_on_user_change" to true on firewall "secured_area" is deprecated as of 3.4, it will always be true in 4.0.
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https } # set to HTTPS
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY, requires_channel: https } # set to HTTPS

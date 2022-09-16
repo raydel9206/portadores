@@ -1,0 +1,427 @@
+#=======================================================================================================================
+# Control de Combustible por Depósito
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.controlCombustibleDeposito:
+  path:     /controlCombustibleDeposito
+  defaults: { _controller: PortadoresBundle:ReporteControlCombustibleDeposito:view }
+  methods: [GET]
+  options:
+    text: Control de Combustible por Depósito
+    module: Portadores
+    dropdown: [Reportes, Combustible]
+    #        dropdown_header: Electricidad
+    resources:
+      Listado:
+        description: Listado Control de Combustible por Depósito
+        files:
+        - bundles/portadores/js/reporteControlCombustibleDeposito/reporteControlCombustibleDepositoController.js
+        dependencies:
+        - app.portadores.controlCombustibleDeposito.load
+        - app.portadores.tarjeta.loadCombo
+        - app.portadores.unidad.loadTree
+
+      Exportar:
+        description: Exportar Control de Combustible por Depósito
+        files:
+        - bundles/portadores/js/reporteControlCombustibleDeposito/reporteControlCombustibleDepositoExportar.js
+        dependencies:
+        - app.portadores.controlCombustibleDeposito.print
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.controlCombustibleDeposito.load:
+  path:     /controlCombustibleDeposito/load
+  defaults: { _controller: PortadoresBundle:ReporteControlCombustibleDeposito:load }
+  methods: [GET]
+
+app.portadores.controlCombustibleDeposito.print:
+  path:     /controlCombustibleDeposito/print
+  defaults: { _controller: PortadoresBundle:ReporteControlCombustibleDeposito:print }
+  methods: [POST]
+
+#=======================================================================================================================
+# Control de Combustible por Vehículo
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.controlCombustibleVehiculo:
+  path:     /controlCombustibleVehiculo
+  defaults: { _controller: PortadoresBundle:ReporteControlCombustibleVehiculo:view }
+  methods: [GET]
+  options:
+    text: Control de Combustible por Vehículo
+    module: Portadores
+    dropdown: [Reportes, Combustible]
+    #        dropdown_header: Electricidad
+    resources:
+      Listado:
+        description: Listado Control de Combustible por Vehículo
+        files:
+        - bundles/portadores/js/reporteControlCombustibleVehiculo/reporteControlCombustibleVehiculoController.js
+        dependencies:
+        - app.portadores.controlCombustibleVehiculo.load
+        - app.portadores.vehiculo.loadCombo
+        - app.portadores.unidad.loadTree
+
+      Exportar:
+        description: Exportar Control de Combustible por Vehículo
+        files:
+        - bundles/portadores/js/reporteControlCombustibleVehiculo/reporteControlCombustibleVehiculoExportar.js
+        dependencies:
+        - app.portadores.controlCombustibleVehiculo.print
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.controlCombustibleVehiculo.load:
+  path:     /controlCombustibleVehiculo/load
+  defaults: { _controller: PortadoresBundle:ReporteControlCombustibleVehiculo:load }
+  methods: [GET]
+
+app.portadores.controlCombustibleVehiculo.print:
+  path:     /controlCombustibleVehiculo/print
+  defaults: { _controller: PortadoresBundle:ReporteControlCombustibleVehiculo:print }
+  methods: [POST]
+
+#=======================================================================================================================
+# Submayor de Vales, Anticipo y Liquidaciones
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.submayor:
+  path:     /submayor
+  defaults: { _controller: PortadoresBundle:Submayor:view }
+  methods: [GET]
+  options:
+    text: Submayor de Vales, Anticipo y Liquidaciones
+    module: Portadores
+    dropdown: [Reportes, Combustible]
+    #        dropdown_header: Electricidad
+    resources:
+      Listado:
+        description: Submayor de Vales, Anticipo y Liquidaciones
+        files:
+        - bundles/portadores/js/submayor/submayorController.js
+        dependencies:
+        - app.portadores.submayor.load
+        - app.portadores.unidad.loadTree
+
+      Exportar:
+        description: Exportar Submayor de Vales, Anticipo y Liquidaciones
+        files:
+        - bundles/portadores/js/submayor/submayorExportar.js
+        dependencies:
+        - app.portadores.submayor.print
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.submayor.load:
+  path:     /submayor/load
+  defaults: { _controller: PortadoresBundle:Submayor:load }
+  methods: [GET]
+
+app.portadores.submayor.print:
+  path:     /submayor/print
+  defaults: { _controller: PortadoresBundle:Submayor:print }
+  methods: [POST]
+
+#=======================================================================================================================
+# Reembolso de Combustible
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.reembolsoCombustible:
+#  path:     /reembolsoCombustible
+#  defaults: { _controller: PortadoresBundle:ReporteReembolsoCombustible:view }
+#  methods: [GET]
+#  options:
+#    text: Reembolso de Combustible
+#    module: Portadores
+#    dropdown: [Reportes, Combustible]
+#    #        dropdown_header: Electricidad
+#    resources:
+#      Listado:
+#        description: Listado Reembolso de Combustible
+#        files:
+#        - bundles/portadores/js/reporteReembolsoCombustible/reporteReembolsoController.js
+#        dependencies:
+#        - app.portadores.reembolsoCombustible.load
+#        - app.portadores.unidad.loadTree
+#        - app.portadores.moneda.loadMoneda
+#
+#      Exportar:
+#        description: Exportar Reembolso de Combustible
+#        files:
+#        - bundles/portadores/js/reporteReembolsoCombustible/reporteReembolsoExportar.js
+#        dependencies:
+#        - app.portadores.reembolsoCombustible.print
+#
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.reembolsoCombustible.load:
+#  path:     /reembolsoCombustible/load
+#  defaults: { _controller: PortadoresBundle:ReporteReembolsoCombustible:load }
+#  methods: [GET]
+#
+#app.portadores.reembolsoCombustible.print:
+#  path:     /reembolsoCombustible/print
+#  defaults: { _controller: PortadoresBundle:ReporteReembolsoCombustible:print }
+#  methods: [POST]
+
+#=======================================================================================================================
+# Pase Tarjetas por Post
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tarjeta_post:
+  path:     /tarjeta_post
+  defaults: { _controller: PortadoresBundle:ReporteTarjetasPost:view }
+  methods: [GET]
+  options:
+    text: Pase de las tarjetas por el POST
+    module: Portadores
+    dropdown: [Reportes, Combustible]
+    #        dropdown_header: Electricidad
+    resources:
+      Listado:
+        description: Reporte Pase de las tarjetas por el POST
+        files:
+        - bundles/portadores/js/reporteTarjetasPost/reporteTarjetasPostController.js
+        dependencies:
+        - app.portadores.tarjeta_post.load
+        - app.portadores.tarjeta.loadCombo
+        - app.portadores.unidad.loadTree
+
+      Exportar:
+        description: Exportar Reporte Pase de las tarjetas por el POST
+        files:
+        - bundles/portadores/js/reporteTarjetasPost/reporteTarjetasPostExportar.js
+        dependencies:
+        - app.portadores.tarjeta_post.print
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.tarjeta_post.load:
+  path:     /tarjeta_post/load
+  defaults: { _controller: PortadoresBundle:ReporteTarjetasPost:load }
+  methods: [GET]
+
+app.portadores.tarjeta_post.print:
+  path:     /tarjeta_post/print
+  defaults: { _controller: PortadoresBundle:ReporteTarjetasPost:print }
+  methods: [POST]
+
+#=======================================================================================================================
+# Libro Combustible en Caja
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.libro_caja:
+  path:     /libro_caja
+  defaults: { _controller: PortadoresBundle:ReporteCombustibleCaja:view }
+  methods: [GET]
+  options:
+    text: Libro Combustible en Caja
+    module: Portadores
+    dropdown: [Reportes, Combustible]
+    #        dropdown_header: Electricidad
+    resources:
+      Listado:
+        description: Libro Combustible en Caja
+        files:
+        - bundles/portadores/js/reporteCombustibleCaja/reporteCombustibleCajaController.js
+        dependencies:
+        - app.portadores.libro_caja.load
+        - app.portadores.tarjeta.loadCombo
+        - app.portadores.unidad.loadTree
+
+      Exportar:
+        description: Exportar Libro Combustible en Caja
+        files:
+        - bundles/portadores/js/reporteCombustibleCaja/reporteCombustibleCajaExportar.js
+        dependencies:
+        - app.portadores.libro_caja.print
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.libro_caja.load:
+  path:     /libro_caja/load
+  defaults: { _controller: PortadoresBundle:ReporteCombustibleCaja:load }
+  methods: [GET]
+
+app.portadores.libro_caja.print:
+  path:     /libro_caja/print
+  defaults: { _controller: PortadoresBundle:ReporteCombustibleCaja:print }
+  methods: [POST]
+
+#=======================================================================================================================
+# Conciliaciòn Mensual de las Hojas de Rutas
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.conciliacion_mensual:
+  path:     /conciliacion_mensual
+  defaults: { _controller: PortadoresBundle:ReporteConciliacionSemanal:view }
+  methods: [GET]
+  options:
+    text: Conciliación Mensual Combustible
+    module: Portadores
+    dropdown: [Reportes, Combustible]
+    #        dropdown_header: Electricidad
+    resources:
+      Listado:
+        description: Conciliación Mensual de Combustible
+        files:
+        - bundles/portadores/js/reporte_conciliacion_semanal/reporte_conciliacion_semanalController.js
+        dependencies:
+        - app.portadores.conciliacion_mensual.load
+        - app.portadores.tarjeta.loadCombo
+        - app.portadores.unidad.loadTree
+
+      Exportar:
+        description: Exportar Conciliación Mensual de las Hojas de Rutas
+        files:
+        - bundles/portadores/js/reporte_conciliacion_semanal/reporte_conciliacion_semanalExportar.js
+        dependencies:
+        - app.portadores.conciliacion_mensual.print
+        - app.portadores.conciliacion_mensual.export
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.conciliacion_mensual.load:
+  path:     /conciliacion_mensual/load
+  defaults: { _controller: PortadoresBundle:ReporteConciliacionSemanal:load }
+  methods: [GET]
+
+app.portadores.conciliacion_mensual.print:
+  path:     /conciliacion_mensual/print
+  defaults: { _controller: PortadoresBundle:ReporteConciliacionSemanal:print }
+  methods: [POST]
+
+#=======================================================================================================================
+# Anexo 8
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.anexo8:
+  path:     /anexo8
+  defaults: { _controller: PortadoresBundle:Anexo8:view }
+  methods: [GET]
+  options:
+    text: Anexo 8
+    module: Portadores
+    dropdown: [Reportes, Combustible]
+    #        dropdown_header: Electricidad
+    resources:
+      Listado:
+        description: Reporte Anexo 8
+        files:
+        - bundles/portadores/js/anexo8/anexo8Controller.js
+        dependencies:
+        - app.portadores.anexo8.load
+        - app.portadores.tarjeta.loadCombo
+        - app.portadores.unidad.loadTree
+
+      Exportar:
+        description: Exportar Reporte Anexo 8
+        files:
+        - bundles/portadores/js/anexo8/anexo8Exportar.js
+        dependencies:
+        - app.portadores.anexo8.print
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.anexo8.load:
+  path:     /anexo8/load
+  defaults: { _controller: PortadoresBundle:Anexo8:load }
+  methods: [GET]
+
+app.portadores.anexo8.print:
+  path:     /anexo8/print
+  defaults: { _controller: PortadoresBundle:Anexo8:print }
+  methods: [POST]
+
+#=======================================================================================================================
+# Analisis
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.analisis:
+  path:     /analisis
+  defaults: { _controller: PortadoresBundle:AnalisisTarjeta:view }
+  methods: [GET]
+  options:
+    text: Comportamiento Tarjetas
+    module: Portadores
+    dropdown: [Reportes, Combustible]
+    #        dropdown_header: Electricidad
+    resources:
+      Listado:
+        description: Análisis del Comportamiento de las Tarjetas
+        files:
+        - bundles/portadores/js/analisisTarjeta/analisisTarjetaController.js
+        dependencies:
+        - app.portadores.analisis.load
+        - app.portadores.tarjeta.loadCombo
+        - app.portadores.unidad.loadTree
+
+      Exportar:
+        description: Exportar Análisis del Comportamiento de las Tarjetas
+        files:
+        - bundles/portadores/js/analisisTarjeta/analisisTarjetaExportar.js
+        dependencies:
+        - app.portadores.analisis.print
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.analisis.load:
+  path:     /analisis/load
+  defaults: { _controller: PortadoresBundle:AnalisisTarjeta:load }
+  methods: [GET]
+
+app.portadores.analisis.print:
+  path:     /analisis/print
+  defaults: { _controller: PortadoresBundle:AnalisisTarjeta:print }
+  methods: [POST]
+
+#=======================================================================================================================
+# Reembolso Semanal de Combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.reembolso:
+  path:     /reembolso
+  defaults: { _controller: PortadoresBundle:ReporteReembolsoCombustible:view }
+  methods: [GET]
+  options:
+    text: Reembolso de combustible
+    module: Portadores
+    dropdown: [Reportes, Combustible]
+    resources:
+      Listado:
+        description: Reporte para el control del reembolso de combustible
+        files:
+        - bundles/portadores/js/reporteReembolsoCombustible/reporteReembolsoController.js
+        dependencies:
+        - app.portadores.reembolso.load
+        - app.portadores.unidad.loadTree
+        - app.portadores.moneda.loadMoneda
+      Exportar:
+        description: Exportar Reporte para el control del reembolso de combustible
+        files:
+        - bundles/portadores/js/reporteReembolsoCombustible/reporteReembolsoExportar.js
+        dependencies:
+        - app.portadores.reembolso.print
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.reembolso.load:
+  path:     /reembolso/load
+  defaults: { _controller: PortadoresBundle:ReporteReembolsoCombustible:load }
+  methods: [GET]
+
+app.portadores.reembolso.print:
+  path:     /reembolso/print
+  defaults: { _controller: PortadoresBundle:ReporteReembolsoCombustible:print  }
+  methods: [POST]
+
+#=======================================================================================================================
+# Saldos Combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.saldos_combustible:
+  path:     /saldos_combustible
+  defaults: { _controller: PortadoresBundle:SaldosCombustible:view }
+  methods: [GET]
+  options:
+    text: Saldos de combustible
+    module: Portadores
+    dropdown: [Reportes, Combustible]
+    resources:
+      Listado:
+        description: Reporte para el control por tipos de combustible
+        files:
+        - bundles/portadores/js/saldos_combustible/saldos_combustibleController.js
+        dependencies:
+        - app.portadores.saldos_combustible.load
+        - app.portadores.tipocombustible.load
+        - app.portadores.unidad.loadTree
+
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.saldos_combustible.load:
+  path:     /saldos_combustible/load
+  defaults: { _controller: PortadoresBundle:SaldosCombustible:load }
+  methods: [GET]
+
+
+

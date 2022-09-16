@@ -1,0 +1,165 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# Tarjetas
+#-----------------------------------------------------------------------------------------------------------------------
+app.soporte.tarjetaEventos:
+    path:     /tarjetaEventos
+    defaults: { _controller: SoporteBundle:TarjetaEventos:view }
+    methods: [GET]
+    options:
+        text: Eventos tarjetas magnéticas
+        module: Soporte
+        dropdown: Economía
+        resources:
+            Listado:
+                description: Permite dar soporte a los eventos mal ejecutados sobre las tarjetas
+                files:
+                - bundles/soporte/js/tarjetaEventos/tarjetaEventosController.js
+                dependencies:
+                - app.portadores.unidad.loadTree
+                - app.portadores.tarjeta.loadTarjeta
+                - app.soporte.tarjetaEventos.loadHistorial
+                - app.soporte.tarjetaEventos.clean
+#-----------------------------------------------------------------------------------------------------------------------
+app.soporte.tarjetaEventos.loadHistorial:
+  path:     /tarjetaEventos/loadHistorial
+  defaults: { _controller: SoporteBundle:TarjetaEventos:loadHistorial }
+  methods: [GET]
+
+app.soporte.tarjetaEventos.clean:
+  path:     /tarjetaEventos/clean
+  defaults: { _controller: SoporteBundle:TarjetaEventos:clean }
+  methods: [GET,POST]
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Anticipos
+#-----------------------------------------------------------------------------------------------------------------------
+
+app.soporte.anticipoEventos:
+    path:     /anticipoEventos
+    defaults: { _controller: SoporteBundle:AnticipoEventos:view }
+    methods: [GET]
+    options:
+        text: Anticipos Cerrados
+        module: Soporte
+        dropdown: Economía
+        resources:
+            Listado:
+                description: Permite dar soporte a los anticipos
+                files:
+                - bundles/soporte/js/anticipoEventos/anticipoEventosController.js
+                dependencies:
+                - app.portadores.unidad.loadTree
+                - app.portadores.anticipo.loadAnticipo
+                - app.portadores.tarjeta.loadTarjeta
+                - app.soporte.anticipoEventos.abrir
+                - app.portadores.persona.loadCombo
+                - app.portadores.anticipo.loadVehiculoAnticipo
+                - app.portadores.actividad.loadCombo
+#-----------------------------------------------------------------------------------------------------------------------
+app.soporte.anticipoEventos.abrir:
+  path:     /anticipoEventos/abrir
+  defaults: { _controller: SoporteBundle:AnticipoEventos:abrir }
+  methods: [GET,POST]
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Anticipos y recargas eliminados
+#-----------------------------------------------------------------------------------------------------------------------
+
+app.soporte.restoreHistorial:
+    path:     /restoreHistorial
+    defaults: { _controller: SoporteBundle:RestoreHistorial:view }
+    methods: [GET]
+    options:
+        text: Recargas, Anticipos y Liquidaciones
+        module: Soporte
+        dropdown: Economía
+        resources:
+            Listado:
+                description: Permite restaurar los anticipos, liquidaciones y recargas durante el proceso de corregir el historial de la tarjeta
+                files:
+                - bundles/soporte/js/restoreHistorial/restoreHistorialController.js
+                dependencies:
+                - app.portadores.familia.load
+                - app.portadores.actividad.load
+                - app.portadores.unidad.loadTree
+                - app.soporte.anticipo.modAntRest
+                - app.portadores.servicentro.load
+                - app.portadores.persona.loadCombo
+                - app.portadores.paralizacion.load
+                - app.soporte.anticipo.desmarcarAnt
+                - app.soporte.anticipo.restaurarRec
+                - app.soporte.anticipo.descartarAnt
+                - app.soporte.anticipo.descartarRec
+                - app.portadores.anticipo.restaurar
+                - app.portadores.tarjeta.loadTarjeta
+                - app.portadores.actividad.loadCombo
+                - app.portadores.centrocosto.loadCombo
+                - app.soporte.restoreHistorial.restaurar
+                - app.portadores.tarjeta.recargaTarjetas
+                - app.soporte.restoreHistorial.modAntRest
+                - app.soporte.restoreHistorial.loadAntRest
+                - app.soporte.restoreHistorial.loadRecRest
+                - app.soporte.restoreHistorial.loadLiqRest
+                - app.soporte.restoreHistorial.restaurarRec
+                - app.soporte.restoreHistorial.descartarRec
+                - app.soporte.restoreHistorial.desmarcarAnt
+                - app.soporte.restoreHistorial.descartarAnt
+                - app.portadores.anticipo.loadTarjetaAnticipo
+                - app.portadores.tarjeta.exportRecargaTarjeta
+                - app.portadores.anticipo.loadTrabajoAnticipo
+                - app.portadores.anticipo.loadVehiculoAnticipo
+                - app.soporte.restoreHistorial.addLiqToRestore
+                - app.portadores.anticipo.loadAnticipoLiquidaciones
+                - app.portadores.anticipo.getCantLtsLiquidacionAnticipo
+                - app.portadores.anticipo.loadHistorialPrecioCombustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.soporte.restoreHistorial.loadAntRest:
+    path:     /restoreHistorial/loadAntRest
+    defaults: { _controller: SoporteBundle:RestoreHistorial:loadAntRest }
+    methods: [GET]
+
+app.soporte.restoreHistorial.loadRecRest:
+    path:     /restoreHistorial/loadRecRest
+    defaults: { _controller: SoporteBundle:RestoreHistorial:loadRecRest }
+    methods: [GET]
+
+app.soporte.restoreHistorial.loadLiqRest:
+    path:     /restoreHistorial/loadLiqRest
+    defaults: { _controller: SoporteBundle:RestoreHistorial:loadLiqRest }
+    methods: [GET]
+
+app.soporte.restoreHistorial.restaurar:
+    path:     /restoreHistorial/restaurar
+    defaults: { _controller: SoporteBundle:RestoreHistorial:restaurar }
+    methods: [GET,POST]
+
+app.soporte.restoreHistorial.modAntRest:
+    path:     /restoreHistorial/modAntRest
+    defaults: { _controller: SoporteBundle:RestoreHistorial:modAntRest }
+    methods: [GET,POST]
+
+app.soporte.restoreHistorial.restaurarRec:
+    path:     /restoreHistorial/restaurarRec
+    defaults: { _controller: SoporteBundle:RestoreHistorial:restaurarRec }
+    methods: [GET,POST]
+
+app.soporte.restoreHistorial.descartarAnt:
+    path:     /restoreHistorial/descartarAnt
+    defaults: { _controller: SoporteBundle:RestoreHistorial:descartarAnt }
+    methods: [GET,POST]
+
+app.soporte.restoreHistorial.desmarcarAnt:
+    path:     /restoreHistorial/desmarcarAnt
+    defaults: { _controller: SoporteBundle:RestoreHistorial:desmarcarAnt }
+    methods: [GET,POST]
+
+app.soporte.restoreHistorial.descartarRec:
+    path:     /restoreHistorial/descartarRec
+    defaults: { _controller: SoporteBundle:RestoreHistorial:descartarRec }
+    methods: [GET,POST]
+
+app.soporte.restoreHistorial.addLiqToRestore:
+    path:     /restoreHistorial/addLiqToRestore
+    defaults: { _controller: SoporteBundle:RestoreHistorial:addLiqToRestore }
+    methods: [GET,POST]
+

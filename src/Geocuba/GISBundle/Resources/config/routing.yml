@@ -1,0 +1,111 @@
+#=======================================================================================================================
+# Map
+#-----------------------------------------------------------------------------------------------------------------------
+app.gis.map:
+    path:     /map
+    defaults: { _controller: GISBundle:Map:index }
+    methods: [GET]
+    options:
+        text: GISRoute
+        module: Mapa
+        resources:
+            Cuba:
+                description: Mapa de Cuba
+                files:
+                    - bundles/gis/js/map.js
+                    - bundles/gis/js/stores.js
+                    - bundles/gis/js/layers.js
+                    - bundles/gis/css/map.css
+                dependencies:
+                    - TODO # TODO
+            Rutas:
+                description: Mostrar e insertar rutas
+                files:
+                    - bundles/gis/js/Route/view.js
+                    - bundles/gis/js/Route/add.js
+                dependencies:
+                    - app.gis.route.list
+                    - app.gis.route.add
+                    - app.gis.route.export
+                    - app.gis.state.list
+                    - app.gis.locality.list
+                    - app.gis.poi.list
+            Puntos de interés (POI):
+                description: Insertar y eliminar puntos de interés (POI)
+                files:
+                    - bundles/gis/js/POI/add.js
+                    - bundles/gis/js/POI/delete.js
+                dependencies:
+                    - app.gis.poi.add
+                    - app.gis.poi.del
+            Tablas de distancia:
+                description: Crear y eliminar tablas de distancia
+                files:
+                    - bundles/gis/js/Table/view.js
+                    - bundles/gis/js/Table/add.js
+                dependencies:
+                    - app.gis.table.list
+                    - app.gis.table.add
+                    - app.gis.table.del
+                    - app.gis.table.export
+#-----------------------------------------------------------------------------------------------------------------------
+app.gis.state.list:
+  path:     /state/list
+  defaults: { _controller: GISBundle:Map:listStates }
+  methods: [GET]
+
+app.gis.locality.list:
+  path:     /locality/list
+  defaults: { _controller: GISBundle:Map:listLocalities }
+  methods: [GET]
+#-----------------------------------------------------------------------------------------------------------------------
+app.gis.route.list:
+    path:     /route/list
+    defaults: { _controller: GISBundle:Route:list }
+    methods: [GET]
+
+app.gis.route.add:
+    path:     /route/add
+    defaults: { _controller: GISBundle:Route:add }
+    methods: [GET, POST]
+
+app.gis.route.export:
+    path:     /route/export
+    defaults: { _controller: GISBundle:Route:export }
+    methods: [GET]
+#-----------------------------------------------------------------------------------------------------------------------
+app.gis.poi.list:
+  path:     /poi/list
+  defaults: { _controller: GISBundle:POI:list }
+  methods: [GET]
+
+app.gis.poi.add:
+    path:     /poi/add
+    defaults: { _controller: GISBundle:POI:add }
+    methods: [GET, POST]
+
+app.gis.poi.del:
+    path:     /poi/del
+    defaults: { _controller: GISBundle:POI:del }
+    methods: [DELETE]
+#-----------------------------------------------------------------------------------------------------------------------
+app.gis.table.list:
+    path:     /table/list
+    defaults: { _controller: GISBundle:Table:list }
+    methods: [GET]
+
+app.gis.table.add:
+    path:     /table/add
+    defaults: { _controller: GISBundle:Table:add }
+    methods: [GET, POST]
+
+app.gis.table.del:
+    path:     /table/del
+    defaults: { _controller: GISBundle:Table:del }
+    methods: [DELETE]
+
+app.gis.table.export:
+  path:     /table/export
+  defaults: { _controller: GISBundle:Table:export }
+  methods: [GET]
+#-----------------------------------------------------------------------------------------------------------------------

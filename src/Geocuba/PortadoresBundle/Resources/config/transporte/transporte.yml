@@ -1,0 +1,623 @@
+#=======================================================================================================================
+# Anexo Único
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.anexo_unico:
+#    path:     /anexo_unico
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:view }
+#    methods: [GET]
+#    options:
+#        text: Anexo Único
+#        module: Portadores
+#        dropdown: Transporte
+#        #        dropdown_header: Seguridad
+#        resources:
+#            Listado:
+#                description: Listado de Anexo Único
+#                files:
+#                - bundles/portadores/js/anexoUnico/anexoUnicoController.js
+#                dependencies:
+#                - app.portadores.anexo_unico.load
+#                - app.portadores.unidad.loadTree
+#            Editar:
+#                description: Editar los Anexos Únicos
+#                dependent_of: Listado
+#                files:
+#                - bundles/portadores/js/anexoUnico/anexoUnicoGestionar.js
+#                dependencies:
+#                - app.portadores.tipoMantenimiento.loadTipoMantenimientoCombo
+#                - app.portadores.persona.loadCombo
+#                - app.portadores.vehiculo.loadCombo
+#                - app.portadores.anexo_unico.add
+#                - app.portadores.anexo_unico.mod
+#                - app.portadores.anexo_unico.del
+#                - app.portadores.anexo_unico.loadCombKilometros
+#                - app.portadores.anexo_unico.getLastAnexoVehiculo
+#                - app.portadores.anexo_unico.getCombAbastecido
+#                - app.portadores.anexo_unico.getDatosVehiculo
+#                - app.portadores.anexo_unico.getKM_recorridos
+#                - app.portadores.anexo_unico.loadTipoMantenimientoBy
+#                - app.portadores.tarjeta.loadTarjeta
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.anexo_unico.load:
+#    path:     /anexo_unico/load
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:load }
+#    methods: [GET]
+#
+#app.portadores.anexo_unico.add:
+#    path:     /anexo_unico/add
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:add }
+#    methods: [GET, POST]
+#
+#app.portadores.anexo_unico.mod:
+#    path:     /anexo_unico/mod
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.anexo_unico.del:
+#    path:     /anexo_unico/del
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:del }
+#    methods: [DELETE]
+#
+#app.portadores.anexo_unico.loadCombKilometros:
+#    path:     /anexo_unico/loadCombKilometros
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:loadCombKilometros }
+#    methods: [GET]
+#
+#app.portadores.anexo_unico.getLastAnexoVehiculo:
+#    path:     /anexo_unico/getLastAnexoVehiculo
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:getLastAnexoVehiculo }
+#    methods: [GET]
+#
+#
+#app.portadores.anexo_unico.getCombAbastecido:
+#    path:     /anexo_unico/getCombAbastecido
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:getCombAbastecido }
+#    methods: [GET]
+#
+#app.portadores.anexo_unico.getDatosVehiculo:
+#    path:     /anexo_unico/getDatosVehiculo
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:getDatosVehiculo }
+#    methods: [GET]
+#
+#app.portadores.anexo_unico.getKM_recorridos:
+#    path:     /anexo_unico/getKM_recorridos
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:getKM_recorridos }
+#    methods: [GET]
+#
+#app.portadores.anexo_unico.loadTipoMantenimientoBy:
+#    path:     /anexo_unico/loadTipoMantenimientoBy
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:loadTipoMantenimientoBy }
+#    methods: [GET]
+#=======================================================================================================================
+# Registro de Combustible
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.registro_combustible:
+    path:     /registro_combustible
+    defaults: { _controller: PortadoresBundle:RegistroCombustible:view }
+    methods: [GET]
+    options:
+        text: Registro de Combustible
+        module: Portadores
+        dropdown: Transporte
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de Registros de Combustible
+                files:
+                    - bundles/portadores/js/registroCombustible/registroCombustibleController.js
+                dependencies:
+                    - app.portadores.registro_combustible.load
+                    - app.portadores.unidad.loadTree
+                    - app.portadores.vehiculo.load
+                    - app.portadores.moneda.loadMoneda
+            Editar:
+                description: Editar los Registros de combustible
+                dependent_of: Listado
+                files:
+                    - bundles/portadores/js/registroCombustible/registroCombustibleGestionar.js
+                dependencies:
+                    - app.portadores.registro_combustible.loadPlanificacion
+                    - app.portadores.registro_combustible.loadAnalisis
+                    - app.portadores.registro_combustible.loadAnalisisData
+                    - app.portadores.registro_combustible.add
+                    - app.portadores.registro_combustible.print
+                    - app.portadores.registro_combustible.addAnalisis
+                    - app.portadores.registro_combustible.del
+
+#                    - app.portadores.tipoMantenimiento.loadTipoMantenimientoCombo
+#                    - app.portadores.persona.loadCombo
+#                    - app.portadores.vehiculo.loadCombo
+#                    - app.portadores.registro_combustible.mod
+#                    - app.portadores.registro_combustible.del
+#                    - app.portadores.registro_combustible.loadCombKilometros
+#                    - app.portadores.registro_combustible.getLastAnexoVehiculo
+#                    - app.portadores.registro_combustible.getCombAbastecido
+#                    - app.portadores.registro_combustible.getDatosVehiculo
+#                    - app.portadores.registro_combustible.getKM_recorridos
+#                    - app.portadores.registro_combustible.loadTipoMantenimientoBy
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.registro_combustible.load:
+    path:     /registro_combustible/load
+    defaults: { _controller: PortadoresBundle:RegistroCombustible:load }
+    methods: [GET]
+
+app.portadores.registro_combustible.loadPlanificacion:
+    path:     /registro_combustible/loadPlanificacion
+    defaults: { _controller: PortadoresBundle:RegistroCombustible:loadPlanificacion }
+    methods: [GET]
+
+app.portadores.registro_combustible.loadAnalisis:
+    path:     /registro_combustible/loadAnalisis
+    defaults: { _controller: PortadoresBundle:RegistroCombustible:loadAnalisis }
+    methods: [GET]
+
+app.portadores.registro_combustible.loadAnalisisData:
+    path:     /registro_combustible/loadAnalisisData
+    defaults: { _controller: PortadoresBundle:RegistroCombustible:loadAnalisisData }
+    methods: [GET]
+
+app.portadores.registro_combustible.add:
+    path:     /registro_combustible/add
+    defaults: { _controller: PortadoresBundle:RegistroCombustible:add }
+    methods: [GET, POST]
+
+app.portadores.registro_combustible.print:
+    path:     /registro_combustible/print
+    defaults: { _controller: PortadoresBundle:RegistroCombustible:print }
+    methods: [GET, POST]
+
+app.portadores.registro_combustible.addAnalisis:
+    path:     /registro_combustible/addAnalisis
+    defaults: { _controller: PortadoresBundle:RegistroCombustible:addAnalisis }
+    methods: [GET, POST]
+
+#app.portadores.registro_combustible.mod:
+#    path:     /registro_combustible/mod
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:mod }
+#    methods: [GET, POST]
+#
+app.portadores.registro_combustible.del:
+    path:     /registro_combustible/del
+    defaults: { _controller: PortadoresBundle:RegistroCombustible:del }
+    methods: [DELETE]
+#
+#app.portadores.registro_combustible.loadCombKilometros:
+#    path:     /registro_combustible/loadCombKilometros
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:loadCombKilometros }
+#    methods: [GET]
+#
+#app.portadores.registro_combustible.getLastAnexoVehiculo:
+#    path:     /registro_combustible/getLastAnexoVehiculo
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:getLastAnexoVehiculo }
+#    methods: [GET]
+#
+#
+#app.portadores.registro_combustible.getCombAbastecido:
+#    path:     /registro_combustible/getCombAbastecido
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:getCombAbastecido }
+#    methods: [GET]
+#
+#app.portadores.registro_combustible.getDatosVehiculo:
+#    path:     /registro_combustible/getDatosVehiculo
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:getDatosVehiculo }
+#    methods: [GET]
+#
+#app.portadores.registro_combustible.getKM_recorridos:
+#    path:     /registro_combustible/getKM_recorridos
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:getKM_recorridos }
+#    methods: [GET]
+#
+#app.portadores.registro_combustible.loadTipoMantenimientoBy:
+#    path:     /registro_combustible/loadTipoMantenimientoBy
+#    defaults: { _controller: PortadoresBundle:AnexoUnico:loadTipoMantenimientoBy }
+#    methods: [GET]
+
+#=======================================================================================================================
+# Hoja de Ruta
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.hoja_ruta:
+#    path:     /hoja_ruta
+#    defaults: { _controller: PortadoresBundle:HojaRuta:view }
+#    methods: [GET]
+#    options:
+#        text: Hoja de Ruta
+#        module: Portadores
+#        dropdown: Transporte
+#        #        dropdown_header: Seguridad
+#        resources:
+#            Listado:
+#                description: Listado de Hojas de Ruta
+#                files:
+#                - bundles/portadores/js/hojaRuta/hojaRutaController.js
+#                dependencies:
+#                - app.portadores.unidad.loadTree
+#                - app.portadores.hoja_ruta.load
+#                - app.portadores.hoja_ruta.desglose.load
+#                - app.portadores.hoja_ruta.conductor.load
+#            Editar:
+#                description: Editar las Hojas de Ruta
+#                dependent_of: Listado
+#                files:
+#                - bundles/portadores/js/hojaRuta/hojaRutaGestionar.js
+#                dependencies:
+#                - app.portadores.vehiculo.loadCombo
+#                - app.portadores.persona.loadCombo
+#                - app.portadores.hoja_ruta.add
+#                - app.portadores.hoja_ruta.mod
+#                - app.portadores.hoja_ruta.del
+#                - app.portadores.hoja_ruta.desglose.add
+#                - app.portadores.hoja_ruta.desglose.del
+#                - app.portadores.hoja_ruta.conductor.add
+#                - app.portadores.hoja_ruta.conductor.del
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.hoja_ruta.load:
+#    path:     /hoja_ruta/load
+#    defaults: { _controller: PortadoresBundle:HojaRuta:load }
+#    methods: [GET]
+#
+#app.portadores.hoja_ruta.add:
+#    path:     /hoja_ruta/add
+#    defaults: { _controller: PortadoresBundle:HojaRuta:add }
+#    methods: [GET, POST]
+#
+#app.portadores.hoja_ruta.mod:
+#    path:     /hoja_ruta/mod
+#    defaults: { _controller: PortadoresBundle:HojaRuta:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.hoja_ruta.del:
+#    path:     /hoja_ruta/del
+#    defaults: { _controller: PortadoresBundle:HojaRuta:del }
+#    methods: [DELETE]
+#
+#app.portadores.hoja_ruta.desglose.load:
+#    path:     /hoja_ruta/desglose/load
+#    defaults: { _controller: PortadoresBundle:HojaRuta:loadDesglose }
+#    methods: [GET]
+#
+#app.portadores.hoja_ruta.desglose.add:
+#    path:     /hoja_ruta/desglose/add
+#    defaults: { _controller: PortadoresBundle:HojaRuta:addDesglose }
+#    methods: [POST]
+#
+#app.portadores.hoja_ruta.desglose.del:
+#    path:     /hoja_ruta/desglose/del
+#    defaults: { _controller: PortadoresBundle:HojaRuta:delDesglose }
+#    methods: [DELETE]
+#
+#app.portadores.hoja_ruta.conductor.load:
+#    path:     /hoja_ruta/conductor/load
+#    defaults: { _controller: PortadoresBundle:HojaRuta:loadConductor }
+#    methods: [GET]
+#
+#app.portadores.hoja_ruta.conductor.add:
+#    path:     /hoja_ruta/conductor/add
+#    defaults: { _controller: PortadoresBundle:HojaRuta:addConductor }
+#    methods: [POST]
+#
+#app.portadores.hoja_ruta.conductor.del:
+#    path:     /hoja_ruta/conductor/del
+#    defaults: { _controller: PortadoresBundle:HojaRuta:delConductor }
+#    methods: [DELETE]
+#=======================================================================================================================
+# Plan Recape
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.plan_recape:
+#    path:     /plan_recape
+#    defaults: { _controller: PortadoresBundle:PlanRecape:view }
+#    methods: [GET]
+#    options:
+#        text: Plan Recape
+#        module: Portadores
+#        dropdown: Transporte
+#        #        dropdown_header: Seguridad
+#        resources:
+#            Listado:
+#                description: Listado de Planes de Recape
+#                files:
+#                - bundles/portadores/js/plan_recape/plan_recapeController.js
+#                dependencies:
+#                - app.portadores.unidad.loadTree
+#                - app.portadores.plan_recape.load
+#                - app.portadores.plan_recape.loadVehiculos
+#            Editar:
+#                description: Editar los Planes de Recape
+#                dependent_of: Listado
+#                files:
+#                - bundles/portadores/js/plan_recape/plan_recapeGestionar.js
+#                dependencies:
+#                - app.portadores.plan_recape.add
+#                - app.portadores.plan_recape.mod
+#                - app.portadores.plan_recape.del
+#                - app.portadores.vehiculo.loadCombo
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.plan_recape.load:
+#    path:     /plan_recape/load
+#    defaults: { _controller: PortadoresBundle:PlanRecape:load }
+#    methods: [GET]
+#
+#app.portadores.plan_recape.add:
+#    path:     /plan_recape/add
+#    defaults: { _controller: PortadoresBundle:PlanRecape:add }
+#    methods: [GET, POST]
+#
+#app.portadores.plan_recape.mod:
+#    path:     /plan_recape/mod
+#    defaults: { _controller: PortadoresBundle:PlanRecape:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.plan_recape.del:
+#    path:     /plan_recape/del
+#    defaults: { _controller: PortadoresBundle:PlanRecape:del }
+#    methods: [DELETE]
+#
+#app.portadores.plan_recape.loadVehiculos:
+#    path:     /plan_recape/loadVehiculos
+#    defaults: { _controller: PortadoresBundle:PlanRecape:loadVehiculoRecape }
+#    methods: [GET, POST]
+
+#=======================================================================================================================
+# Prueba Litro
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.prueba_litro:
+    path:     /prueba_litro
+    defaults: { _controller: PortadoresBundle:PruebaLitro:view }
+    methods: [GET]
+    options:
+        text: Prueba Litro
+        module: Portadores
+        dropdown: Transporte
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de Pruebas del Litro
+                files:
+                - bundles/portadores/js/pruebaLitro/pruebaLitroController.js
+                dependencies:
+                - app.portadores.unidad.loadTree
+                - app.portadores.prueba_litro.load
+            Editar:
+                description: Editar los Pruebas del Litro
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/pruebaLitro/pruebaLitroGestionar.js
+                dependencies:
+                - app.portadores.vehiculo.loadCombo
+                - app.portadores.prueba_litro.add
+                - app.portadores.prueba_litro.mod
+                - app.portadores.prueba_litro.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.prueba_litro.load:
+    path:     /prueba_litro/load
+    defaults: { _controller: PortadoresBundle:PruebaLitro:load }
+    methods: [GET]
+
+app.portadores.prueba_litro.add:
+    path:     /prueba_litro/add
+    defaults: { _controller: PortadoresBundle:PruebaLitro:add }
+    methods: [GET, POST]
+
+app.portadores.prueba_litro.mod:
+    path:     /prueba_litro/mod
+    defaults: { _controller: PortadoresBundle:PruebaLitro:mod }
+    methods: [GET, POST]
+
+app.portadores.prueba_litro.del:
+    path:     /prueba_litro/del
+    defaults: { _controller: PortadoresBundle:PruebaLitro:del }
+    methods: [DELETE]
+
+#=======================================================================================================================
+# Accidente
+#-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.accidente:
+#    path:     /accidente
+#    defaults: { _controller: PortadoresBundle:Accidente:view }
+#    methods: [GET]
+#    options:
+#        text: Accidente
+#        module: Portadores
+#        dropdown: Transporte
+#        #        dropdown_header: Seguridad
+#        resources:
+#            Listado:
+#                description: Listado de Pruebas del Litro
+#                files:
+#                - bundles/portadores/js/accidente/accidenteController.js
+#                dependencies:
+#                - app.portadores.unidad.loadTree
+#                - app.portadores.accidente.load
+#            Editar:
+#                description: Editar los Accidentes
+#                dependent_of: Listado
+#                files:
+#                - bundles/portadores/js/accidente/accidenteGestionar.js
+#                dependencies:
+#                - app.portadores.vehiculo.loadCombo
+#                - app.portadores.persona.loadCombo
+#                - app.portadores.accidente.add
+#                - app.portadores.accidente.mod
+#                - app.portadores.accidente.del
+#                - app.portadores.accidente.export
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.accidente.load:
+#    path:     /accidente/load
+#    defaults: { _controller: PortadoresBundle:Accidente:load }
+#    methods: [GET]
+#
+#app.portadores.accidente.add:
+#    path:     /accidente/add
+#    defaults: { _controller: PortadoresBundle:Accidente:add }
+#    methods: [GET, POST]
+#
+#app.portadores.accidente.mod:
+#    path:     /accidente/mod
+#    defaults: { _controller: PortadoresBundle:Accidente:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.accidente.del:
+#    path:     /accidente/del
+#    defaults: { _controller: PortadoresBundle:Accidente:del }
+#    methods: [DELETE]
+#
+#app.portadores.accidente.export:
+#    path:     /accidente/export
+#    defaults: { _controller: PortadoresBundle:Accidente:exportToExcel }
+#    methods: [GET, POST]
+
+#=======================================================================================================================
+# Paralización
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.paralizacion:
+    path:     /paralizacion
+    defaults: { _controller: PortadoresBundle:Paralizacion:view }
+    methods: [GET]
+    options:
+        text: Paralización
+        module: Portadores
+        dropdown: Transporte
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de Paralización
+                files:
+                - bundles/portadores/js/paralizacion/paralizacionController.js
+                dependencies:
+                - app.portadores.unidad.loadTree
+                - app.portadores.paralizacion.load
+                - app.portadores.paralizacion.cdt.load
+            Editar:
+                description: Editar las Paralizaciones
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/paralizacion/paralizacionGestionar.js
+                dependencies:
+                - app.portadores.persona.loadCombo
+                - app.portadores.vehiculo.loadCombo
+                - app.portadores.paralizacion.add
+                - app.portadores.paralizacion.mod
+                - app.portadores.paralizacion.del
+                - app.portadores.paralizacion.ponerMarcha
+                - app.portadores.paralizacion.print
+                - app.portadores.paralizacion.printParque
+                - app.portadores.paralizacion.export
+                - app.portadores.paralizacion.exportCdt
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.paralizacion.load:
+    path:     /paralizacion/load
+    defaults: { _controller: PortadoresBundle:Paralizacion:load }
+    methods: [GET]
+
+app.portadores.paralizacion.cdt.load:
+    path:     /paralizacion/cdt/load
+    defaults: { _controller: PortadoresBundle:Paralizacion:loadCdt }
+    methods: [GET]
+
+app.portadores.paralizacion.add:
+    path:     /paralizacion/add
+    defaults: { _controller: PortadoresBundle:Paralizacion:add }
+    methods: [GET, POST]
+
+app.portadores.paralizacion.ponerMarcha:
+    path:     /paralizacion/ponerMarcha
+    defaults: { _controller: PortadoresBundle:Paralizacion:ponerMarcha }
+    methods: [GET, POST]
+
+app.portadores.paralizacion.mod:
+    path:     /paralizacion/mod
+    defaults: { _controller: PortadoresBundle:Paralizacion:mod }
+    methods: [GET, POST]
+
+app.portadores.paralizacion.del:
+    path:     /paralizacion/del
+    defaults: { _controller: PortadoresBundle:Paralizacion:del }
+    methods: [DELETE]
+
+app.portadores.paralizacion.print:
+    path:     /paralizacion/print
+    defaults: { _controller: PortadoresBundle:Paralizacion:print }
+    methods: [GET]
+
+app.portadores.paralizacion.printParque:
+    path:     /paralizacion/printParque
+    defaults: { _controller: PortadoresBundle:Paralizacion:printParque }
+    methods: [GET]
+
+app.portadores.paralizacion.export:
+    path:     /paralizacion/export
+    defaults: { _controller: PortadoresBundle:Paralizacion:export }
+    methods: [GET]
+
+app.portadores.paralizacion.exportCdt:
+    path:     /paralizacion/exportCdt
+    defaults: { _controller: PortadoresBundle:Paralizacion:exportCdtToExcel }
+    methods: [GET]
+
+#=======================================================================================================================
+# Mantenimiento
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.mantenimiento:
+    path:     /mantenimiento
+    defaults: { _controller: PortadoresBundle:Mantenimiento:view }
+    methods: [GET]
+    options:
+        text: Mantenimiento
+        module: Portadores
+        dropdown: Transporte
+        #        dropdown_header: Seguridad
+        resources:
+            Listado:
+                description: Listado de Mantenimientos
+                files:
+                - bundles/portadores/js/mantenimiento/mantenimientoController.js
+                dependencies:
+                - app.portadores.unidad.loadTree
+                - app.portadores.mantenimiento.load
+                - app.portadores.mantenimiento.loadVehiculos
+                - app.portadores.mantenimiento.loadUltimo
+            Editar:
+                description: Editar los Mantenimientos
+                dependent_of: Listado
+                files:
+                - bundles/portadores/js/mantenimiento/mantenimientoGestionar.js
+                dependencies:
+                - app.portadores.vehiculo.loadCombo
+                - app.portadores.mantenimiento.loadTipoMant
+                - app.portadores.mantenimiento.add
+                - app.portadores.mantenimiento.mod
+                - app.portadores.mantenimiento.del
+#-----------------------------------------------------------------------------------------------------------------------
+app.portadores.mantenimiento.load:
+    path:     /mantenimiento/load
+    defaults: { _controller: PortadoresBundle:Mantenimiento:load }
+    methods: [GET]
+
+app.portadores.mantenimiento.loadVehiculos:
+    path:     /mantenimiento/loadVehiculos
+    defaults: { _controller: PortadoresBundle:Mantenimiento:loadVehiculos }
+    methods: [GET]
+
+app.portadores.mantenimiento.loadUltimo:
+    path:     /mantenimiento/loadUltimo
+    defaults: { _controller: PortadoresBundle:Mantenimiento:loadUltimo }
+    methods: [GET]
+
+app.portadores.mantenimiento.loadTipoMant:
+    path:     /mantenimiento/loadTipoMant
+    defaults: { _controller: PortadoresBundle:Mantenimiento:loadTipoMant }
+    methods: [GET]
+
+app.portadores.mantenimiento.add:
+    path:     /mantenimiento/add
+    defaults: { _controller: PortadoresBundle:Mantenimiento:add }
+    methods: [GET, POST]
+
+app.portadores.mantenimiento.mod:
+    path:     /mantenimiento/mod
+    defaults: { _controller: PortadoresBundle:Mantenimiento:mod }
+    methods: [GET, POST]
+
+app.portadores.mantenimiento.del:
+    path:     /mantenimiento/del
+    defaults: { _controller: PortadoresBundle:Mantenimiento:del }
+    methods: [DELETE]
