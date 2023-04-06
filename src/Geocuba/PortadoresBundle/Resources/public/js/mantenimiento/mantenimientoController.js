@@ -194,6 +194,16 @@ Ext.onReady(function () {
                 filter: 'string',
                 flex: 1
             }, {
+                text: '<strong>Odómetro Inicio</strong>',
+                dataIndex: 'odometro_inicio',
+                filter: 'string',
+                flex: 1,
+                renderer: function (value) {
+                    if (typeof value === 'string')
+                        return '<div class="badge badge-pill badge-danger">' + value + '</div>';
+                    return value;
+                }
+            }, {
                 text: '<strong>Odómetro</strong>',
                 dataIndex: 'odometro',
                 filter: 'string',

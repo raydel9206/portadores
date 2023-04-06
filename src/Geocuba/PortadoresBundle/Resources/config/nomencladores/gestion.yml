@@ -363,54 +363,54 @@ app.portadores.actividad.del:
 #    path:     /factor/delete
 #    defaults: { _controller: PortadoresBundle:FactorConversion:del }
 #    methods: [DELETE]
-app.portadores.factor:
-    path:     /factor
-    defaults: { _controller: PortadoresBundle:Factor:view }
-    methods: [GET]
-    options:
-        text: Factor Conversión
-        module: Portadores
-        dropdown: [Datos Primarios, Gestión]
-#        dropdown_header: Gestión
-        resources:
-            Listado:
-                description: Listado de Facttores de Conversión
-                files:
-                    - bundles/portadores/js/factor/factorController.js
-                dependencies:
-                    - app.portadores.factor.load
-            Editar:
-                description: Editar los Factores de Conversión
-                dependent_of: Listado
-                files:
-                    - bundles/portadores/js/factor/factorGestionar.js
-                dependencies:
-                    - app.portadores.unidad_medida.load
-#                    - app.portadores.portador.load
-                    - app.portadores.factor.add
-                    - app.portadores.factor.mod
-                    - app.portadores.factor.del
-
-#-----------------------------------------------------------------------------------------------------------------------
-app.portadores.factor.load:
-    path:     /factor/load
-    defaults: { _controller: PortadoresBundle:Factor:load }
-    methods: [GET]
-
-app.portadores.factor.add:
-    path:     /factor/add
-    defaults: { _controller: PortadoresBundle:Factor:add }
-    methods: [GET, POST]
-
-app.portadores.factor.mod:
-    path:     /factor/mod
-    defaults: { _controller: PortadoresBundle:Factor:mod }
-    methods: [GET, POST]
-
-app.portadores.factor.del:
-    path:     /factor/del
-    defaults: { _controller: PortadoresBundle:Factor:del }
-    methods: [DELETE]
+#app.portadores.factor:
+#    path:     /factor
+#    defaults: { _controller: PortadoresBundle:Factor:view }
+#    methods: [GET]
+#    options:
+#        text: Factor Conversión
+#        module: Portadores
+#        dropdown: [Datos Primarios, Gestión]
+##        dropdown_header: Gestión
+#        resources:
+#            Listado:
+#                description: Listado de Facttores de Conversión
+#                files:
+#                    - bundles/portadores/js/factor/factorController.js
+#                dependencies:
+#                    - app.portadores.factor.load
+#            Editar:
+#                description: Editar los Factores de Conversión
+#                dependent_of: Listado
+#                files:
+#                    - bundles/portadores/js/factor/factorGestionar.js
+#                dependencies:
+#                    - app.portadores.unidad_medida.load
+##                    - app.portadores.portador.load
+#                    - app.portadores.factor.add
+#                    - app.portadores.factor.mod
+#                    - app.portadores.factor.del
+#
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.factor.load:
+#    path:     /factor/load
+#    defaults: { _controller: PortadoresBundle:Factor:load }
+#    methods: [GET]
+#
+#app.portadores.factor.add:
+#    path:     /factor/add
+#    defaults: { _controller: PortadoresBundle:Factor:add }
+#    methods: [GET, POST]
+#
+#app.portadores.factor.mod:
+#    path:     /factor/mod
+#    defaults: { _controller: PortadoresBundle:Factor:mod }
+#    methods: [GET, POST]
+#
+#app.portadores.factor.del:
+#    path:     /factor/del
+#    defaults: { _controller: PortadoresBundle:Factor:del }
+#    methods: [DELETE]
 
 #=======================================================================================================================
 # Servicio de Agua

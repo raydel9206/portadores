@@ -283,8 +283,6 @@ Ext.onReady(function () {
                     obj.tipo_combustibleid = selected[0].data.tipo_combustible_id;
                     obj.unidadid = Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id;
 
-
-
                     App.request('GET', App.buildURL('/portadores/plan_disponible/loadDisponibleTC'), obj, null, null,
                         function (response) {
                             disposicion = response.disponible;
@@ -348,7 +346,6 @@ Ext.onReady(function () {
                     for (var i = 0; i < datos.length; i++) {
                         suma += datos[i].data.cambustible_asignado;
                     }
-
                     if (e.originalValue === e.value) {
                         store_distribucion_combustible_desglose.filterBy(function (record) {
                             return record.data.vehiculo.search(Ext.getCmp('find_button_vehiculo').getValue()) !== -1;
@@ -381,6 +378,7 @@ Ext.onReady(function () {
                         e.record.data['incremento'] = 0;
                     }
 
+
                     Ext.getCmp('disposicion').setValue(disponible);
                     selection_dist.data.cantidad = suma;
                     grid_desglose.getView().refresh();
@@ -392,7 +390,6 @@ Ext.onReady(function () {
                 }
             }
         },
-
         columns: [
             {
                 dataIndex: 'vehiculo',
@@ -409,7 +406,7 @@ Ext.onReady(function () {
             //     dataIndex: 'persona',
             //     width: 170,
             //     text: '<b>Persona Autorizada</b>'
-            // },123123123
+            // },
             {
                 dataIndex: 'cambustible_asignado',
                 width: 90,

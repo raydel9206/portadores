@@ -153,6 +153,13 @@ class Vehiculo
     private $normaFabricante;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="factor", type="decimal", precision=3, scale=2, nullable=true)
+     */
+    private $factor;
+
+    /**
      * @var bool|null
      *
      * @ORM\Column(name="embarcacion", type="boolean", nullable=true)
@@ -701,6 +708,31 @@ class Vehiculo
     public function getNormaFabricante()
     {
         return $this->normaFabricante;
+    }
+
+
+    /**
+     * Set factor.
+     *
+     * @param string|null $factor
+     *
+     * @return Vehiculo
+     */
+    public function setFactor($factor = null)
+    {
+        $this->factor = $factor;
+
+        return $this;
+    }
+
+    /**
+     * Get factor.
+     *
+     * @return string|null
+     */
+    public function getFactor()
+    {
+        return $this->factor;
     }
 
     /**

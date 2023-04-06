@@ -59,8 +59,12 @@ resportes_combustible:
 resportes_transporte:
     resource: "@PortadoresBundle/Resources/config/reportes/transporte.yml"
     prefix:   /
-
 #Utiles
+cerrar_periodo:
+    resource: "@PortadoresBundle/Resources/config/utiles/util.yml"
+    prefix:   /
+
+#RigthMenu
 global.portadores.utiles.cambiarPeriodo:
     path:     /utiles/cambiarPeriodo
     defaults: { _controller: PortadoresBundle:Utiles:cambiarPeriodo }
@@ -71,10 +75,10 @@ global.portadores.utiles.getCurrentPeriodo:
     defaults: { _controller: PortadoresBundle:Utiles:getCurrentPeriodo }
     methods: [GET,POST]
 
-global.portadores.utiles.cerrarPeriodo:
-    path:     /utiles/cerrarPeriodo
-    defaults: { _controller: PortadoresBundle:Utiles:cerrarPeriodo }
-    methods: [GET,POST]
+#global.portadores.utiles.cerrarPeriodo:
+#    path:     /utiles/cerrarPeriodo
+#    defaults: { _controller: PortadoresBundle:Utiles:cerrarPeriodo }
+#    methods: [GET,POST]
 
 global.portadores.utiles.loadTree:
     path:     /utiles/loadTree

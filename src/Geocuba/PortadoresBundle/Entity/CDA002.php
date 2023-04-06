@@ -95,7 +95,7 @@ class CDA002
     /**
      * @var decimal
      *
-     * @ORM\Column(name="consumo_plan", type="decimal", precision=20, scale=2, nullable=true)
+     * @ORM\Column(name="consumo_plan", type="decimal", precision=20, scale=3, nullable=true)
      */
     private $consumoPlan;
 

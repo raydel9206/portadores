@@ -694,7 +694,7 @@ Ext.onReady(function () {
                         return;
                     }
 
-                    var selection = Ext.getCmp('id_grid_distribucion').getSelectionModel().getLastSelected();
+                    selection = Ext.getCmp('id_grid_distribucion').getSelectionModel().getLastSelected();
                     Ext.Msg.show({
                         title: '¿Aprobar Distribución?',
                         message: Ext.String.format('¿Está seguro que desea aprobar la distribución <span class="font-italic font-weight-bold">{0}</span>?', selection.data.denominacion),
@@ -1184,7 +1184,7 @@ Ext.onReady(function () {
         fieldStyle: 'font-weight: bold; color: green',
         listeners: {
             change: function (This, newValue, oldValue, eOpts) {
-                if (newValue === 0)
+                if (newValue == 0)
                     This.setFieldStyle('font-weight: bold; color: black',)
                 else if (newValue < 0)
                     This.setFieldStyle('font-weight: bold; color: red',)

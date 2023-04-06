@@ -39,12 +39,18 @@ class ReporteControlCombustibleDepositoController extends Controller
     public function loadAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $conn = $this->get('database_connection');
         $id = trim($request->get('tarjeta'));
 
         if (is_null($id) || $id == '') {
             return new JsonResponse(array('rows' => array(), 'total' => 0));
         }
+
+        $session = $request->getSession();
+        $currentYear = intval($session->get('current_year'));
+        $currentMonth = intval($session->get('current_month'));
+        $resultado = null;
+        $litros = null;
         $export = $request->get('export');
         $anno = $request->get('anno');
         $mes = $request->get('mes');
@@ -66,7 +72,7 @@ class ReporteControlCombustibleDepositoController extends Controller
                 'entrada_importe' => '',
                 'salida_litros' => '',
                 'salida_importe' => '',
-                'existencia_importe' => $tarjeta->getImporte(),
+                'existencia_importe' =>  $tarjeta->getImporte(),
                 'existencia_litros' => round($tarjeta->getImporte() / $tarjeta->getTipoCombustibleid()->getPrecio(), 2),
                 'chapa' => '',
                 'combustible' => $tarjeta->getTipoCombustibleid()->getNombre(),

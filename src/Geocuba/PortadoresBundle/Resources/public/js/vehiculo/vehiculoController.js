@@ -386,11 +386,19 @@
                 width: 90
             },
             {
-                text: '<strong>Norma <br> FAR</strong>',
+                text: '<strong>Norma FAR</strong>',
                 dataIndex: 'norma_far',
                 filter: 'string',
                 align: 'center',
-                width: 90
+                width: 90,
+                renderer: function (val2, met, record, a, b, c, d) {
+                    if (record.get('factor')) {
+                        return val2 + ' / ' + record.get('factor');
+                    } else {
+                        return val2;
+                    }
+
+                }
             },
             {
                 text: '<strong>No. <br>inventario</strong>',
@@ -452,7 +460,7 @@
         tbar: {
             id: 'vehiculo_tbar',
             height: 36,
-            items: ['  ', find_button, tipo_combustible,tipo_medio, btnClearSearch, '-']
+            items: ['  ', find_button, tipo_combustible, tipo_medio, btnClearSearch, '-']
         },
         bbar: {
             xtype: 'pagingtoolbar',

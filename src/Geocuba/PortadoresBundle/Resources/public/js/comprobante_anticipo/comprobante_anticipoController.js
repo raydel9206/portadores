@@ -146,37 +146,6 @@ Ext.onReady(function(){
         }
     });
 
-    let _btn_Export = Ext.create('Ext.button.MyButton', {
-        id: 'modelo50723_btn_export',
-        text: 'Exportar',
-        iconCls: 'fas fa-file-excel text-primary',
-        handler: function (This, e) {
-            // var summary = Ext.getCmp('grid_modelo5073').getView().normalView.features[0].summaryRecord.data;
-            // var send = [];
-            // Ext.Array.each(summary, function (valor) {
-            //     send.push(valor);
-            // });
-            var obj ={};
-            // obj.summary = Ext.encode(send);
-            // obj.mes = Ext.getCmp('mes_anno').getValue().getMonth()+1;
-            // obj.anno = Ext.getCmp('mes_anno').getValue().getFullYear();
-            // obj.unidadid =Ext.getCmp('arbolunidades').getSelection()[0].data.id;
-            // obj.siglas_unidad =Ext.getCmp('arbolunidades').getSelection()[0].data.siglas;
-            // obj.accion = true;
-            //
-            App.request('POST', App.buildURL('/portadores/comp_anticipo/export'), obj, null, null,
-                function (response) { // success_callback
-                    window.open('data:application/vnd.ms-excel,' + encodeURIComponent(response.html));
-                }
-            );
-
-            // var mes = Ext.getCmp('mes_anno').getValue().getMonth()+1;
-            // var anno = Ext.getCmp('mes_anno').getValue().getFullYear();
-            // window.open(App.buildURL("/portadores/modelo5073/export") + "?view_id=" + App.route + "&unidadid=" + Ext.getCmp('arbolunidades').getSelection()[0].data.id + "&anno=" + anno + "&mes=" + mes + "&accion=true");
-        }
-    });
-
-
     var grid_comp_anticipo = Ext.create('Ext.grid.Panel',{
         id: 'id_grid_comp_anticipo',
         disabled: true,
@@ -214,7 +183,7 @@ Ext.onReady(function(){
         tbar: {
             id: 'tbar_comp',
             height: 36,
-            items: [mes_anno, '-',monedaCombo , '-',_btn_Export]
+            items: [mes_anno, '-',monedaCombo , '-']
         },
     });
     var _panel_comp_anticipo = Ext.create('Ext.panel.Panel',{

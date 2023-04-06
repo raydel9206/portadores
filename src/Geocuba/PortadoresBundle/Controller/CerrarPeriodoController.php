@@ -7,6 +7,8 @@
  */
 
 namespace Geocuba\PortadoresBundle\Controller;
+
+use Doctrine\Common\Util\Debug;
 use Geocuba\PortadoresBundle\Entity\CierreMes;
 use Doctrine\Common\CommonException;
 use Geocuba\Utils\ViewActionTrait;
@@ -17,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Geocuba\PortadoresBundle\Util\Utiles;
 
 class CerrarPeriodoController extends Controller
 {
@@ -33,35 +36,39 @@ class CerrarPeriodoController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        //validar que no se puede cerrar periodo si existen anticipos abiertos
-        $anticipos = $em->getRepository('PortadoresBundle:Anticipo')->findBy(array('abierto' => true,'visible' => true));
-        if (count($anticipos) > 0)
-            return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'No se puede cerrar el período, existen anticipos abiertos.'));
+        $_user = $this->get('security.token_storage')->getToken()->getUser();
+        $_unidaduser = $_user->getUnidad()->getId();
 
-        $entity = $this->getDoctrine()->getManager()->getRepository('PortadoresBundle:CierreMes')->findOneBy(array('cerrado' => false, 'disponible' => true));
+        $_unidades = [];
+        Utiles::findDomainByChildren($em, $em->getRepository('PortadoresBundle:Unidad')->find($_user->getUnidad()), $_unidades);
+        $unidades_string = $this->unidadesToString($_unidades);
+
+        $conn = $this->get('database_connection');
+        $anticipos = $conn->fetchAll("select * from datos.anticipo as a 
+                                      inner join nomencladores.tarjeta as t on t.id = a.tarjeta
+                                      inner join nomencladores.unidad as u on u.id = t.nunidadid
+                                      where
+                                      t.nunidadid in ($unidades_string) and a.abierto = TRUE and a.visible = TRUE ");
+
+        if (count($anticipos) > 0)
+            return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'No se puede cerrar el período, hay ' . count($anticipos) . ' anticipo(s) abierto(s).'));
+
+        $entity = $this->getDoctrine()->getManager()->getRepository('PortadoresBundle:CierreMes')->findOneBy(array('cerrado' => false, 'disponible' => true, 'idunidad' =>$_unidaduser));
         $entity->setCerrado(true);
         $entity->setDisponible(false);
 
-        $_user = $this->get('security.token_storage')->getToken()->getUser();
-        $unidadid = $em->getRepository('AdminBundle:UsuarioUnidad')->findOneBy(array('usuario' => $_user->getId()));
 
         $cierreMes = new CierreMes();
         $cierreMes->setMes(($mes_abierto == 12) ? 1 : $mes_abierto + 1);
         $cierreMes->setAnno(($mes_abierto == 12) ? $anno_abierto + 1 : $anno_abierto);
         $cierreMes->setCerrado(false);
         $cierreMes->setDisponible(true);
-        $cierreMes->setIdunidad($em->getRepository('PortadoresBundle:Unidad')->find($unidadid));
+        $cierreMes->setIdunidad($_user->getUnidad());
 
         try {
             $em->persist($entity);
             $em->persist($cierreMes);
             $em->flush();
-
-            //si se cierra el mes de diciembre reiniciar la secuancia del numero de orden de trabajo
-//            if ($mes_abierto == 12) {
-//                $conn = $this->getDoctrine()->getConnection();
-//                $conn->fetchAll("SELECT setval('datos.no_orden_seq', 0, true)");
-//            }
 
             return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'Cierre realizado con éxito.'));
         } catch (\Exception $ex) {
@@ -71,5 +78,14 @@ class CerrarPeriodoController extends Controller
                 throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
             }
         }
+    }
+
+    private function unidadesToString($_unidades)
+    {
+        $_string_unidades = "'" . $_unidades[0] . "'";
+        for ($i = 1, $iMax = count($_unidades); $i < $iMax; $i++) {
+            $_string_unidades .= ",'" . $_unidades[$i] . "'";
+        }
+        return $_string_unidades;
     }
 }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CierreMes
  *
  * @ORM\Table(name="datos.cierre_mes", indexes={@ORM\Index(name="IDX_9B439BFB975B7D83", columns={"idunidad"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Geocuba\PortadoresBundle\Repository\CierreMesRepository")
  */
 class CierreMes
 {

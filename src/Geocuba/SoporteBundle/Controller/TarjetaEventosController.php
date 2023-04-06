@@ -224,6 +224,7 @@ class TarjetaEventosController extends Controller
             $em->flush();
             return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'Tarjeta corregida con éxito. Se han eliminado'.$cant_ant_del.'anticipos'));
         } catch (\Exception $ex) {
+            //Debug::dump($ex);
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error guardando los datos, si el error persiste contacte a su administrador.'));
         }
     }

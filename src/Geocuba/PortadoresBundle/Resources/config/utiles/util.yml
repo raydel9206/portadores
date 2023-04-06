@@ -1,42 +1,42 @@
-#=======================================================================================================================
-# Seleccionar Periodo
-#-----------------------------------------------------------------------------------------------------------------------
-app.portadores.seleccionarperiodo:
-    path:     /seleccionarperiodo
-    defaults: { _controller: PortadoresBundle:Utiles:view }
-    methods: [GET, POST]
-    options:
-        text: Seleccionar Período
-        module: Portadores
-        dropdown: Utiles
-#        dropdown_header: Seguridad
-        resources:
-            Seleccionar:
-                description: Selecciona el período
-                files:
-                    - bundles/portadores/js/utiles/cambiarPeriodo.js
-                dependencies:
-#                    - app.portadores.seleccionarperiodo.getCurrentPeriodo
-#                    - app.portadores.seleccionarperiodo.selectPeriodo
-                    - global.portadores.seleccionarperiodo.selectPeriodo
-                    - global.portadores.seleccionarperiodo.getCurrentPeriodo
-                    - app.portadores.seleccionarperiodo.getunidadlogin
-
-#-----------------------------------------------------------------------------------------------------------------------
-global.portadores.seleccionarperiodo.getCurrentPeriodo:
-    path:     /seleccionarperiodo/getCurrentPeriodo
-    defaults: { _controller: PortadoresBundle:Utiles:getCurrentPeriodo }
-    methods: [GET]
-
-gloabal.portadores.seleccionarperiodo.selectPeriodo:
-    path:     /seleccionarperiodo/selectPeriodo
-    defaults: { _controller: PortadoresBundle:Utiles:selectPeriodo }
-    methods: [GET, POST]
-
-app.portadores.seleccionarperiodo.getunidadlogin:
-    path:     /seleccionarperiodo/getunidadlogin
-    defaults: { _controller: PortadoresBundle:Utiles:getunidadlogin }
-    methods: [GET, POST]
+##=======================================================================================================================
+## Seleccionar Periodo
+##-----------------------------------------------------------------------------------------------------------------------
+#app.portadores.seleccionarperiodo:
+#    path:     /seleccionarperiodo
+#    defaults: { _controller: PortadoresBundle:Utiles:view }
+#    methods: [GET, POST]
+#    options:
+#        text: Seleccionar Período
+#        module: Portadores
+#        dropdown: Utiles
+##        dropdown_header: Seguridad
+#        resources:
+#            Seleccionar:
+#                description: Selecciona el período
+#                files:
+#                    - bundles/portadores/js/utiles/cambiarPeriodo.js
+#                dependencies:
+##                    - app.portadores.seleccionarperiodo.getCurrentPeriodo
+##                    - app.portadores.seleccionarperiodo.selectPeriodo
+#                    - global.portadores.seleccionarperiodo.selectPeriodo
+#                    - global.portadores.seleccionarperiodo.getCurrentPeriodo
+#                    - app.portadores.seleccionarperiodo.getunidadlogin
+#
+##-----------------------------------------------------------------------------------------------------------------------
+#global.portadores.seleccionarperiodo.getCurrentPeriodo:
+#    path:     /seleccionarperiodo/getCurrentPeriodo
+#    defaults: { _controller: PortadoresBundle:Utiles:getCurrentPeriodo }
+#    methods: [GET]
+#
+#gloabal.portadores.seleccionarperiodo.selectPeriodo:
+#    path:     /seleccionarperiodo/selectPeriodo
+#    defaults: { _controller: PortadoresBundle:Utiles:selectPeriodo }
+#    methods: [GET, POST]
+#
+#app.portadores.seleccionarperiodo.getunidadlogin:
+#    path:     /seleccionarperiodo/getunidadlogin
+#    defaults: { _controller: PortadoresBundle:Utiles:getunidadlogin }
+#    methods: [GET, POST]
 
 #=======================================================================================================================
 # Cerrar Periodo

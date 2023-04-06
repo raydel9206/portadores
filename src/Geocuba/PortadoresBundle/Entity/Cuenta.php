@@ -43,15 +43,15 @@ class Cuenta
      */
     private $descripcion;
 
-//    /**
-//     * @var \Unidad
-//     *
-//     * @ORM\ManyToOne(targetEntity="Unidad")
-//     * @ORM\JoinColumns({
-//     *   @ORM\JoinColumn(name="unidad", referencedColumnName="id")
-//     * })
-//     */
-//    private $unidad;
+    /**
+     * @var \Unidad
+     *
+     * @ORM\ManyToOne(targetEntity="Unidad")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="unidad", referencedColumnName="id")
+     * })
+     */
+    private $unidad;
 
     /**
      * @var \Clasificador
@@ -147,29 +147,29 @@ class Cuenta
         return $this->descripcion;
     }
 
-//    /**
-//     * Set unidad.
-//     *
-//     * @param \Geocuba\PortadoresBundle\Entity\Unidad|null $unidad
-//     *
-//     * @return Cuenta
-//     */
-//    public function setUnidad(\Geocuba\PortadoresBundle\Entity\Unidad $unidad = null)
-//    {
-//        $this->unidad = $unidad;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get unidad.
-//     *
-//     * @return \Geocuba\PortadoresBundle\Entity\Unidad|null
-//     */
-//    public function getUnidad()
-//    {
-//        return $this->unidad;
-//    }
+    /**
+     * Set unidad.
+     *
+     * @param \Geocuba\PortadoresBundle\Entity\Unidad|null $unidad
+     *
+     * @return Cuenta
+     */
+    public function setUnidad(\Geocuba\PortadoresBundle\Entity\Unidad $unidad = null)
+    {
+        $this->unidad = $unidad;
+    
+        return $this;
+    }
+
+    /**
+     * Get unidad.
+     *
+     * @return \Geocuba\PortadoresBundle\Entity\Unidad|null
+     */
+    public function getUnidad()
+    {
+        return $this->unidad;
+    }
 
     /**
      * Set clasificador.

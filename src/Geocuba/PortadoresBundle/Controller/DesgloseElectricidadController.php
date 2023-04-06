@@ -46,7 +46,7 @@ class DesgloseElectricidadController extends Controller
             $entity->setPlanPico($valores[$i]['plan_pico']);
             $entity->setPerdidast($valores[$i]['perdidasT']);
             $entity->setMes($valores[$i]['nromes']);
-            $entity->setAnno($anno);
+            $entity->setAnno($valores[$i]['anno_desglose']);
             $entity->setIddesgloseServicios($em->getRepository('PortadoresBundle:DesgloseServicios')->find($valores[$i]['id_desglose']));
             $em->persist($entity);
             $em->flush();
@@ -216,8 +216,7 @@ class DesgloseElectricidadController extends Controller
             $perdidasT = trim($request->get('perdidasT'));
             $servicio = trim($request->get('servicio'));
             $fecha_desglose = new \DateTime();
-            $session = $request->getSession();
-            $anno = $session->get('current_year');
+            $anno = trim($request->get('anno_desglose'));
 
             $entity = new DesgloseServicios();
             $entity->setPlanPico($plan_pico);

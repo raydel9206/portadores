@@ -385,51 +385,55 @@ Ext.onReady(function () {
             _window.show();
         },
 
-        cerrarPeriodo: function () {
-            var tree_store = Ext.create('Ext.data.TreeStore', {
-                id: 'store_unidad',
-                fields: [
-                    {name: 'id', type: 'string'},
-                    {name: 'nombre', type: 'string'},
-                    {name: 'siglas', type: 'string'}
-                ],
-                proxy: {
-                    type: 'ajax',
-                    url: App.buildURL('/portadores/utiles/loadTree'),
-                    reader: {
-                        type: 'json',
-                    }
-                },
-                root: {
-                    expanded: true,
-                    children: []
-                },
-                autoLoad: false,
-                listeners: {
-                    beforeload: function (This, operation) {
-                        operation.setParams({
-                            unidad_id: App.user.unidad,
-                            checked: true
-                        });
-                    }
-                }
-            });
-
-            var params = {};
-            Ext.MessageBox.confirm('Confirmaci&oacute;n', '¿Está usted seguro de cerrar el Período actual: ' + App.getMonthName(App.selected_month) + ' del ' + App.selected_year + '? <br> Una ves realizada la acción, no podrá modificar los datos del mismo',
-                function (btn) {
-                    if (btn === 'yes') {
-                        App.request('GET', App.buildURL('/portadores/utiles/cerrarPeriodo'), params, null, null,
-                            function (response) { // success_callback
-                                App.showAlert('Período Cerrado Correctamente', 'success');
-                                App.showWindowPeriodo();
-                            },
-                            function (response) { // failure_callback
-                                App.showAlert(response.message, 'error');
-                            }, null);
-                    }
-                });
-        },
+        // cerrarPeriodo: function () {
+        //     var tree_store = Ext.create('Ext.data.TreeStore', {
+        //         id: 'store_unidad',
+        //         fields: [
+        //             {name: 'id', type: 'string'},
+        //             {name: 'nombre', type: 'string'},
+        //             {name: 'siglas', type: 'string'}
+        //         ],
+        //         proxy: {
+        //             type: 'ajax',
+        //             url: App.buildURL('/portadores/utiles/loadTree'),
+        //             reader: {
+        //                 type: 'json',
+        //             }
+        //         },
+        //         root: {
+        //             expanded: true,
+        //             children: []
+        //         },
+        //         autoLoad: false,
+        //         listeners: {
+        //             beforeload: function (This, operation) {
+        //                 operation.setParams({
+        //                     unidad_id: App.user.unidad,
+        //                     checked: true
+        //                 });
+        //             }
+        //         }
+        //     });
+        //
+        //     var params = {};
+        //     Ext.MessageBox.confirm('Confirmaci&oacute;n', '¿Está usted seguro de cerrar el Período actual: ' + App.getMonthName(App.selected_month) + ' del ' + App.selected_year + '? <br> Una ves realizada la acción, no podrá modificar los datos del mismo',
+        //         function (btn) {
+        //             if (btn === 'yes') {
+        //                 App.request('GET', App.buildURL('/portadores/utiles/cerrarPeriodo'), params, null, null,
+        //                     function (response) { //
+        //                         if(response.success()){
+        //                             App.showAlert('Período Cerrado Correctamente', 'success');
+        //                             App.showWindowPeriodo();
+        //                         }else{
+        //                             App.showAlert(response.message, 'error');
+        //                         }
+        //                     },
+        //                     function (response) { // failure_callback
+        //                         App.showAlert(response.message, 'error');
+        //                     }, null);
+        //             }
+        //         });
+        // },
 
         FilterStore: function (DataStore, Params) {
             var _url = DataStore.getProxy().url;
@@ -839,9 +843,9 @@ Ext.onReady(function () {
                 '<a class="dropdown-item mr-4 pl-3 pr-3" href="#" onclick="App.showWindowPeriodo()"><i class="fas fa-calendar-alt float-right text-primary fa_inherit"></i>Seleccionar Período</a>',
                 {compiled: true, disableFormats: true});
 
-            this.templates['dropdown_item_close_periodo_tpl'] = new Ext.Template(
-                '<a class="dropdown-item mr-4 pl-3 pr-3" href="#" onclick="App.cerrarPeriodo()"><i class="fas fa-lock float-right text-primary fa_inherit"></i>Cerrar Período</a>',
-                {compiled: true, disableFormats: true});
+            // this.templates['dropdown_item_close_periodo_tpl'] = new Ext.Template(
+            //     '<a class="dropdown-item mr-4 pl-3 pr-3" href="#" onclick="App.cerrarPeriodo()"><i class="fas fa-lock float-right text-primary fa_inherit"></i>Cerrar Período</a>',
+            //     {compiled: true, disableFormats: true});
 
 
             this.templates['nav_item_logout_tpl'] = new Ext.Template(
@@ -1211,7 +1215,7 @@ Ext.onReady(function () {
                     .append($(this.templates['dropdown_item_about_tpl'].apply()))
                     .append($(this.templates['divider_tpl'].apply()))
                     .append($(this.templates['dropdown_item_periodo_tpl'].apply()))
-                    .append($(this.templates['dropdown_item_close_periodo_tpl'].apply()))
+                    // .append($(this.templates['dropdown_item_close_periodo_tpl'].apply()))
                     .append($(this.templates['dropdown_item_logout_tpl'].apply({url: this.buildURL('logout')})));
             } else {
                 navbar_right_el.append($(this.templates['nav_item_logout_tpl'].apply({url: this.buildURL('logout')})));

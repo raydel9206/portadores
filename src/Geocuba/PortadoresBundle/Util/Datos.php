@@ -22,11 +22,14 @@ class Datos
         ));
         if ($entity)
             foreach ($entity as $ent) {
+
                 $datos = array(
                     'precio' => $ent->getPrecio(),
                     'nombre' => $ent->getNombre()
                 );
+
             }
+
         return $datos;
     }
 
@@ -53,7 +56,6 @@ class Datos
         } else {
             $cuentas = $em->getRepository('PortadoresBundle:CuentaRecarga')->findBy(array('unidad' => $em->getRepository('PortadoresBundle:Unidad')->find($unidadid), 'tipoCombustible' => $tipoCombustible));
         }
-
         foreach ($cuentas as $cuenta) {
             $saldo_fincimex += $cuenta->getMonto();
         }

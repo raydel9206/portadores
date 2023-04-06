@@ -17,14 +17,13 @@ Ext.onReady(function () {
                 rootProperty: 'rows'
             }
         },
-        autoLoad: true,
+        autoLoad: false,
         listeners: {
             beforeload: function (This, operation, eOpts) {
-                console.log('asdd');
                 Ext.getCmp('id_grid_cuenta').getSelectionModel().deselectAll();
                 operation.setParams({
                     no_cuenta: find_button.getValue(),
-                    // unidadid: Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id
+                    unidadid: Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id
                 });
             }
         }
@@ -59,34 +58,34 @@ Ext.onReady(function () {
     });
 
 
-    // var tree_store = Ext.create('Ext.data.TreeStore', {
-    //     id: 'store_unidades',
-    //     fields: [
-    //         {name: 'id', type: 'string'},
-    //         {name: 'nombre', type: 'string'},
-    //         {name: 'siglas', type: 'string'},
-    //         {name: 'codigo', type: 'string'},
-    //         {name: 'municipio', type: 'string'},
-    //         {name: 'municipio_nombre', type: 'string'},
-    //         {name: 'provincia', type: 'string'},
-    //         {name: 'provincia_nombre', type: 'string'},
-    //     ],
-    //     proxy: {
-    //         type: 'ajax',
-    //         url: App.buildURL('/portadores/unidad/loadTree'),
-    //         reader: {
-    //             type: 'json',
-    //             rootProperty: 'children'
-    //         }
-    //     },
-    //     sorters: 'nombre',
-    //     listeners: {
-    //         beforeload: function () {
-    //             if (Ext.getCmp('arbolunidades') !== undefined)
-    //                 Ext.getCmp('arbolunidades').getSelectionModel().deselectAll();
-    //         }
-    //     }
-    // });
+    var tree_store = Ext.create('Ext.data.TreeStore', {
+        id: 'store_unidades',
+        fields: [
+            {name: 'id', type: 'string'},
+            {name: 'nombre', type: 'string'},
+            {name: 'siglas', type: 'string'},
+            {name: 'codigo', type: 'string'},
+            {name: 'municipio', type: 'string'},
+            {name: 'municipio_nombre', type: 'string'},
+            {name: 'provincia', type: 'string'},
+            {name: 'provincia_nombre', type: 'string'},
+        ],
+        proxy: {
+            type: 'ajax',
+            url: App.buildURL('/portadores/unidad/loadTree'),
+            reader: {
+                type: 'json',
+                rootProperty: 'children'
+            }
+        },
+        sorters: 'nombre',
+        listeners: {
+            beforeload: function () {
+                if (Ext.getCmp('arbolunidades') !== undefined)
+                    Ext.getCmp('arbolunidades').getSelectionModel().deselectAll();
+            }
+        }
+    });
 
     var find_button = Ext.create('Ext.form.field.Text', {
         emptyText: 'Buscar...',
@@ -184,36 +183,36 @@ Ext.onReady(function () {
     });
 
     //TODO barra de scroll para las unidades
-    // var panetree = Ext.create('Ext.tree.Panel', {
-    //     title: 'Unidades',
-    //     store: tree_store,
-    //     region: 'west',
-    //     width: 280,
-    //     id: 'arbolunidades',
-    //     hideHeaders: true,
-    //     border: true,
-    //     rootVisible: false,
-    //     collapsible: true,
-    //     collapsed: false,
-    //     collapseDirection: 'left',
-    //     header: {style: {backgroundColor: 'white', borderBottom: '1px solid #c1c1c1 !important'},},
-    //     layout: 'fit',
-    //     columns: [
-    //         {xtype: 'treecolumn', iconCls: Ext.emptyString, width: 450, dataIndex: 'nombre'}
-    //     ],
-    //     root: {
-    //         text: 'root',
-    //         expanded: true
-    //     },
-    //     listeners: {
-    //         select: function (This, record, tr, rowIndex, e, eOpts) {
-    //             Ext.getCmp('id_grid_cuenta').enable();
-    //             Ext.getCmp('id_grid_cuenta').getStore().loadPage(1);
-    //         }
-    //     }
-    //
-    //
-    // });
+    var panetree = Ext.create('Ext.tree.Panel', {
+        title: 'Unidades',
+        store: tree_store,
+        region: 'west',
+        width: 280,
+        id: 'arbolunidades',
+        hideHeaders: true,
+        border: true,
+        rootVisible: false,
+        collapsible: true,
+        collapsed: false,
+        collapseDirection: 'left',
+        header: {style: {backgroundColor: 'white', borderBottom: '1px solid #c1c1c1 !important'},},
+        layout: 'fit',
+        columns: [
+            {xtype: 'treecolumn', iconCls: Ext.emptyString, width: 450, dataIndex: 'nombre'}
+        ],
+        root: {
+            text: 'root',
+            expanded: true
+        },
+        listeners: {
+            select: function (This, record, tr, rowIndex, e, eOpts) {
+                Ext.getCmp('id_grid_cuenta').enable();
+                Ext.getCmp('id_grid_cuenta').getStore().loadPage(1);
+            }
+        }
+
+
+    });
 
     var grid_subcuenta = Ext.create('Ext.grid.Panel', {
         id: 'id_grid_subcuenta',
@@ -258,7 +257,7 @@ Ext.onReady(function () {
         store: store,
         region: 'center',
         width: '75%',
-        // disabled: true,
+        disabled: true,
         columns: [
             {text: '<strong>No. Cuenta</strong>', dataIndex: 'no_cuenta', filter: 'string', flex: 0.4},
             {text: '<strong>Denominación</strong>', dataIndex: 'clasificador_nombre', filter: 'string', flex: 1},
@@ -304,7 +303,7 @@ Ext.onReady(function () {
         closable: true,
         layout: 'border',
         padding: '1 0 0',
-        items: [grid_cuenta,grid_subcuenta]
+        items: [panetree, grid_cuenta,grid_subcuenta]
     });
 
     App.render(panel_cuenta);

@@ -380,7 +380,7 @@ Ext.onReady(function () {
                     Ext.create('Ext.window.Window', {
                         id: 'desglosemeses_id',
                         title: 'Desglose por meses ',
-                        height: 230,
+                        height: 270,
                         modal: true,
                         width: 340,
                         layout: 'fit',
@@ -407,6 +407,19 @@ Ext.onReady(function () {
                                         margin: '4 4 4 4',
                                         id: 'id_meses_desgloseserver'
                                     }, {
+                                        xtype: 'numberfield',
+                                        decimalSeparator: '.',
+                                        name: 'anno_desglose',
+                                        fieldLabel: 'Año',
+                                        id: 'anno_desglose',
+                                        value: App.selected_year,
+                                        margin: '4 4 4 4',
+                                        afterLabelTextTpl: [
+                                            '<span style="color:red;font-weight:bold" data-qtip="Campo Obligatorio">*</span>'
+                                        ],
+                                        allowBlank: false
+                                    },
+                                    {
                                         xtype: 'numberfield',
                                         decimalSeparator: '.',
                                         name: 'plan_total',
@@ -453,6 +466,7 @@ Ext.onReady(function () {
 
                                     let mes = Ext.getCmp('id_meses_desgloseserver').getValue();
                                     let plan_total = Ext.getCmp('id_plan_total').getValue();
+                                    let anno_desglose = Ext.getCmp('anno_desglose').getValue();
                                     let plan_pico = Ext.getCmp('id_plan_pico').getValue();
                                     let perdidasT = Ext.getCmp('id_perdidasT').getValue();
                                     let selection = Ext.getCmp('gridservicios').getSelectionModel().getLastSelected();
@@ -460,12 +474,13 @@ Ext.onReady(function () {
 
                                     if (plan_pico >= plan_total) {
                                         App.showAlert('El plan Pico  no debe ser mayor o igual que el Plan Total', 'danger', 3500);
-                                    } else if (store_servicios_desglose.findExact('mes', mes) !== -1) {
+                                    } else if (store_servicios_desglose.findExact('mes', mes) !== -1 && store_servicios_desglose.findExact('anno', anno_desglose) !== -1) {
                                         App.showAlert('Ya ha desglosado el mes seleccionado', 'warning', 3500);
                                     } else {
 
                                         let valores = {};
                                         valores.mes = mes;
+                                        valores.anno_desglose = anno_desglose;
                                         valores.plan_total = plan_total;
                                         valores.plan_pico = plan_pico;
                                         valores.perdidasT = perdidasT;
@@ -516,7 +531,7 @@ Ext.onReady(function () {
                         let win = Ext.create('Ext.window.Window', {
                             id: 'desglosemeses_idMod',
                             title: 'Modificar Desglose ' + selec.data.nombre_mes,
-                            height: 200,
+                            height: 270,
                             width: 330,
                             modal: true,
                             layout: 'fit',

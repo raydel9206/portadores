@@ -29,11 +29,12 @@ class ReporteResumenEficienciaController extends Controller
         $em = $this->getDoctrine()->getManager();
         $nunidadid = $request->get('unidadid');
         $tipoCombustible = $request->get('tipoCombustible');
-        $conn = $this->get('database_connection');
+
         $_unidades = [];
         Utiles::findDomainByChildren($em, $em->getRepository('PortadoresBundle:Unidad')->find($nunidadid), $_unidades);
 
         $qb = $em->createQueryBuilder();
+
 
         $qb->select('vehiculo.id, marca.nombre marca_vehiculo, vehiculo.matricula, vehiculo.normaFar, tipoComb.id tipoCombustible, vehiculo.nroOrden, modelo.nombre modelo_vehiculo')
             ->from('PortadoresBundle:Vehiculo', 'vehiculo')
@@ -56,6 +57,7 @@ class ReporteResumenEficienciaController extends Controller
 
         $arr_mes = array(1 => 'ene', 2 => 'feb', 3 => 'mar', 4 => 'abr', 5 => 'may', 6 => 'jun', 7 => 'jul', 8 => 'ago', 9 => 'sep', 10 => 'oct', 11 => 'nov', 12 => 'dic');
         foreach ($vehiculos as $vehiculo) {
+            $conn = $this->get('database_connection');
 
             $plan_mn = 0;
             $plan_cuc = 0;
@@ -106,8 +108,7 @@ class ReporteResumenEficienciaController extends Controller
                 $comb_abastecido = empty($combustible_abastecido[0]['abastecido']) ? 0 : $combustible_abastecido[0]['abastecido'];
                 $kms_trabajado = is_null($result_kmt_trab[0]['sum']) ? '0' : $result_kmt_trab[0]['sum'];
 
-            }
-            else {
+            } else {
 
                 for ($i = $mes; $i >= 1; $i--) {
 

@@ -123,7 +123,7 @@ class DistribucionCombustibleController extends Controller
                 );
             }
         } elseif (!$distribucionCombustibleEdit) {
-            $vehiculos = $em->getRepository('PortadoresBundle:Vehiculo')->buscarVehiculo('', $_tipoCombustible, $_unidades);
+            $vehiculos = $em->getRepository('PortadoresBundle:Vehiculo')->buscarVehiculo('', $_tipoCombustible, '',$_unidades);
             $total_km = 0;
             foreach ($vehiculos as $vehiculo) {
 
@@ -513,6 +513,9 @@ class DistribucionCombustibleController extends Controller
 
         $distribucionesDesgloses = $em->getRepository('PortadoresBundle:DistribucionDesgloseEdit')->findBy(array('distCombustible' => $_distribucion));
 
+//        $particular = $distribucionesDesgloses[0]->getVehiculoid()->getParticular();
+
+
         $tcambustible_asignado = 0;
         $tmonto_asignado = 0;
         $tvehiculo_norma = 0;
@@ -581,11 +584,17 @@ class DistribucionCombustibleController extends Controller
         foreach ($distribucionesDesgloses as $distribucionDesglose) {
             $i++;
             $id_dis = $distribucionDesglose->getDistCombustible()->getId();
+            $pendiente_anterior = 0;
+            $pendiente_actual = 0;
+            $suma = 0;
+
+
+//            $planificacion = $em->getRepository('PortadoresBundle:PlanificacionCombustible')->planificacionVehiculo($distribucionDesglose->getVehiculoId()->getId(), $mes, $_anno);
+//            $planificacionCUC = $em->getRepository('PortadoresBundle:PlanificacionCombustibleCuc')->planificacionVehiculo($distribucionDesglose->getVehiculoId()->getId(), $mes, $_anno);
 
             $vehiculo = $distribucionDesglose->getVehiculoId()->getMatricula();
             $vehiculoDenominacion = $distribucionDesglose->getVehiculoId()->getNdenominacionVehiculoid()->getNombre();
             $vehiculoMarca = $distribucionDesglose->getVehiculoId()->getNmodeloid()->getMarcaVehiculoid()->getNombre();
-
             $persona = '';
             if ($distribucionDesglose->getVehiculoId()->getPersonas()->count() > 0)
                 $persona = $distribucionDesglose->getVehiculoId()->getPersonas()->first()->getIdpersona()->getNombre();
@@ -643,6 +652,9 @@ class DistribucionCombustibleController extends Controller
                     </tr>
                     ";
 
+//            var_dump(floatval($disponible));
+//            var_dump($distribucion->getCantidad());
+//            die;
             $_html .= "<tr>
             <td colspan='13' style='text-align: left;'>Nota: Combustible disponible para este mes " . floatval($distribucion->getCantidad()+ floatval($disponible)) . "L ,de ello se distribuyen por ahora " . floatval($distribucion->getCantidad()) . "L ,quedando pendiente " . floatval($disponible) . "L</td>
             </tr>";

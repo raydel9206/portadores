@@ -129,6 +129,8 @@ class AsignacionController extends Controller
         $moneda = $em->getRepository('PortadoresBundle:Moneda')->find($_moneda);
         $disponible = 0;
 
+
+//       Volver a cambiar
         $disponible += Datos::getPlanDisponibleFincimex($em, $nunidadid, $tipoCombustible, $moneda);
         $disponible += Datos::getSaldoDisponibleFincimex($em, $nunidadid, $tipoCombustible, $moneda);
         $disponible += Datos::getSaldoCaja($em, $nunidadid, $tipoCombustible, $moneda);
@@ -195,6 +197,8 @@ class AsignacionController extends Controller
             $asignacion->setDisponible($cantidad);
         else
             $asignacion->setDisponible($last_asignacion->getDisponible() + $cantidad);
+
+
         try {
             $em->persist($asignacion);
             if ($last_asignacion) {
@@ -237,7 +241,6 @@ class AsignacionController extends Controller
 
         $asignacion = $em->getRepository('PortadoresBundle:Asignacion')->find($id);
         $asignacion->setFecha($fecha_obj);
-
         $new_disponible = $asignacion->getDisponible() + (abs($cantidad - $asignacion->getCantidad()));
         if ($new_disponible < 0){
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'No se puede modificar la asignación, el combustible ya fue distribuido.'));
@@ -261,6 +264,7 @@ class AsignacionController extends Controller
             $entity_cuenta->setMoneda($moneda);
             $entity_cuenta->setMonto(floatval($tipoCombustible->getPrecio()) * ($cantidad - $asignacion->getCantidad()));
         }
+
         try {
             $em->persist($asignacion);
             $em->flush();

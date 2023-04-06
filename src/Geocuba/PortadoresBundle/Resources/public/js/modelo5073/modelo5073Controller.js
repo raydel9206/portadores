@@ -75,7 +75,7 @@ Ext.onReady(function () {
                 });
             },
             load: function (This, records, successful, eOpts) {
-                if (records.length === 0) {
+                if (records.length == 0) {
                     App.showAlert('No existe modelo generado para el mes seleccionado', 'warning');
                 }
             }
@@ -165,7 +165,7 @@ Ext.onReady(function () {
 
                     Ext.getCmp('modelo50723_btn_export').setDisabled(true);
 
-                    if (context.field === 'consumo_directo' || context.field === 'consumo_indirecto' || context.field === 'consumo') {
+                    if (context.field == 'consumo_directo' || context.field == 'consumo_indirecto' || context.field == 'consumo') {
                         if (context.originalValue > context.value) {
                             context.record.data['ca_real'] = context.record.data['ca_real'] - (context.originalValue - context.value);
                             _grid.getView().refresh();

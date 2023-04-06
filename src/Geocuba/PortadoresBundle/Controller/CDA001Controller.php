@@ -41,12 +41,12 @@ class CDA001Controller extends Controller
         $portadorName = $request->get('portadorName');
         $unidadid = $request->get('unidadid');
         $anno = $request->get('anno');
-        $monedaStr= $request->get('moneda');
+        $monedaStr = $request->get('moneda');
 
         $_data = array();
-        if($portadorName !== "ELECTRICIDAD"){
+        if ($portadorName !== "ELECTRICIDAD") {
             $cda001 = $em->getRepository('PortadoresBundle:CDA001')->buscarCda001($portadorid, $unidadid, $anno, $monedaStr);
-        }else{
+        } else {
             $cda001 = $em->getRepository('PortadoresBundle:CDA001')->buscarCda001($portadorid, $unidadid, $anno, '');
         }
 
@@ -67,8 +67,8 @@ class CDA001Controller extends Controller
                     'unidadid' => $cda->getNunidadid()->getId(),
                     'unidad_nombre' => $cda->getNunidadid()->getNombre(),
                     'portadorid' => $cda->getPortadorid()->getId(),
-                    'monedaid' => ($portadorName !== "ELECTRICIDAD") ? $cda->getMoneda()->getId(): '',
-                    'moneda' => ($portadorName !== "ELECTRICIDAD") ? $cda->getMoneda()->getNombre(): '',
+                    'monedaid' => ($portadorName !== "ELECTRICIDAD") ? $cda->getMoneda()->getId() : '',
+                    'moneda' => ($portadorName !== "ELECTRICIDAD") ? $cda->getMoneda()->getNombre() : '',
                     'portador_nombre' => $cda->getPortadorid()->getNombre(),
                     'real_nivel_act' => $cda->getRealNivelAct(),
                     'real_consumo' => $cda->getRealConsumo(),
@@ -146,14 +146,13 @@ class CDA001Controller extends Controller
         $anno = $request->get('anno');
         $monedaStr = $request->get('moneda');
 
-//        Debug::dump($portadorName);die;
         /*BUSCO LOS CDA EXISTENTES, DADO EL PORTADOR,LA MONEDA, EL AÑO Y LA UNIDAD*/
-        if($portadorName !== "ELECTRICIDAD"){
+        if ($portadorName !== "ELECTRICIDAD") {
             $cda001_existente = $em->getRepository('PortadoresBundle:CDA001')->findBy(array('anno' => $anno, 'portadorid' => $portadorid, 'nunidadid' => $unidadid, 'moneda' => $monedaStr));
-        }else{
+        } else {
             $cda001_existente = $em->getRepository('PortadoresBundle:CDA001')->findBy(array('anno' => $anno, 'portadorid' => $portadorid, 'nunidadid' => $unidadid));
         }
-        $moneda = $em->getRepository('PortadoresBundle:Moneda')->findOneBy(array('id'=> $monedaStr));
+        $moneda = $em->getRepository('PortadoresBundle:Moneda')->findOneBy(array('id' => $monedaStr));
 
 
         /*ELIMINO CADA UNO DE LOS CDA EXISTENTE PARA GENERALOS DE NUEVO*/
@@ -309,7 +308,9 @@ class CDA001Controller extends Controller
                     if (count($cda001Meses1) === 12) $cda001Meses = $cda001Meses1;
                     else {
                         for ($j = 1; $j <= 12; $j++) {
-                            $found = array_filter($cda001Meses1, function ($c) use ($j) { return $c['mes'] == $j; });
+                            $found = array_filter($cda001Meses1, function ($c) use ($j) {
+                                return $c['mes'] == $j;
+                            });
                             if (!$found) $cda001Meses[] = [
                                 'nivel_act' => 0,
                                 'plan_total' => 0
@@ -378,11 +379,10 @@ class CDA001Controller extends Controller
                     }
                 }
             }
-        }
-        else {
+        } else {
 
             /*SI EL PORTADOR NO ES GLP BUSCO LOS DATOS DESDE LA VISTA DE LA BD suma_planpe*/
-            if($moneda->getNombre() === 'MEP'){
+            if ($moneda->getNombre() === 'MEP') {
                 $sql = "SELECT
                         sum(suma_planpe.combustible_litros_total) AS combustible_litros_total,
                         sum(suma_planpe.combustible_litros_ene) AS combustible_litros_ene,
@@ -418,7 +418,7 @@ class CDA001Controller extends Controller
                     WHERE anno = $anno AND nunidadid in($unidades_string) AND portador='$portadorid'
                     GROUP BY suma_planpe.actividad
                     ORDER BY  suma_planpe.actividad";
-            }else{
+            } else {
                 $sql = "SELECT
                         sum(suma_planpe_cuc.combustible_litros_total) AS combustible_litros_total,
                         sum(suma_planpe_cuc.combustible_litros_ene) AS combustible_litros_ene,
@@ -459,6 +459,7 @@ class CDA001Controller extends Controller
 
             $cda001 = $this->getDoctrine()->getConnection()->fetchAll($sql);
 
+
             /*COMPROBAMOS QUE EXISTAN DATOS EN LA CONSULTA*/
             if (\count($cda001) >= 1) {
                 for ($i = 0, $iMax = \count($cda001); $i < $iMax; $i++) {
@@ -482,85 +483,89 @@ class CDA001Controller extends Controller
 
                     $entity_cda001 = new CDA001();
 
-                    $entity_cda001->setActividad($actividad);
-                    $entity_cda001->setNunidadid($em->getRepository('PortadoresBundle:Unidad')->find($unidadid));
-                    $entity_cda001->setPortadorid($em->getRepository('PortadoresBundle:Portador')->find($portadorid));
-                    $entity_cda001->setMoneda($moneda);
-                    $entity_cda001->setAnno($anno);
+                    if ($nivel_act_acum !== '0') {
+                        $entity_cda001->setActividad($actividad);
+                        $entity_cda001->setNunidadid($em->getRepository('PortadoresBundle:Unidad')->find($unidadid));
+                        $entity_cda001->setPortadorid($em->getRepository('PortadoresBundle:Portador')->find($portadorid));
+                        $entity_cda001->setMoneda($moneda);
+                        $entity_cda001->setAnno($anno);
 
-                    $entity_cda001->setRealNivelAct($nivel_act_real_anterior);
-                    $entity_cda001->setRealConsumo($consumo_comb_real_anterior);
-                    $entity_cda001->setAcumuladoNivelAct(0.00);
-                    $entity_cda001->setAcumuladoConsumo(0.00);
-                    $entity_cda001->setEstimadoNivelAct(0.00);
-                    $entity_cda001->setEstimadoConsumo(0.00);
+                        $entity_cda001->setRealNivelAct($nivel_act_real_anterior);
+                        $entity_cda001->setRealConsumo($consumo_comb_real_anterior);
+                        $entity_cda001->setAcumuladoNivelAct(0.00);
+                        $entity_cda001->setAcumuladoConsumo(0.00);
+                        $entity_cda001->setEstimadoNivelAct(0.00);
+                        $entity_cda001->setEstimadoConsumo(0.00);
 
-                    $entity_cda001->setPropuestaNivelAct($nivel_act_acum);
-                    $entity_cda001->setPropuestaConsumo($consumo_acum);
-                    $entity_cda001->setPropuestaIndice($indice_acum);
+                        $entity_cda001->setPropuestaNivelAct($nivel_act_acum);
+                        $entity_cda001->setPropuestaConsumo($consumo_acum);
+                        $entity_cda001->setPropuestaIndice($indice_acum);
 
-                    $entity_cda001->setPlanFinalNivelAct($nivel_act_acum);
-                    $entity_cda001->setPlanFinalConsumo($consumo_acum);
-                    $entity_cda001->setPlanFinalIndice($indice_acum);
+                        $entity_cda001->setPlanFinalNivelAct($nivel_act_acum);
+                        $entity_cda001->setPlanFinalConsumo($consumo_acum);
+                        $entity_cda001->setPlanFinalIndice($indice_acum);
 
-                    $entity_cda001->setEneroNivelAct($cda001[$i]['nivel_act_kms_ene']);
-                    $entity_cda001->setEneroConsumo($cda001[$i]['combustible_litros_ene']);
-                    $entity_cda001->setEneroIndice(($cda001[$i]['nivel_act_kms_ene'] == 0 ? 0 : $cda001[$i]['combustible_litros_ene'] / $cda001[$i]['nivel_act_kms_ene']));
+                        $entity_cda001->setEneroNivelAct($cda001[$i]['nivel_act_kms_ene']);
+                        $entity_cda001->setEneroConsumo($cda001[$i]['combustible_litros_ene']);
+                        $entity_cda001->setEneroIndice(($cda001[$i]['nivel_act_kms_ene'] == 0 ? 0 : $cda001[$i]['combustible_litros_ene'] / $cda001[$i]['nivel_act_kms_ene']));
 
-                    $entity_cda001->setFebreroNivelAct($cda001[$i]['nivel_act_kms_feb']);
-                    $entity_cda001->setFebreroConsumo($cda001[$i]['combustible_litros_feb']);
-                    $entity_cda001->setFebreroIndice(($cda001[$i]['nivel_act_kms_feb'] == 0 ? 0 : $cda001[$i]['combustible_litros_feb'] / $cda001[$i]['nivel_act_kms_feb']));
+                        $entity_cda001->setFebreroNivelAct($cda001[$i]['nivel_act_kms_feb']);
+                        $entity_cda001->setFebreroConsumo($cda001[$i]['combustible_litros_feb']);
+                        $entity_cda001->setFebreroIndice(($cda001[$i]['nivel_act_kms_feb'] == 0 ? 0 : $cda001[$i]['combustible_litros_feb'] / $cda001[$i]['nivel_act_kms_feb']));
 
-                    $entity_cda001->setMarzoNivelAct($cda001[$i]['nivel_act_kms_mar']);
-                    $entity_cda001->setMarzoConsumo($cda001[$i]['combustible_litros_mar']);
-                    $entity_cda001->setMarzoIndice(($cda001[$i]['nivel_act_kms_mar'] == 0 ? 0 : $cda001[$i]['combustible_litros_mar'] / $cda001[$i]['nivel_act_kms_mar']));
+                        $entity_cda001->setMarzoNivelAct($cda001[$i]['nivel_act_kms_mar']);
+                        $entity_cda001->setMarzoConsumo($cda001[$i]['combustible_litros_mar']);
+                        $entity_cda001->setMarzoIndice(($cda001[$i]['nivel_act_kms_mar'] == 0 ? 0 : $cda001[$i]['combustible_litros_mar'] / $cda001[$i]['nivel_act_kms_mar']));
 
-                    $entity_cda001->setAbrilNivelAct($cda001[$i]['nivel_act_kms_abr']);
-                    $entity_cda001->setAbrilConsumo($cda001[$i]['combustible_litros_abr']);
-                    $entity_cda001->setAbrilIndice(($cda001[$i]['nivel_act_kms_abr'] == 0 ? 0 : $cda001[$i]['combustible_litros_abr'] / $cda001[$i]['nivel_act_kms_abr']));
+                        $entity_cda001->setAbrilNivelAct($cda001[$i]['nivel_act_kms_abr']);
+                        $entity_cda001->setAbrilConsumo($cda001[$i]['combustible_litros_abr']);
+                        $entity_cda001->setAbrilIndice(($cda001[$i]['nivel_act_kms_abr'] == 0 ? 0 : $cda001[$i]['combustible_litros_abr'] / $cda001[$i]['nivel_act_kms_abr']));
 
-                    $entity_cda001->setMayoNivelAct($cda001[$i]['nivel_act_kms_may']);
-                    $entity_cda001->setMayoConsumo($cda001[$i]['combustible_litros_may']);
-                    $entity_cda001->setMayoIndice(($cda001[$i]['nivel_act_kms_may'] == 0 ? 0 : $cda001[$i]['combustible_litros_may'] / $cda001[$i]['nivel_act_kms_may']));
+                        $entity_cda001->setMayoNivelAct($cda001[$i]['nivel_act_kms_may']);
+                        $entity_cda001->setMayoConsumo($cda001[$i]['combustible_litros_may']);
+                        $entity_cda001->setMayoIndice(($cda001[$i]['nivel_act_kms_may'] == 0 ? 0 : $cda001[$i]['combustible_litros_may'] / $cda001[$i]['nivel_act_kms_may']));
 
-                    $entity_cda001->setJunioNivelAct($cda001[$i]['nivel_act_kms_jun']);
-                    $entity_cda001->setJunioConsumo($cda001[$i]['combustible_litros_jun']);
-                    $entity_cda001->setJunioIndice(($cda001[$i]['nivel_act_kms_jun'] == 0 ? 0 : $cda001[$i]['combustible_litros_jun'] / $cda001[$i]['nivel_act_kms_jun']));
+                        $entity_cda001->setJunioNivelAct($cda001[$i]['nivel_act_kms_jun']);
+                        $entity_cda001->setJunioConsumo($cda001[$i]['combustible_litros_jun']);
+                        $entity_cda001->setJunioIndice(($cda001[$i]['nivel_act_kms_jun'] == 0 ? 0 : $cda001[$i]['combustible_litros_jun'] / $cda001[$i]['nivel_act_kms_jun']));
 
-                    $entity_cda001->setJulioNivelAct($cda001[$i]['nivel_act_kms_jul']);
-                    $entity_cda001->setJulioConsumo($cda001[$i]['combustible_litros_jul']);
-                    $entity_cda001->setJulioIndice(($cda001[$i]['nivel_act_kms_jul'] == 0 ? 0 : $cda001[$i]['combustible_litros_jul'] / $cda001[$i]['nivel_act_kms_jul']));
+                        $entity_cda001->setJulioNivelAct($cda001[$i]['nivel_act_kms_jul']);
+                        $entity_cda001->setJulioConsumo($cda001[$i]['combustible_litros_jul']);
+                        $entity_cda001->setJulioIndice(($cda001[$i]['nivel_act_kms_jul'] == 0 ? 0 : $cda001[$i]['combustible_litros_jul'] / $cda001[$i]['nivel_act_kms_jul']));
 
-                    $entity_cda001->setAgostoNivelAct($cda001[$i]['nivel_act_kms_ago']);
-                    $entity_cda001->setAgostoConsumo($cda001[$i]['combustible_litros_ago']);
-                    $entity_cda001->setAgostoIndice(($cda001[$i]['nivel_act_kms_ago'] == 0 ? 0 : $cda001[$i]['combustible_litros_ago'] / $cda001[$i]['nivel_act_kms_ago']));
+                        $entity_cda001->setAgostoNivelAct($cda001[$i]['nivel_act_kms_ago']);
+                        $entity_cda001->setAgostoConsumo($cda001[$i]['combustible_litros_ago']);
+                        $entity_cda001->setAgostoIndice(($cda001[$i]['nivel_act_kms_ago'] == 0 ? 0 : $cda001[$i]['combustible_litros_ago'] / $cda001[$i]['nivel_act_kms_ago']));
 
-                    $entity_cda001->setSeptiembreNivelAct($cda001[$i]['nivel_act_kms_sep']);
-                    $entity_cda001->setSeptiembreConsumo($cda001[$i]['combustible_litros_sep']);
-                    $entity_cda001->setSeptiembreIndice(($cda001[$i]['nivel_act_kms_sep'] == 0 ? 0 : $cda001[$i]['combustible_litros_sep'] / $cda001[$i]['nivel_act_kms_sep']));
+                        $entity_cda001->setSeptiembreNivelAct($cda001[$i]['nivel_act_kms_sep']);
+                        $entity_cda001->setSeptiembreConsumo($cda001[$i]['combustible_litros_sep']);
+                        $entity_cda001->setSeptiembreIndice(($cda001[$i]['nivel_act_kms_sep'] == 0 ? 0 : $cda001[$i]['combustible_litros_sep'] / $cda001[$i]['nivel_act_kms_sep']));
 
-                    $entity_cda001->setOctubreNivelAct($cda001[$i]['nivel_act_kms_oct']);
-                    $entity_cda001->setOctubreConsumo($cda001[$i]['combustible_litros_oct']);
-                    $entity_cda001->setOctubreIndice(($cda001[$i]['nivel_act_kms_oct'] == 0 ? 0 : $cda001[$i]['combustible_litros_oct'] / $cda001[$i]['nivel_act_kms_oct']));
+                        $entity_cda001->setOctubreNivelAct($cda001[$i]['nivel_act_kms_oct']);
+                        $entity_cda001->setOctubreConsumo($cda001[$i]['combustible_litros_oct']);
+                        $entity_cda001->setOctubreIndice(($cda001[$i]['nivel_act_kms_oct'] == 0 ? 0 : $cda001[$i]['combustible_litros_oct'] / $cda001[$i]['nivel_act_kms_oct']));
 
-                    $entity_cda001->setNoviembreNivelAct($cda001[$i]['nivel_act_kms_nov']);
-                    $entity_cda001->setNoviembreConsumo($cda001[$i]['combustible_litros_nov']);
-                    $entity_cda001->setNoviembreIndice(($cda001[$i]['nivel_act_kms_nov'] == 0 ? 0 : $cda001[$i]['combustible_litros_nov'] / $cda001[$i]['nivel_act_kms_nov']));
+                        $entity_cda001->setNoviembreNivelAct($cda001[$i]['nivel_act_kms_nov']);
+                        $entity_cda001->setNoviembreConsumo($cda001[$i]['combustible_litros_nov']);
+                        $entity_cda001->setNoviembreIndice(($cda001[$i]['nivel_act_kms_nov'] == 0 ? 0 : $cda001[$i]['combustible_litros_nov'] / $cda001[$i]['nivel_act_kms_nov']));
 
-                    $entity_cda001->setDiciembreNivelAct($cda001[$i]['nivel_act_kms_dic']);
-                    $entity_cda001->setDiciembreConsumo($cda001[$i]['combustible_litros_dic']);
-                    $entity_cda001->setDiciembreIndice(($cda001[$i]['nivel_act_kms_dic'] == 0 ? 0 : $cda001[$i]['combustible_litros_dic'] / $cda001[$i]['nivel_act_kms_dic']));
+                        $entity_cda001->setDiciembreNivelAct($cda001[$i]['nivel_act_kms_dic']);
+                        $entity_cda001->setDiciembreConsumo($cda001[$i]['combustible_litros_dic']);
+                        $entity_cda001->setDiciembreIndice(($cda001[$i]['nivel_act_kms_dic'] == 0 ? 0 : $cda001[$i]['combustible_litros_dic'] / $cda001[$i]['nivel_act_kms_dic']));
 
-                    try {
-                        $em->persist($entity_cda001);
-                        $em->flush();
-                    } catch (\Exception $ex) {
-                        if ($ex instanceof HttpException) {
-                            return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
-                        } else {
-                            throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+
+                        try {
+                            $em->persist($entity_cda001);
+                            $em->flush();
+                        } catch (\Exception $ex) {
+                            if ($ex instanceof HttpException) {
+                                return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
+                            } else {
+                                throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+                            }
                         }
                     }
+
 
                 }
 
@@ -669,7 +674,7 @@ class CDA001Controller extends Controller
         $anno = $request->get('anno');
         $monedaStr = $request->get('moneda');
 
-        $entities = $em->getRepository('PortadoresBundle:CDA001')->findBy(array('anno'=>$anno,'portadorid'=>$portadorid));
+        $entities = $em->getRepository('PortadoresBundle:CDA001')->findBy(array('anno' => $anno, 'portadorid' => $portadorid));
         $moneda = $em->getRepository('PortadoresBundle:Moneda')->findoneBy(array('id' => $monedaStr));
         foreach ($entities as $entity)
             $em->remove($entity);
@@ -743,11 +748,11 @@ class CDA001Controller extends Controller
             $em->persist($entity);
         }
 
-       try {
-           $em->flush();
-       } catch (\Exception $ex) {
-           return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error insertando los datos, si el error persiste contacte a su administrador.'));
-       }
+        try {
+            $em->flush();
+        } catch (\Exception $ex) {
+            return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error insertando los datos, si el error persiste contacte a su administrador.'));
+        }
 
         return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'Datos del CDA001 guardado con éxito.'));
     }

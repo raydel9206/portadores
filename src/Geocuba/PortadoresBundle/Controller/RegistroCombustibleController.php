@@ -83,6 +83,7 @@ class RegistroCombustibleController extends Controller
         }
 
         $count = $qb1->getQuery()->getSingleScalarResult();
+
         $_data = array();
         foreach ($entities as $entity) {
             $_data[] = array(
@@ -137,7 +138,7 @@ class RegistroCombustibleController extends Controller
         try {
             $em->flush();
             return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'Registro de combustible adicionado con éxito.'));
-        } catch (\Exception $ex) {
+        } catch (CommonException $ex) {
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error insertando los datos, si el error persiste contacte a su administrador.'));
         }
     }
@@ -174,7 +175,7 @@ class RegistroCombustibleController extends Controller
             $response = new JsonResponse();
             $response->setData(array('success' => true, 'cls' => 'success', 'message' => 'Registro de combustible modificado con éxito.'));
             return $response;
-        } catch (\Exception $ex) {
+        } catch (CommonException $ex) {
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error guardando los datos, si el error persiste contacte a su administrador.'));
         }
     }
@@ -192,7 +193,7 @@ class RegistroCombustibleController extends Controller
             $em->remove($entity);
             $em->flush();
             return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'Registro de combustible eliminado con éxito.'));
-        } catch (\Exception $ex) {
+        } catch (CommonException $ex) {
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error guardando los datos, si el error persiste contacte a su administrador.'));
         }
     }
@@ -1048,7 +1049,7 @@ class RegistroCombustibleController extends Controller
         try {
             $em->flush();
             return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'Planificación adicionada con éxito.'));
-        } catch (\Exception $ex) {
+        } catch (CommonException $ex) {
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error insertando los datos, si el error persiste contacte a su administrador.'));
         }
     }
@@ -1139,7 +1140,7 @@ class RegistroCombustibleController extends Controller
             $response = new JsonResponse();
             $response->setData(array('success' => true, 'cls' => 'success', 'message' => 'Planificación modificada con éxito.'));
             return $response;
-        } catch (\Exception $ex) {
+        } catch (CommonException $ex) {
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error guardando los datos, si el error persiste contacte a su administrador.'));
         }
     }
@@ -1207,7 +1208,7 @@ class RegistroCombustibleController extends Controller
         try {
             $em->flush();
             return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'Planificación eliminada con éxito.'));
-        } catch (\Exception $ex) {
+        } catch (CommonException $ex) {
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error guardando los datos, si el error persiste contacte a su administrador.'));
         }
     }*/
@@ -1541,7 +1542,7 @@ class RegistroCombustibleController extends Controller
         try {
             $em->flush();
             return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'Análisis gestionado con éxito.'));
-        } catch (\Exception $ex) {
+        } catch (CommonException $ex) {
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error insertando los datos, si el error persiste contacte a su administrador.'));
         }
     }
@@ -1586,7 +1587,7 @@ class RegistroCombustibleController extends Controller
             $response = new JsonResponse();
             $response->setData(array('success' => true, 'cls' => 'success', 'message' => 'Análisis modificado con éxito.'));
             return $response;
-        } catch (\Exception $ex) {
+        } catch (CommonException $ex) {
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error guardando los datos, si el error persiste contacte a su administrador.'));
         }
     }
@@ -1603,7 +1604,7 @@ class RegistroCombustibleController extends Controller
             $em->persist($entity);
             $em->flush();
             return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'Análisis eliminado con éxito.'));
-        } catch (\Exception $ex) {
+        } catch (CommonException $ex) {
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Error guardando los datos, si el error persiste contacte a su administrador.'));
         }
     }*/

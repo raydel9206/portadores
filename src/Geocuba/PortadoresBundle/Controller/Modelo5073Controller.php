@@ -156,8 +156,9 @@ class Modelo5073Controller extends Controller
                 foreach ($tipo_combustibles as $tipo_combustible)
                     $filas[] = $tipo_combustible['fila'];
 
-                if (!in_array(370, $filas)) $filas[] = '370';
-                if (!in_array(360, $filas)) $filas[] = '360';
+//                Elimanando GLP del modelo
+//                if (!in_array(370, $filas)) $filas[] = '370';
+//                if (!in_array(360, $filas)) $filas[] = '360';
 
                 foreach ($productos as $producto) {
                     $modelo_anterior = $em->getRepository('PortadoresBundle:Modelo5073')->findOneBy(array('mes' => $mes_anterior, 'anno' => $anno_anterior, 'producto' => $producto->getId(), 'unidadid' => $unidadid));
@@ -165,24 +166,25 @@ class Modelo5073Controller extends Controller
 
                     //Tipos de Combustible
                     if (in_array($producto->getFila(), $filas)) {
-                        if($producto->getFila() == 370 || $producto->getFila() == 360) {
-                            $tipo_combustible = $em->getRepository('PortadoresBundle:TipoCombustible')->findOneBy([
-                                'fila' => 370,
-                                'visible' => true
-                            ]);
-                            if (!$tipo_combustible) {
-                                $tipo_combustible = $em->getRepository('PortadoresBundle:TipoCombustible')->findOneBy([
-                                    'fila' => 360,
-                                    'visible' => true
-                                ]);
-                            }
-                        }
-                        else {
+                        //                Elimanando GLP del modelo
+//                        if($producto->getFila() == 370 || $producto->getFila() == 360) {
+//                            $tipo_combustible = $em->getRepository('PortadoresBundle:TipoCombustible')->findOneBy([
+//                                'fila' => 370,
+//                                'visible' => true
+//                            ]);
+//                            if (!$tipo_combustible) {
+//                                $tipo_combustible = $em->getRepository('PortadoresBundle:TipoCombustible')->findOneBy([
+//                                    'fila' => 360,
+//                                    'visible' => true
+//                                ]);
+//                            }
+//                        }
+//                        else {
                             $tipo_combustible = $em->getRepository('PortadoresBundle:TipoCombustible')->findOneBy(array(
                                 'fila' => $producto->getFila(),
                                 'visible' => true
                             ));
-                        }
+//                        }
 
                         $id_tc = $tipo_combustible->getId();
 
@@ -423,7 +425,8 @@ class Modelo5073Controller extends Controller
                         $modelo->setSaldoFinalTotal(($disponible_fincimex + $saldo_caja + $saldo_fincimex)/1000);
                         $modelo->setSaldoFinalUtilizarProximoMes($utilizar_proximo_mes/1000);
                         $modelo->setSaldoFinalDisponibleFincimex($disponible_fincimex/1000);
-                        $modelo->setAcumuladoReal($mes == 1 ? $consumo/1000 : $modelo_anterior ? $modelo_anterior->getAcumuladoReal()+$consumo/1000:0);
+                        $acu_ant_real =  $modelo_anterior ? ($modelo_anterior->getAcumuladoReal()+$consumo/1000) :0;
+                        $modelo->setAcumuladoReal(($mes == 1) ? $consumo/1000 : $acu_ant_real);
                         $modelo->setAcumuladoAnnoAnterior($modelo_anno_anterior ? $modelo_anno_anterior->getAcumuladoReal() : null );
 
                         //Electricidad

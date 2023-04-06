@@ -43,7 +43,7 @@ class VehiculoController extends Controller
         Utiles::findDomainByChildren($em, $em->getRepository('PortadoresBundle:Unidad')->find($nunidadid), $_unidades);
 
 
-        $entities = $em->getRepository('PortadoresBundle:Vehiculo')->buscarVehiculo($_nombre, $_tipoCombustible,$_tipoMedio, $_unidades, $start, $limit);
+        $entities = $em->getRepository('PortadoresBundle:Vehiculo')->buscarVehiculo($_nombre, $_tipoCombustible, $_tipoMedio, $_unidades, $start, $limit);
         $total = $em->getRepository('PortadoresBundle:Vehiculo')->buscarVehiculo($_nombre, $_tipoCombustible, $_tipoMedio, $_unidades, $start, $limit, true);
 
         foreach ($entities as $entity) {
@@ -70,6 +70,7 @@ class VehiculoController extends Controller
                 'nro_orden' => $entity->getNroOrden(),
                 'odometro' => $entity->getOdometro(),
                 'norma_fabricante' => round($entity->getNormaFabricante(), 2),
+                'factor' => round($entity->getFactor(), 2),
                 'norma_far' => round($entity->getNormaFar(), 2),
                 'norma_lubricante' => $entity->getNormaLubricante(),
                 'nro_inventario' => $entity->getNroInventario(),
@@ -122,6 +123,7 @@ class VehiculoController extends Controller
                     'matricula' => $_data[$i]['matricula'],
                     'empresa' => $_data[$i]['empresa'],
                     'norma_fabricante' => round($_data[$i]['norma_fabricante'], 2),
+                    'factor' => round($_data[$i]['factor'], 2),
                     'norma' => round($_data[$i]['norma'], 2),
                     'norma_far' => round($_data[$i]['norma_far'], 2),
                     'norma_lubricante' => $_data[$i]['norma_lubricante'],
@@ -163,6 +165,7 @@ class VehiculoController extends Controller
                     'nro_orden' => $_data[$i]['nro_orden'],
                     'odometro' => $_data[$i]['odometro'],
                     'norma_fabricante' => round($_data[$i]['norma_fabricante'], 2),
+                    'factor' => round($_data[$i]['factor'], 2),
                     'norma' => round($_data[$i]['norma'], 2),
                     'norma_far' => round($_data[$i]['norma_far'], 2),
                     'norma_lubricante' => $_data[$i]['norma_lubricante'],
@@ -424,6 +427,7 @@ class VehiculoController extends Controller
         $odometro = trim($request->get('odometro'));
         $norma_far = trim($request->get('norma_far'));
         $norma_fabricante = trim($request->get('norma_fabricante'));
+        $factor = trim($request->get('factor'));
         $normaLubricante = trim($request->get('norma_lubricante'));
         $nro_inventario = trim($request->get('nro_inventario'));
         $nro_serie_carreceria = trim($request->get('nro_serie_carreceria'));
@@ -467,10 +471,10 @@ class VehiculoController extends Controller
 
         $entity = new Vehiculo();
         $entity->setMatricula($matricula);
-        //Voy a poner como norma la de las FAR// Solo Sistemas FAR
         $entity->setNorma($norma_far);
         $entity->setNroOrden($nro_orden);
         $entity->setNormaFabricante($norma_fabricante);
+        $entity->setFactor($factor ? $factor : null);
         $entity->setNormaFar($norma_far);
         $entity->setNormaLubricante($normaLubricante);
         $entity->setNroInventario($nro_inventario);
@@ -516,7 +520,6 @@ class VehiculoController extends Controller
     public function modAction(Request $request)
     {
 
-        //dando exception
         $em = $this->getDoctrine()->getManager();
         $id = $request->get('id');
         $matricula = trim($request->get('matricula'));
@@ -525,6 +528,7 @@ class VehiculoController extends Controller
         $norma = trim($request->get('norma'));
         $norma_far = trim($request->get('norma_far'));
         $norma_fabricante = trim($request->get('norma_fabricante'));
+        $factor = trim($request->get('factor'));
         $normaLubricante = trim($request->get('norma_lubricante'));
         $nro_inventario = trim($request->get('nro_inventario'));
         $nro_serie_carreceria = trim($request->get('nro_serie_carreceria'));
@@ -547,23 +551,24 @@ class VehiculoController extends Controller
         $embarcacion = ($favmedio === 'embarcacion') ? true : false;
 
 
-        $repetido = $em->getRepository('PortadoresBundle:Vehiculo')->findOneBy(array('matricula' => $matricula, 'visible' => true));
-        if ($repetido) {
-            if ($repetido->getId() != $id)
-                return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'El Vehículo ya existe.'));
-        }
+//        $repetido = $em->getRepository('PortadoresBundle:Vehiculo')->findOneBy(array('matricula' => $matricula, 'visible' => true));
+//        if ($repetido) {
+//            if ($repetido->getId() != $id)
+//                return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'El Vehículo ya existe.'));
+//        }
+//
+//        $repetido = $em->getRepository('PortadoresBundle:Vehiculo')->findOneBy(array('nroInventario' => $nro_inventario, 'nunidadid' => $nunidadid, 'visible' => true));
+//        if ($repetido) {
+//            if ($repetido->getId() != $id)
+//                return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'El número de inventario ya existe.'));
+//        }
+//
+//        $repetido = $em->getRepository('PortadoresBundle:Vehiculo')->findOneBy(array('nroOrden' => $nro_orden, 'nunidadid' => $nunidadid, 'visible' => true));
+//        if ($repetido) {
+//            if ($repetido->getId() != $id)
+//                return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'El número de orden ya existe.'));
+//        }
 
-        $repetido = $em->getRepository('PortadoresBundle:Vehiculo')->findOneBy(array('nroInventario' => $nro_inventario, 'nunidadid' => $nunidadid, 'visible' => true));
-        if ($repetido) {
-            if ($repetido->getId() != $id)
-                return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'El número de inventario ya existe.'));
-        }
-
-        $repetido = $em->getRepository('PortadoresBundle:Vehiculo')->findOneBy(array('nroOrden' => $nro_orden, 'nunidadid' => $nunidadid, 'visible' => true));
-        if ($repetido) {
-            if ($repetido->getId() != $id)
-                return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'El número de orden ya existe.'));
-        }
 
         /**@var Vehiculo $entity * */
         $entity = $em->getRepository('PortadoresBundle:Vehiculo')->find($id);
@@ -571,6 +576,7 @@ class VehiculoController extends Controller
         $entity->setNorma($norma_far);
         $entity->setNroOrden($nro_orden);
         $entity->setNormaFabricante($norma_fabricante);
+        $entity->setFactor($factor ? $factor : null);
         $entity->setNormaFar($norma_far);
         $entity->setNormaLubricante($normaLubricante);
         $entity->setNroInventario($nro_inventario);
@@ -582,9 +588,7 @@ class VehiculoController extends Controller
         $entity->setNroCirculacion($nro_circulacion);
         $entity->setAnnoFabricacion($anno_fabricacion);
         $entity->setNunidadid($em->getRepository('PortadoresBundle:Unidad')->find($nunidadid));
-
         $entity->setArea($em->getRepository('PortadoresBundle:Area')->find($area_id));
-
         $entity->setNmodeloid($em->getRepository('PortadoresBundle:ModeloVehiculo')->find($nmodeloid));
         $entity->setNtipoCombustibleid($em->getRepository('PortadoresBundle:TipoCombustible')->find($ntipo_combustibleid));
         $entity->setNestadoTecnicoid($em->getRepository('PortadoresBundle:EstadoTecnico')->find($nestado_tecnicoid));
@@ -820,6 +824,7 @@ class VehiculoController extends Controller
              </tr>
             <tr>
               <td style='text-align: center'><strong>Mátricula</strong></td>
+              <td style='text-align: center'><strong>Empresa</strong></td>
               <td style='text-align: center'><strong>Unidad</strong></td>
               <td style='text-align: center'><strong>Tipo de Combustible</strong></td>
               <td style='text-align: center'><strong>Norma</strong></td>
@@ -837,7 +842,7 @@ class VehiculoController extends Controller
         });
 
         $newData = [];
-        for ($a = 0; $a < count($data); $a++){
+        for ($a = 0; $a < count($data); $a++) {
             $qb = $em->createQueryBuilder();
             $qb->select('traslado')
                 ->from('PortadoresBundle:Traslado', 'traslado')
@@ -847,8 +852,8 @@ class VehiculoController extends Controller
 
             $trasladado = $qb->getQuery()->getResult();
 
-            if(!$trasladado){
-                array_unshift($newData,$data[$a]);
+            if (!$trasladado) {
+                array_unshift($newData, $data[$a]);
             }
         }
 
@@ -914,7 +919,6 @@ class VehiculoController extends Controller
         $entities = $qb->getQuery()->getResult();
 
 
-
         foreach ($entities as $entity) {
             /**@var Vehiculo $entity */
 
@@ -926,7 +930,7 @@ class VehiculoController extends Controller
             }
 
             $data[] = array(
-                'id' =>  $entity->getId(),
+                'id' => $entity->getId(),
                 'ndenominacion_vehiculo' => $entity->getNdenominacionVehiculoid()->getNombre(),
                 'matricula' => $entity->getMatricula(),
                 'ntipo_combustible' => $entity->getNtipoCombustibleid()->getNombre(),
@@ -943,7 +947,7 @@ class VehiculoController extends Controller
         }
 
         $newData = [];
-        for ($a = 0; $a < count($data); $a++){
+        for ($a = 0; $a < count($data); $a++) {
             $qb = $em->createQueryBuilder();
             $qb->select('traslado')
                 ->from('PortadoresBundle:Traslado', 'traslado')
@@ -953,8 +957,8 @@ class VehiculoController extends Controller
 
             $trasladado = $qb->getQuery()->getResult();
 
-            if(!$trasladado){
-                array_unshift($newData,$data[$a]);
+            if (!$trasladado) {
+                array_unshift($newData, $data[$a]);
             }
         }
 

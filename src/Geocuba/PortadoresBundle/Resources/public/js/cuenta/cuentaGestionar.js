@@ -171,8 +171,8 @@ Ext.onReady(function () {
                             var form = window.down('form').getForm();
                             if (form.isValid()) {
                                 let obj = form.getValues();
-                                // obj.unidad = Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id;
-                                // console.log(obj.unidad);
+                                obj.unidad = Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id;
+                                console.log(obj.unidad);
                                 window.hide();
                                 App.request('POST', App.buildURL('/portadores/cuenta/add'), obj, null, null,
                                     function (response) { // success_callback

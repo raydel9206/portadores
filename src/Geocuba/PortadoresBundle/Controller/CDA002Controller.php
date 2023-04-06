@@ -76,7 +76,7 @@ class CDA002Controller extends Controller
                 'consumo_acum' => $entity->getConsumoAcum(),
                 'indice_acum' => $entity->getIndiceAcum(),
                 'nivel_actividad_plan' => $entity->getNivelActividadPlan(),
-                'consumo_plan' => $entity->getConsumoPlan(),
+                'consumo_plan' => floatval($entity->getConsumoPlan()),
                 'indice_plan' => $entity->getIndicePlan(),
                 'indice_anual' => $entity->getIndiceAnual(),
                 'mes' => $entity->getMes(),
@@ -115,6 +115,7 @@ class CDA002Controller extends Controller
 
         $portadorid = $request->get('portadorid');
         $monedaStr = $request->get('moneda');
+
         $unidadid = $request->get('unidadid');
         $portadorName = $request->get('portadorName');
         $anno = $request->get('anno');
@@ -275,8 +276,9 @@ class CDA002Controller extends Controller
         } /*Si el portador es electricidad*/
         if ($portador->getNombre() == 'ELECTRICIDAD') {
             /*BUSCAMOS EL PLAN EN EL CDA 001*/
-            $sql = "SELECT cda001.actividad_id, cda001.plan_final_nivel_act, cda001.plan_final_consumo, cda001.plan_final_indice 
-                        FROM datos.cda001 WHERE nunidadid IN ($unidades_string) and cda001.portadorid = '$portadorid'";
+            $sql = "SELECT max(cda001.actividad_id) as actividad_id, sum(cda001.plan_final_nivel_act) as plan_final_nivel_act,
+                           sum(cda001.plan_final_consumo) as plan_final_consumo, sum(cda001.plan_final_indice) as  plan_final_indice
+                        FROM datos.cda001 WHERE nunidadid IN ($unidades_string) and cda001.portadorid = '$portadorid' GROUP BY cda001.actividad_id";
 
             $cda001 = $this->getDoctrine()->getConnection()->fetchAll($sql);
 
@@ -295,7 +297,6 @@ class CDA002Controller extends Controller
                                 inner join nomencladores.turnotrabajo tb on tb.id = s.turnos_trabajo
                                 where s.nactividadid = '" . $cda['actividad_id'] . "' and extract(month from ap.fecha_lectura) = $mes and extract(year from ap.fecha_lectura) = $anno and s.nunidadid = '$unidadid' ";
                 $prepago = $this->getDoctrine()->getConnection()->fetchAll($sqlPrepago);
-
 
 
                 $sqlTresescalas = "select 
@@ -318,7 +319,7 @@ class CDA002Controller extends Controller
                 ];
 
                 $indice_real = $cda002['nivel_act'] !== 0 ? $cda002['consumo_real'] / $cda002['nivel_act'] : 0;
-                $consumo_plan = $cda002['consumo_total_plan'] !== 0 ? $cda002['consumo_total_plan']  : 0;
+                $consumo_plan = $cda002['consumo_total_plan'] !== 0 ? $cda002['consumo_total_plan'] : 0;
 
                 $cda002Anterior = null;
                 $i = $mes - 1;
@@ -334,46 +335,46 @@ class CDA002Controller extends Controller
                 $relacion_acumulado_plan = $cda['plan_final_indice'] == 0 ? 0 : $indice_acumulado / $cda['plan_final_indice'];
 
                 $entity_cda002 = new CDA002();
-                $entity_cda002->setMes($mes);
-                $entity_cda002->setAnno($anno);
-                $entity_cda002->setNunidadid($em->getRepository('PortadoresBundle:Unidad')->find($unidadid));
-                $entity_cda002->setNactividadid($actividad);
-                $entity_cda002->setPortador($em->getRepository('PortadoresBundle:Portador')->find($portadorid));
-                $entity_cda002->setNumNivelActividadid($actividad->getUmActividad());
+                if($cda002['consumo_real'] !== 0 ){
+                    $entity_cda002->setMes($mes);
+                    $entity_cda002->setAnno($anno);
+                    $entity_cda002->setNunidadid($em->getRepository('PortadoresBundle:Unidad')->find($unidadid));
+                    $entity_cda002->setNactividadid($actividad);
+                    $entity_cda002->setPortador($em->getRepository('PortadoresBundle:Portador')->find($portadorid));
+                    $entity_cda002->setNumNivelActividadid($actividad->getUmActividad());
 
-                $entity_cda002->setIndice($indice_real);
-                $entity_cda002->setConsumo($cda002['consumo_real'] / 1000);
-                $entity_cda002->setNivelActividad($cda002['nivel_act'] / 1000);
-                $entity_cda002->setNivelActividadPlan($cda['plan_final_nivel_act'] / 1000);
-                $entity_cda002->setConsumoPlan($consumo_plan / 1000);
+                    $entity_cda002->setIndice($indice_real);
+                    $entity_cda002->setConsumo($cda002['consumo_real'] / 1000);
+                    $entity_cda002->setNivelActividad($cda002['nivel_act'] / 1000);
+                    $entity_cda002->setNivelActividadPlan($cda['plan_final_nivel_act'] / 1000);
+                    $entity_cda002->setConsumoPlan($consumo_plan / 1000);
 //                $entity_cda002->setConsumoPlan($cda['plan_final_consumo'] / 1000);
-                $entity_cda002->setIndicePlan($cda['plan_final_indice']);
-                $entity_cda002->setIndiceAcum($indice_acumulado);
-                $entity_cda002->setConsumoAcum($consumo_acumulado / 1000);
-                $entity_cda002->setNivelActividadAcum($nivel_act_acumulado / 1000);
-                $entity_cda002->setRelacionRealPlan($relacion_real_plan);
-                $entity_cda002->setRelacionAcumAprob($relacion_acumulado_plan);
-                try {
-                    $em->persist($entity_cda002);
-                    $em->flush();
-                } catch (\Exception $ex) {
-                    if ($ex instanceof HttpException) {
-                        return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
-                    } else {
-                        throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+                    $entity_cda002->setIndicePlan($cda['plan_final_indice']);
+                    $entity_cda002->setIndiceAcum($indice_acumulado);
+                    $entity_cda002->setConsumoAcum($consumo_acumulado / 1000);
+                    $entity_cda002->setNivelActividadAcum($nivel_act_acumulado / 1000);
+                    $entity_cda002->setRelacionRealPlan($relacion_real_plan);
+                    $entity_cda002->setRelacionAcumAprob($relacion_acumulado_plan);
+                    try {
+                        $em->persist($entity_cda002);
+                        $em->flush();
+                    } catch (\Exception $ex) {
+                        if ($ex instanceof HttpException) {
+                            return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
+                        } else {
+                            throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+                        }
                     }
                 }
 
             }
 
 
-}
-
-else
-{
-$meses = ['anual', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
-    //Buscar los registros de combustibles para determinar los consumos de comb y nivel de act
-$sql = "select sum(rca.combustible)as combustible,
+        }
+        else {
+            $meses = ['anual', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+            //Buscar los registros de combustibles para determinar los consumos de comb y nivel de act
+            $sql = "select sum(rca.combustible)as combustible,
                            sum(rca.km) as km, 
                            rc.vehiculoid, 
                            p.id as portadorid
@@ -385,14 +386,14 @@ $sql = "select sum(rca.combustible)as combustible,
                         where rca.conceptoid = '3' and date_part('YEAR', rc.fecha) = $anno and date_part('MONTH', rc.fecha) = $mes and p.id = '$portadorid'
                         and nvehiculo.nunidadid in ($unidades_string) and rc.visible = true 
                         group by rc.vehiculoid,p.id ";
-$sqlRCA = $this->getDoctrine()->getConnection()->fetchAll($sql);
-$arr = array();
+            $sqlRCA = $this->getDoctrine()->getConnection()->fetchAll($sql);
+            $arr = array();
 
-foreach ($sqlRCA as $reg)
-{
-$idVeh = $reg['vehiculoid'];
-    //Buscar los consumos por actividades en las liquidaciones porque el 117 no diferencia cuanto se consume por una actividad u otra
-$sqlL = "select m.id as moneda, 
+            foreach ($sqlRCA as $reg) {
+                $idVeh = $reg['vehiculoid'];
+                //Buscar los consumos por actividades en las liquidaciones porque el 117 no diferencia cuanto se consume por una actividad u otra
+
+                $sqlL = "select m.id as moneda, 
                                  a.id as actividadid, 
                                  a.nombre as actividad, 
                                  liq.nvehiculoid, 
@@ -405,11 +406,10 @@ $sqlL = "select m.id as moneda,
                         where liq.nvehiculoid = '$idVeh' and liq.visible = true and  date_part('YEAR', liq.fecha_vale) = $anno and date_part('MONTH', liq.fecha_vale) = $mes and p.id = '$portadorid' and m.id = '$monedaStr'
                         group by m.id , a.id, liq.nvehiculoid, a.portadorid";
 
-$sqlLIQ = $this->getDoctrine()->getConnection()->fetchAll($sqlL);
+                $sqlLIQ = $this->getDoctrine()->getConnection()->fetchAll($sqlL);
 
-if ($monedaStr === MonedaEnum::cup)
-{
-$sqlP = "select pc.combustible_litros_$meses[$mes],
+                if ($monedaStr === MonedaEnum::cup) {
+                    $sqlP = "select pc.combustible_litros_$meses[$mes],
                                pc.nivel_act_kms_$meses[$mes], 
                                pc.nivel_act_kms_total, 
                                pc.combustible_litros_total 
@@ -419,10 +419,8 @@ $sqlP = "select pc.combustible_litros_$meses[$mes],
                                inner join nomencladores.tipo_combustible tc on nvehiculo.ntipo_combustibleid = tc.id
                                inner join nomencladores.portador p on p.id = tc.portadorid
                                WHERE pc.anno = $anno AND p.id = '$portadorid' and pc.vehiculoid = '$idVeh'";
-}
-
-else {
-    $sqlP = "select pc.combustible_litros_$meses[$mes],
+                } else {
+                    $sqlP = "select pc.combustible_litros_$meses[$mes],
                                pc.nivel_act_kms_$meses[$mes], 
                                pc.nivel_act_kms_total, 
                                pc.combustible_litros_total 
@@ -432,311 +430,332 @@ else {
                                inner join nomencladores.tipo_combustible tc on nvehiculo.ntipo_combustibleid = tc.id
                                inner join nomencladores.portador p on p.id = tc.portadorid
                                WHERE pc.anno = $anno AND p.id = '$portadorid' and pc.vehiculoid = '$idVeh'";
-}
+                }
 
-$sqlPlan = $this->getDoctrine()->getConnection()->fetchAll($sqlP);
 
-foreach ($sqlLIQ as $liq) {
-    if ($liq['moneda'] === $monedaStr) {
-        $arr[] = array(
-            'moneda' => $liq['moneda'],
-            'actividadid' => $liq['actividadid'],
-            'nombre_actividad' => $liq['actividad'],
-            'nvehiculoid' => $liq['nvehiculoid'],
-            'cant_litros' => $liq['cant_litros'],
-            'comb_debio_consumir' => (count($sqlPlan) > 0) ? $sqlPlan[0]["combustible_litros_$meses[$mes]"] : 0,
-            'nivel_act_debio_realizar' => (count($sqlPlan) > 0) ? $sqlPlan[0]["nivel_act_kms_$meses[$mes]"] : 0,
-            'nivel_act' => $reg['km'],
-            'consumo_real' => $reg['combustible'],
-        );
+                $sqlPlan = $this->getDoctrine()->getConnection()->fetchAll($sqlP);
+
+
+                if (!count($sqlLIQ)) {
+                    $moneda = "";
+                    $vehTar = $em->getRepository('PortadoresBundle:Vehiculo')->find($idVeh)->getTarjetas();
+                    count($vehTar) > 0 ? $moneda = $vehTar[0]->getTarjetaid()->getMonedaid()->getId() : "";
+
+                    if($monedaStr === $moneda){
+                        $arr[] = array(
+                            'moneda' => $monedaStr,
+                            'actividadid' => $em->getRepository('PortadoresBundle:Vehiculo')->find($idVeh)->getActividad()->getId(),
+                            'nombre_actividad' => $em->getRepository('PortadoresBundle:Vehiculo')->find($idVeh)->getActividad()->getNombre(),
+                            'nvehiculoid' => $idVeh,
+                            'cant_litros' => 0,
+                            'comb_debio_consumir' => (count($sqlPlan) > 0) ? $sqlPlan[0]["combustible_litros_$meses[$mes]"] : 0,
+                            'nivel_act_debio_realizar' => (count($sqlPlan) > 0) ? $sqlPlan[0]["nivel_act_kms_$meses[$mes]"] : 0,
+                            'nivel_act' => $reg['km'],
+                            'consumo_real' => $reg['combustible']
+                        );
+                    }
+
+                } else {
+                    foreach ($sqlLIQ as $liq) {
+                        if ($liq['moneda'] === $monedaStr) {
+                            $arr[] = array(
+                                'moneda' => $liq['moneda'],
+                                'actividadid' => $liq['actividadid'],
+                                'nombre_actividad' => $liq['actividad'],
+                                'nvehiculoid' => $liq['nvehiculoid'],
+                                'cant_litros' => $liq['cant_litros'],
+                                'comb_debio_consumir' => (count($sqlPlan) > 0) ? $sqlPlan[0]["combustible_litros_$meses[$mes]"] : 0,
+                                'nivel_act_debio_realizar' => (count($sqlPlan) > 0) ? $sqlPlan[0]["nivel_act_kms_$meses[$mes]"] : 0,
+                                'nivel_act' => $reg['km'],
+                                'consumo_real' => $reg['combustible']
+                            );
+                        }
+                    }
+                }
+            }
+
+
+            if (count($arr) > 0) {
+                $ids_actividades = [];
+                foreach ($arr as $item) {
+                    $em->getRepository('PortadoresBundle:Actividad')->find($item['actividadid']);
+                    $id_act = $item['actividadid'];
+                    if (!in_array($id_act, $ids_actividades)) {
+                        $ids_actividades[] = $id_act;
+                    }
+                }
+
+                $result = [];
+                foreach ($ids_actividades as $unique_id) {
+                    $temp = [];
+                    foreach ($arr as $arr_act) {
+                        $id = $arr_act["actividadid"];
+
+                        if ($id === $unique_id) {
+                            $temp[] = $arr_act;
+                        }
+                    }
+                    $actividadid = $temp[0];
+                    $actividadid["cantidad"] = 0;
+                    for ($s = 1; $s < sizeof($temp); $s++) {
+                        $actividadid['consumo_real'] = $actividadid['consumo_real'] + $temp[$s]['consumo_real'];
+                        $actividadid['comb_debio_consumir'] = $actividadid['comb_debio_consumir'] + $temp[$s]['comb_debio_consumir'];
+                        $actividadid['nivel_act'] = $actividadid['nivel_act'] + $temp[$s]['nivel_act'];
+                        $actividadid['nivel_act_debio_realizar'] = $actividadid['nivel_act_debio_realizar'] + $temp[$s]['nivel_act_debio_realizar'];
+                    }
+                    $cda002[] = $actividadid;
+                }
+
+                $consumo_total = 0;
+
+                foreach ($cda002 as $cda2) {
+                    $consumo_total += $cda2['consumo_real'];
+                }
+
+                foreach ($cda002 as $cda) {
+                    $actividadid = $cda['actividadid'];
+                    /** @var Actividad $actividad */
+                    $actividad = $em->getRepository('PortadoresBundle:Actividad')->find($actividadid);
+                    $indice_real = $cda['nivel_act'] == 0 ? 0 : $cda['consumo_real'] / $cda['nivel_act'];
+                    $indice_plan = $cda['nivel_act_debio_realizar'] == 0 ? 0 : $cda['comb_debio_consumir'] / $cda['nivel_act_debio_realizar'];
+                    $acumulado = $this->getDoctrine()->getConnection()->fetchAll("Select * from datos.cda002_acumulado WHERE anno = $anno AND nactividadid = '$actividadid'");
+
+                    $consumo_acumulado = empty($acumulado) ? $cda['consumo_real'] : $acumulado[0]['consumo_acum'] + $cda['consumo_real'];
+                    $nivel_act_acumulado = empty($acumulado) ? $cda['nivel_act'] : $acumulado[0]['nivel_act_acum'] + $cda['nivel_act'];
+                    $indice_acumulado = $nivel_act_acumulado == 0 ? 0 : $consumo_acumulado / $nivel_act_acumulado;
+
+                    $desc_bajo_nivel_cant = $consumo_total > 0 && $cda['nivel_act_debio_realizar'] > 0
+                    && $cda['comb_debio_consumir'] && $indice_plan > 0 && $cda['nivel_act_debio_realizar'] > $cda['nivel_act'] ? 1 : 0;
+                    $desc_bajo_nivel_mes = $desc_bajo_nivel_cant == 0 ? 0 : $desc_bajo_nivel_cant == 1 && $cda['comb_debio_consumir'] > $cda['consumo_real'] ? $cda['comb_debio_consumir'] - $cda['consumo_real'] : 0;
+
+                    $desc_bajo = new DescuentoBajo();
+                    $desc_bajo->setCantidad($desc_bajo_nivel_cant);
+                    $desc_bajo->setMes($desc_bajo_nivel_mes);
+                    $desc_bajo->setAcumulado($desc_bajo_nivel_mes);
+
+                    try {
+                        $em->persist($desc_bajo);
+                        $em->flush();
+                    } catch (\Exception $ex) {
+                        if ($ex instanceof HttpException) {
+                            return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
+                        } else {
+                            throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+                        }
+                    }
+
+                    $relacion_real_plan = $indice_plan == 0 ? 0 : $indice_real / $indice_plan;
+
+                    $desc_deterioro_cant = $relacion_real_plan < 1.03 ? 0 : 1;
+
+                    $desc_deterioro_mes = $desc_deterioro_cant == 1 ? ($indice_real - $indice_plan) * $cda['nivel_act'] : 0;
+
+                    $desc_deterioro = new DescuentoDeterioro();
+                    $desc_deterioro->setCantidad($desc_deterioro_cant);
+                    $desc_deterioro->setMes($desc_deterioro_mes);
+                    $desc_deterioro->setAcumulado($desc_deterioro_mes);
+
+                    try {
+                        $em->persist($desc_deterioro);
+                        $em->flush();
+
+                    } catch (\Exception $ex) {
+                        if ($ex instanceof HttpException) {
+                            return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
+                        } else {
+                            throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+                        }
+                    }
+
+                    $desc_sobreconsumo_cant = $cda['comb_debio_consumir'] > 0 && $cda['consumo_real'] > $cda['comb_debio_consumir'] ? 1 : 0;
+                    $desc_sobreconsumo_mes = $desc_sobreconsumo_cant == 1 ? $cda['consumo_real'] - $cda['comb_debio_consumir'] : 0;
+
+                    $descuento_sobreconsumo = new DescuentoSobreconsumo();
+                    $descuento_sobreconsumo->setCantidad($desc_sobreconsumo_cant);
+                    $descuento_sobreconsumo->setMes($desc_sobreconsumo_mes);
+                    $descuento_sobreconsumo->setAcumulado($desc_sobreconsumo_mes);
+
+                    try {
+                        $em->persist($descuento_sobreconsumo);
+                        $em->flush();
+
+                    } catch (\Exception $ex) {
+                        if ($ex instanceof HttpException) {
+                            return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
+                        } else {
+                            throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+                        }
+                    }
+
+                    $entity_cda002 = new CDA002();
+                    $entity_cda002->setMes($mes);
+                    $entity_cda002->setAnno($anno);
+
+                    $entity_cda002->setNunidadid($em->getRepository('PortadoresBundle:Unidad')->find($unidadid));
+                    $entity_cda002->setNactividadid($actividad);
+                    $entity_cda002->setMoneda($em->getRepository('PortadoresBundle:Moneda')->find($monedaStr));
+                    $entity_cda002->setPortador($em->getRepository('PortadoresBundle:Portador')->find($portadorid));
+                    $entity_cda002->setNumNivelActividadid($actividad->getUmActividad());
+
+                    $entity_cda002->setIndice($indice_real);
+                    $entity_cda002->setConsumo($cda['consumo_real'] / 1000);
+                    $entity_cda002->setNivelActividad($cda['nivel_act'] / 1000);
+
+                    $entity_cda002->setNivelActividadPlan($cda['nivel_act_debio_realizar'] / 1000);
+                    $entity_cda002->setConsumoPlan(floatval($cda['comb_debio_consumir'] / 1000));
+                    $entity_cda002->setIndicePlan($indice_plan);
+
+                    $entity_cda002->setIndiceAcum($indice_acumulado);
+                    $entity_cda002->setConsumoAcum($consumo_acumulado / 1000);
+                    $entity_cda002->setNivelActividadAcum($nivel_act_acumulado / 1000);
+
+                    $entity_cda002->setRelacionRealPlan($relacion_real_plan);
+
+                    $entity_cda002->setDescuentoBajoid($desc_bajo);
+                    $entity_cda002->setDescuentoDeterioroid($desc_deterioro);
+                    $entity_cda002->setDescuentoSobreconsumoid($descuento_sobreconsumo);
+
+
+                    try {
+                        $em->persist($entity_cda002);
+                        $em->flush();
+
+                    } catch (\Exception $ex) {
+                        if ($ex instanceof HttpException) {
+                            return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
+                        } else {
+                            throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+                        }
+                    }
+                }
+
+            } else {
+                return new JsonResponse(array('success' => false, 'cls' => 'warning', 'message' => 'No existen datos en el Análisis Equipo a Equipo para generar el CDA 002'));
+            }
+        }
+        return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'CDA002 Generado con éxito.'));
     }
-}
-}
 
-if (count($arr) > 0) {
-    $ids_actividades = [];
-    foreach ($arr as $item) {
-        $em->getRepository('PortadoresBundle:Actividad')->find($item['actividadid']);
-        $id_act = $item['actividadid'];
-        if (!in_array($id_act, $ids_actividades)) {
-            $ids_actividades[] = $id_act;
-        }
-    }
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public
+    function guardarCambiosAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $datos = json_decode($request->get('store'));
+        for ($i = 0; $i < count($datos); $i++) {
+            $id = $datos[$i]->id;
 
-    $result = [];
-    foreach ($ids_actividades as $unique_id) {
-        $temp = [];
-        foreach ($arr as $arr_act) {
-            $id = $arr_act["actividadid"];
+            /** @var  DescuentoDeterioro $descuento */
+            $descuento = $em->getRepository('PortadoresBundle:DescuentoDeterioro')->find($datos[$i]->desc_det_id);
+            $descuento->setCantidad($datos[$i]->desc_det_cant);
+            $descuento->setMes($datos[$i]->desc_det_mes);
+            $descuento->setAcumulado($datos[$i]->desc_det_acumulado);
 
-            if ($id === $unique_id) {
-                $temp[] = $arr_act;
+            try {
+                $em->persist($descuento);
+                $em->flush();
+
+            } catch (\Exception $ex) {
+                if ($ex instanceof HttpException) {
+                    return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
+                } else {
+                    throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+                }
             }
-        }
-        $actividadid = $temp[0];
-        $actividadid["cantidad"] = 0;
-        for ($s = 1; $s < sizeof($temp); $s++) {
-            $actividadid['consumo_real'] = $actividadid['consumo_real'] + $temp[$s]['consumo_real'];
-//                        Debug::dump( $actividadid['consumo_real'] ." + ". $temp[$s]['nombre_actividad']);
-            $actividadid['comb_debio_consumir'] = $actividadid['comb_debio_consumir'] + $temp[$s]['comb_debio_consumir'];
-            $actividadid['nivel_act'] = $actividadid['nivel_act'] + $temp[$s]['nivel_act'];
-            $actividadid['nivel_act_debio_realizar'] = $actividadid['nivel_act_debio_realizar'] + $temp[$s]['nivel_act_debio_realizar'];
-        }
-        $cda002[] = $actividadid;
-    }
 
-    $consumo_total = 0;
+            /** @var  DescuentoBajo $descuento_bajo */
+            $descuento_bajo = $em->getRepository('PortadoresBundle:DescuentoBajo')->find($datos[$i]->desc_bajo_nivel_id);
+            $descuento_bajo->setCantidad($datos[$i]->desc_bajo_nivel_cant);
+            $descuento_bajo->setMes($datos[$i]->desc_bajo_nivel_mes);
+            $descuento_bajo->setAcumulado($datos[$i]->desc_bajo_nivel_acumulado);
 
-    foreach ($cda002 as $cda2) {
-        $consumo_total += $cda2['consumo_real'];
-    }
+            try {
+                $em->persist($descuento_bajo);
+                $em->flush();
 
-    foreach ($cda002 as $cda) {
-
-        $actividadid = $cda['actividadid'];
-        /** @var Actividad $actividad */
-        $actividad = $em->getRepository('PortadoresBundle:Actividad')->find($actividadid);
-        $indice_real = $cda['nivel_act'] == 0 ? 0 : $cda['consumo_real'] / $cda['nivel_act'];
-        $indice_plan = $cda['nivel_act_debio_realizar'] == 0 ? 0 : $cda['comb_debio_consumir'] / $cda['nivel_act_debio_realizar'];
-        $acumulado = $this->getDoctrine()->getConnection()->fetchAll("Select * from datos.cda002_acumulado WHERE anno = $anno AND nactividadid = '$actividadid'");
-
-        $consumo_acumulado = empty($acumulado) ? $cda['consumo_real'] : $acumulado[0]['consumo_acum'] + $cda['consumo_real'];
-        $nivel_act_acumulado = empty($acumulado) ? $cda['nivel_act'] : $acumulado[0]['nivel_act_acum'] + $cda['nivel_act'];
-        $indice_acumulado = $nivel_act_acumulado == 0 ? 0 : $consumo_acumulado / $nivel_act_acumulado;
-
-        $desc_bajo_nivel_cant = $consumo_total > 0 && $cda['nivel_act_debio_realizar'] > 0
-        && $cda['comb_debio_consumir'] && $indice_plan > 0 && $cda['nivel_act_debio_realizar'] > $cda['nivel_act'] ? 1 : 0;
-        $desc_bajo_nivel_mes = $desc_bajo_nivel_cant == 0 ? 0 : $desc_bajo_nivel_cant == 1 && $cda['comb_debio_consumir'] > $cda['consumo_real'] ? $cda['comb_debio_consumir'] - $cda['consumo_real'] : 0;
-
-        $desc_bajo = new DescuentoBajo();
-        $desc_bajo->setCantidad($desc_bajo_nivel_cant);
-        $desc_bajo->setMes($desc_bajo_nivel_mes);
-        $desc_bajo->setAcumulado($desc_bajo_nivel_mes);
-
-        try {
-            $em->persist($desc_bajo);
-            $em->flush();
-        } catch (\Exception $ex) {
-            if ($ex instanceof HttpException) {
-                return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
-            } else {
-                throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+            } catch (\Exception $ex) {
+                if ($ex instanceof HttpException) {
+                    return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
+                } else {
+                    throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+                }
             }
-        }
 
-        $relacion_real_plan = $indice_plan == 0 ? 0 : $indice_real / $indice_plan;
+            /** @var  DescuentoSobreconsumo $descuento_sobreconsumo */
+            $descuento_sobreconsumo = $em->getRepository('PortadoresBundle:DescuentoSobreconsumo')->find($datos[$i]->desc_sobreconsumo_id);
+            $descuento_sobreconsumo->setCantidad($datos[$i]->desc_sobreconsumo_cant);
+            $descuento_sobreconsumo->setMes($datos[$i]->desc_sobreconsumo_mes);
+            $descuento_sobreconsumo->setAcumulado($datos[$i]->desc_sobreconsumo_acumulado);
 
-        $desc_deterioro_cant = $relacion_real_plan < 1.03 ? 0 : 1;
+            try {
+                $em->persist($descuento_sobreconsumo);
+                $em->flush();
 
-        $desc_deterioro_mes = $desc_deterioro_cant == 1 ? ($indice_real - $indice_plan) * $cda['nivel_act'] : 0;
-
-        $desc_deterioro = new DescuentoDeterioro();
-        $desc_deterioro->setCantidad($desc_deterioro_cant);
-        $desc_deterioro->setMes($desc_deterioro_mes);
-        $desc_deterioro->setAcumulado($desc_deterioro_mes);
-
-        try {
-            $em->persist($desc_deterioro);
-            $em->flush();
-
-        } catch (\Exception $ex) {
-            if ($ex instanceof HttpException) {
-                return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
-            } else {
-                throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+            } catch (\Exception $ex) {
+                if ($ex instanceof HttpException) {
+                    return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
+                } else {
+                    throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+                }
             }
-        }
 
-        $desc_sobreconsumo_cant = $cda['comb_debio_consumir'] > 0 && $cda['consumo_real'] > $cda['comb_debio_consumir'] ? 1 : 0;
-        $desc_sobreconsumo_mes = $desc_sobreconsumo_cant == 1 ? $cda['consumo_real'] - $cda['comb_debio_consumir'] : 0;
+            /** @var CDA002 $entity */
+            $entity = $em->getRepository('PortadoresBundle:CDA002')->find($id);
 
-        $descuento_sobreconsumo = new DescuentoSobreconsumo();
-        $descuento_sobreconsumo->setCantidad($desc_sobreconsumo_cant);
-        $descuento_sobreconsumo->setMes($desc_sobreconsumo_mes);
-        $descuento_sobreconsumo->setAcumulado($desc_sobreconsumo_mes);
+            $entity->setConsumo($datos[$i]->consumo);
+            $entity->setNivelActividad($datos[$i]->nivel_activ);
+            $entity->setIndice($datos[$i]->indice);
 
-        try {
-            $em->persist($descuento_sobreconsumo);
-            $em->flush();
-
-        } catch (\Exception $ex) {
-            if ($ex instanceof HttpException) {
-                return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
-            } else {
-                throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
-            }
-        }
-
-        $entity_cda002 = new CDA002();
-
-        $entity_cda002->setMes($mes);
-        $entity_cda002->setAnno($anno);
-
-        $entity_cda002->setNunidadid($em->getRepository('PortadoresBundle:Unidad')->find($unidadid));
-        $entity_cda002->setNactividadid($actividad);
-        $entity_cda002->setMoneda($em->getRepository('PortadoresBundle:Moneda')->find($monedaStr));
-        $entity_cda002->setPortador($em->getRepository('PortadoresBundle:Portador')->find($portadorid));
-        $entity_cda002->setNumNivelActividadid($actividad->getUmActividad());
-
-        $entity_cda002->setIndice($indice_real);
-        $entity_cda002->setConsumo($cda['consumo_real'] / 1000);
-        $entity_cda002->setNivelActividad($cda['nivel_act'] / 1000);
-
-        $entity_cda002->setNivelActividadPlan($cda['nivel_act_debio_realizar'] / 1000);
-        $entity_cda002->setConsumoPlan($cda['comb_debio_consumir'] / 1000);
-        $entity_cda002->setIndicePlan($indice_plan);
-
-        $entity_cda002->setIndiceAcum($indice_acumulado);
-        $entity_cda002->setConsumoAcum($consumo_acumulado / 1000);
-        $entity_cda002->setNivelActividadAcum($nivel_act_acumulado / 1000);
-
-        $entity_cda002->setRelacionRealPlan($relacion_real_plan);
-
-        $entity_cda002->setDescuentoBajoid($desc_bajo);
-        $entity_cda002->setDescuentoDeterioroid($desc_deterioro);
-        $entity_cda002->setDescuentoSobreconsumoid($descuento_sobreconsumo);
-
-
-        try {
-            $em->persist($entity_cda002);
-            $em->flush();
-
-        } catch (\Exception $ex) {
-            if ($ex instanceof HttpException) {
-                return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
-            } else {
-                throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
-            }
-        }
-    }
-
-} else {
-    return new JsonResponse(array('success' => false, 'cls' => 'warning', 'message' => 'No existen datos en el Análisis Equipo a Equipo para generar el CDA 002'));
-}
-}
-return new JsonResponse(array('success' => true, 'cls' => 'success', 'message' => 'CDA002 Generado con éxito.'));
-}
-
-/**
- * @param Request $request
- * @return JsonResponse
- */
-public
-function guardarCambiosAction(Request $request)
-{
-    $em = $this->getDoctrine()->getManager();
-    $datos = json_decode($request->get('store'));
-    for ($i = 0; $i < count($datos); $i++) {
-        $id = $datos[$i]->id;
-
-        /** @var  DescuentoDeterioro $descuento */
-        $descuento = $em->getRepository('PortadoresBundle:DescuentoDeterioro')->find($datos[$i]->desc_det_id);
-        $descuento->setCantidad($datos[$i]->desc_det_cant);
-        $descuento->setMes($datos[$i]->desc_det_mes);
-        $descuento->setAcumulado($datos[$i]->desc_det_acumulado);
-
-        try {
-            $em->persist($descuento);
-            $em->flush();
-
-        } catch (\Exception $ex) {
-            if ($ex instanceof HttpException) {
-                return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
-            } else {
-                throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
-            }
-        }
-
-        /** @var  DescuentoBajo $descuento_bajo */
-        $descuento_bajo = $em->getRepository('PortadoresBundle:DescuentoBajo')->find($datos[$i]->desc_bajo_nivel_id);
-        $descuento_bajo->setCantidad($datos[$i]->desc_bajo_nivel_cant);
-        $descuento_bajo->setMes($datos[$i]->desc_bajo_nivel_mes);
-        $descuento_bajo->setAcumulado($datos[$i]->desc_bajo_nivel_acumulado);
-
-        try {
-            $em->persist($descuento_bajo);
-            $em->flush();
-
-        } catch (\Exception $ex) {
-            if ($ex instanceof HttpException) {
-                return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
-            } else {
-                throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
-            }
-        }
-
-        /** @var  DescuentoSobreconsumo $descuento_sobreconsumo */
-        $descuento_sobreconsumo = $em->getRepository('PortadoresBundle:DescuentoSobreconsumo')->find($datos[$i]->desc_sobreconsumo_id);
-        $descuento_sobreconsumo->setCantidad($datos[$i]->desc_sobreconsumo_cant);
-        $descuento_sobreconsumo->setMes($datos[$i]->desc_sobreconsumo_mes);
-        $descuento_sobreconsumo->setAcumulado($datos[$i]->desc_sobreconsumo_acumulado);
-
-        try {
-            $em->persist($descuento_sobreconsumo);
-            $em->flush();
-
-        } catch (\Exception $ex) {
-            if ($ex instanceof HttpException) {
-                return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
-            } else {
-                throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
-            }
-        }
-
-        /** @var CDA002 $entity */
-        $entity = $em->getRepository('PortadoresBundle:CDA002')->find($id);
-
-        $entity->setConsumo($datos[$i]->consumo);
-        $entity->setNivelActividad($datos[$i]->nivel_activ);
-        $entity->setIndice($datos[$i]->indice);
-
-        $entity->setRelacionRealPlan($datos[$i]->relacion_real_plan);
-        $entity->setRelacionAcumAprob($datos[$i]->relacion_acumulado_aprobado == "" ? 0 : $datos[$i]->relacion_acumulado_aprobado);
+            $entity->setRelacionRealPlan($datos[$i]->relacion_real_plan);
+            $entity->setRelacionAcumAprob($datos[$i]->relacion_acumulado_aprobado == "" ? 0 : $datos[$i]->relacion_acumulado_aprobado);
 
 //Debug::dump()
-        $entity->setIndiceAnual($datos[$i]->indice_anual);
-        $em->persist($entity);
-    }
+            $entity->setIndiceAnual($datos[$i]->indice_anual);
+            $em->persist($entity);
+        }
 
-    try {
-        $em->flush();
+        try {
+            $em->flush();
 
-        $response = new JsonResponse();
-        $response->setData(array('success' => true, 'cls' => 'success', 'message' => 'Cambios al CDA002 Guardados Correctamente.'));
-        return $response;
-    } catch (\Exception $ex) {
-        if ($ex instanceof HttpException) {
-            return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
-        } else {
-            throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+            $response = new JsonResponse();
+            $response->setData(array('success' => true, 'cls' => 'success', 'message' => 'Cambios al CDA002 Guardados Correctamente.'));
+            return $response;
+        } catch (\Exception $ex) {
+            if ($ex instanceof HttpException) {
+                return new JsonResponse(['success' => false, 'message' => $ex->getMessage()]);
+            } else {
+                throw new HttpException(\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR, $ex->getMessage(), $ex);
+            }
         }
     }
-}
 
-/**
- * @param Request $request
- * @return JsonResponse
- */
-public
-function exportAction(Request $request)
-{
-    $em = $this->getDoctrine()->getManager();
-    $data = json_decode($request->get('store'));
-    $portador = $request->get('portador_nombre');
-    $portador_um = $request->get('portador_um');
-    $unidad = $request->get('unidad_nombre');
-    $consumo_total = $request->get('consumo_total');
-    $consumo_total_acum = $request->get('consumo_total_acum');
-    $consumo_total_plan = $request->get('consumo_total_plan');
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public
+    function exportAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = json_decode($request->get('store'));
+        $portador = $request->get('portador_nombre');
+        $portador_um = $request->get('portador_um');
+        $unidad = $request->get('unidad_nombre');
+        $consumo_total = $request->get('consumo_total');
+        $consumo_total_acum = $request->get('consumo_total_acum');
+        $consumo_total_plan = $request->get('consumo_total_plan');
 
 
-    $mes = $request->get('mes');
+        $mes = $request->get('mes');
 //        Debug::dump($mes);die;
 //        $codigogae = $data[0]->codigo_gae;
 
 //        Debug::dump($data);die;
 
-    $_html = "
+        $_html = "
         
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 <html xmlns=\"http://www.w3.org/1999/xhtml\">
@@ -831,8 +850,8 @@ function exportAction(Request $request)
 
         ";
 
-    foreach ($data as $dat) {
-        $_html .= "
+        foreach ($data as $dat) {
+            $_html .= "
         <tr>
     <td align='center' class=\"bordes_derecho_abajo_izquierda\">" . $dat->codigo . "</td>
     <td align='center' class=\"bordes_derecho_abajo_izquierda\">" . $dat->actividad_nombre . "</td>
@@ -855,10 +874,10 @@ function exportAction(Request $request)
   
   
         ";
-    }
+        }
 
 
-    $_html .= "<tr>
+        $_html .= "<tr>
     <td bgcolor=\"#CCFFFF\" class=\"bordes_derecho_abajo_izquierda\">&nbsp;</td>
     <td align='center' class=\"bordes_derecho_abajo_izquierda\">TOTAL DE " . $portador . "</td>
     <td bgcolor=\"#CCFFFF\" class=\"bordes_derecho_abajo_izquierda\">&nbsp;</td>
@@ -909,12 +928,12 @@ function exportAction(Request $request)
     <td>&nbsp;</td>
 
   </tr>";
-    $pieFirma = $this->get('portadores.piefirma')->getPieFirmaDistribucion(DocumentosEnum::distribucionCombustible, $unidad);
+        $pieFirma = $this->get('portadores.piefirma')->getPieFirmaDistribucion(DocumentosEnum::distribucionCombustible, $unidad);
 
-    $_html .= "<tr>
+        $_html .= "<tr>
                 <td colspan='13' style='text-align: left;'>$pieFirma</td>
             </tr>";
-    $_html .= "
+        $_html .= "
     <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -935,40 +954,40 @@ function exportAction(Request $request)
 </table>
 </body>
 </html>";
-    return new JsonResponse((array('success' => true, 'html' => $_html)));
-}
+        return new JsonResponse((array('success' => true, 'html' => $_html)));
+    }
 
-/**
- * @param Request $request
- * @return JsonResponse
- */
-public
-function printAction(Request $request)
-{
-    $em = $this->getDoctrine()->getManager();
-    $datos = json_decode($request->get('store'));
-    $summary = json_decode($request->get('summary'));
-    $portador = $request->get('portador_nombre');
-    $portador_um = $request->get('portador_um');
-    $unidad = strtoupper($request->get('unidad_nombre'));
-    $unidad_id = $request->get('unidad_id');
-    $consumo_total = $request->get('consumo_total');
-    $consumo_total_acum = $request->get('consumo_total_acum');
-    $consumo_total_plan = $request->get('consumo_total_plan');
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public
+    function printAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $datos = json_decode($request->get('store'));
+        $summary = json_decode($request->get('summary'));
+        $portador = $request->get('portador_nombre');
+        $portador_um = $request->get('portador_um');
+        $unidad = strtoupper($request->get('unidad_nombre'));
+        $unidad_id = $request->get('unidad_id');
+        $consumo_total = $request->get('consumo_total');
+        $consumo_total_acum = $request->get('consumo_total_acum');
+        $consumo_total_plan = $request->get('consumo_total_plan');
 
-    $piefirma = $em->getRepository('PortadoresBundle:PieFirma')->findOneBy(array(
-        'documento' => DocumentosEnum::modeloCDA002,
-        'nunidadid' => $unidad_id
-    ));
+        $piefirma = $em->getRepository('PortadoresBundle:PieFirma')->findOneBy(array(
+            'documento' => DocumentosEnum::modeloCDA002,
+            'nunidadid' => $unidad_id
+        ));
 
-    $mes = strtoupper($request->get('mes'));
-    $anno = $request->get('anno');
+        $mes = strtoupper($request->get('mes'));
+        $anno = $request->get('anno');
 //        Debug::dump($mes);die;
 //        $codigogae = $data[0]->codigo_gae;
 
 //        Debug::dump($data);die;
 
-    $_html = "<html xmlns:o=\"urn:schemas-microsoft-com:office:office\"
+        $_html = "<html xmlns:o=\"urn:schemas-microsoft-com:office:office\"
 xmlns:x=\"urn:schemas-microsoft-com:office:excel\"
 xmlns=\"http://www.w3.org/TR/REC-html40\">
 
@@ -3368,12 +3387,12 @@ tags will be replaced.--><!-----------------------------><!--START OF OUTPUT FRO
   <td class=xl8029688 width=72 style='width:100pt'>DET</td>
   <td class=xl8029688 width=90 style='width:100pt'>BAJO NIVEL</td>
  </tr>";
-    foreach ($datos as $dato) {
-        $deterioro = $dato->indice > $dato->indice_plan ? number_format($dato->nivel_activ * ($dato->indice - $dato->indice_plan) * 1000, 3) : '';
-        $bajo_nivel = ($dato->nivel_activ - $dato->nivel_actividad_plan) * 1000;
-        $planvsacumulado = $dato->indice_acum == 0 ? 0 : $dato->indice_plan / $dato->indice_acum;
-        $planvsreal = $dato->indice == 0 ? 0 : $dato->indice_plan / $dato->indice;
-        $_html .= "<tr height=26 style='mso-height-source:userset;height:20.1pt'>
+        foreach ($datos as $dato) {
+            $deterioro = $dato->indice > $dato->indice_plan ? number_format($dato->nivel_activ * ($dato->indice - $dato->indice_plan) * 1000, 3) : '';
+            $bajo_nivel = ($dato->nivel_activ - $dato->nivel_actividad_plan) * 1000;
+            $planvsacumulado = $dato->indice_acum == 0 ? 0 : $dato->indice_plan / $dato->indice_acum;
+            $planvsreal = $dato->indice == 0 ? 0 : $dato->indice_plan / $dato->indice;
+            $_html .= "<tr height=26 style='mso-height-source:userset;height:20.1pt'>
   <td height=26 class=xl8129688 style='height:20.1pt'>" . $dato->actividad_nombre . "</td>
   <td class=xl13629688 style='border-left:none'>" . $dato->um_actividad_nombre . "</td>
   <td class=xl13429688 style='border-left:none'>" . number_format($dato->nivel_activ_acum, 3, '.', ',') . "</td>
@@ -3390,9 +3409,9 @@ tags will be replaced.--><!-----------------------------><!--START OF OUTPUT FRO
   <td class=xl8429688>" . $deterioro . "</td>
   <td class=xl8429688>" . $bajo_nivel . "</td>
  </tr>";
-    }
+        }
 
-    $_html .= "
+        $_html .= "
  <tr height=26 style='mso-height-source:userset;height:20.1pt'>
   <td colspan=2 height=26 class=xl11329688 style='border-right:1.0pt solid black;
   height:20.1pt'>TOTAL</td>
@@ -3475,74 +3494,74 @@ tags will be replaced.--><!-----------------------------><!--START OF OUTPUT FRO
 
 
 ";
-    return new JsonResponse((array('success' => true, 'html' => $_html)));
-}
-
-/**
- * @param $Nromes
- * @return string
- */
-public
-function damemesAction($Nromes)
-{
-    if ($Nromes == 1) {
-        $nombremes = 'Enero';
-
-    } elseif ($Nromes == 2) {
-        $nombremes = 'Febrero';
-
-    } elseif ($Nromes == 3) {
-        $nombremes = 'Marzo';
-
-
-    } elseif ($Nromes == 4) {
-        $nombremes = 'Abril';
-
-
-    } elseif ($Nromes == 5) {
-        $nombremes = 'Mayo';
-
-    } elseif ($Nromes == 6) {
-        $nombremes = 'Junio';
-
-
-    } elseif ($Nromes == 7) {
-        $nombremes = 'Julio';
-
-
-    } elseif ($Nromes == 8) {
-        $nombremes = 'Agosto';
-
-
-    } elseif ($Nromes == 9) {
-        $nombremes = 'Septiembre';
-
-
-    } elseif ($Nromes == 10) {
-        $nombremes = 'Octubre';
-
-
-    } elseif ($Nromes == 11) {
-
-        $nombremes = 'Noviembre';
-
-
-    } elseif ($Nromes == 12) {
-        $nombremes = 'Diciembre';
-
-
+        return new JsonResponse((array('success' => true, 'html' => $_html)));
     }
 
-    return $nombremes;
-}
+    /**
+     * @param $Nromes
+     * @return string
+     */
+    public
+    function damemesAction($Nromes)
+    {
+        if ($Nromes == 1) {
+            $nombremes = 'Enero';
 
-private
-function unidadesToString($_unidades)
-{
-    $_string_unidades = "'" . $_unidades[0] . "'";
-    for ($i = 1; $i < count($_unidades); $i++) {
-        $_string_unidades .= ",'" . $_unidades[$i] . "'";
+        } elseif ($Nromes == 2) {
+            $nombremes = 'Febrero';
+
+        } elseif ($Nromes == 3) {
+            $nombremes = 'Marzo';
+
+
+        } elseif ($Nromes == 4) {
+            $nombremes = 'Abril';
+
+
+        } elseif ($Nromes == 5) {
+            $nombremes = 'Mayo';
+
+        } elseif ($Nromes == 6) {
+            $nombremes = 'Junio';
+
+
+        } elseif ($Nromes == 7) {
+            $nombremes = 'Julio';
+
+
+        } elseif ($Nromes == 8) {
+            $nombremes = 'Agosto';
+
+
+        } elseif ($Nromes == 9) {
+            $nombremes = 'Septiembre';
+
+
+        } elseif ($Nromes == 10) {
+            $nombremes = 'Octubre';
+
+
+        } elseif ($Nromes == 11) {
+
+            $nombremes = 'Noviembre';
+
+
+        } elseif ($Nromes == 12) {
+            $nombremes = 'Diciembre';
+
+
+        }
+
+        return $nombremes;
     }
-    return $_string_unidades;
-}
+
+    private
+    function unidadesToString($_unidades)
+    {
+        $_string_unidades = "'" . $_unidades[0] . "'";
+        for ($i = 1; $i < count($_unidades); $i++) {
+            $_string_unidades .= ",'" . $_unidades[$i] . "'";
+        }
+        return $_string_unidades;
+    }
 }

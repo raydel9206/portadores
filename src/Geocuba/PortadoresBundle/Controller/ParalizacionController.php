@@ -268,6 +268,7 @@ class ParalizacionController extends Controller
         $_html.="</table>
                 </body>
             </html>";
+        //var_dump($store[0]->motivo);die;
         return new JsonResponse(array('success' => true, 'html' => $_html));
     }
 

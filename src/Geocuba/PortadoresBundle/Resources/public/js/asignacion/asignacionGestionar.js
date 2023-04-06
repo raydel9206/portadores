@@ -61,7 +61,7 @@ Ext.onReady(function () {
                             emptyText: 'Seleccione tipo de combustible...',
                             selectOnFocus: true,
                             editable: true
-                        }, {
+                        },{
                             xtype: 'combobox',
                             name: 'moneda_id',
                             id: 'moneda_id',
@@ -123,9 +123,9 @@ Ext.onReady(function () {
         iconCls: 'fas fa-plus-square text-primary',
         width: 100,
         handler: function (This, e) {
-            if (App.user.unidad_id === Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id) {
+            if(App.user.unidad_id === Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id){
                 App.showAlert('Usted no tiene los permisos requeridos para adicionar una asignación a su unidad', 'warning', 3500);
-            } else {
+            }else{
                 Ext.create('Portadores.asignacion.Window', {
                     title: 'Adicionar asignación de combustible',
                     id: 'window_asignacion_id',
@@ -139,8 +139,8 @@ Ext.onReady(function () {
                                 if (form.isValid()) {
                                     window.hide();
                                     var obj = form.getValues();
-                                    obj.unidadid = Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id;
-                                    App.request('POST', App.buildURL('/portadores/asignacion/add'), obj, null, null,
+                                    obj.unidadid =  Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id;
+                                    App.request('POST', App.buildURL('/portadores/asignacion/add'),obj , null, null,
                                         function (response) { // success_callback
                                             if (response && response.hasOwnProperty('success') && response.success) { // success_callback but check if exists errors
                                                 form.reset();
@@ -172,7 +172,6 @@ Ext.onReady(function () {
             }
         }
     });
-
     var _btnMod = Ext.create('Ext.button.MyButton', {
         id: 'asignacion_btn_mod',
         text: 'Modificar',
@@ -180,15 +179,15 @@ Ext.onReady(function () {
         disabled: true,
         width: 100,
         handler: function (This, e) {
-            if (App.user.unidad_id === Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id) {
+            if(App.user.unidad_id === Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id){
                 App.showAlert('Usted no tiene los permisos requeridos para modificar dicha asignación', 'warning', 3500);
-            } else {
+            }else{
                 var selection = Ext.getCmp('id_grid_asignacion').getSelectionModel().getLastSelected();
                 var window = Ext.create('Portadores.asignacion.Window', {
                     title: 'Modificar asignación de combustible',
                     id: 'window_asignacion_id',
-                    listeners: {
-                        afterrender: function () {
+                    listeners:{
+                        afterrender:function(){
                             Ext.getCmp('tipo_combustible_id').setReadOnly(true);
                         }
                     },
@@ -202,7 +201,7 @@ Ext.onReady(function () {
                                     window.hide();
                                     var obj = form.getValues();
                                     obj.id = selection.data.id;
-                                    obj.unidadid = Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id;
+                                    obj.unidadid =  Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id;
                                     App.request('POST', App.buildURL('/portadores/asignacion/mod'), obj, null, null,
                                         function (response) { // success_callback
                                             if (response && response.hasOwnProperty('success') && response.success) { // success_callback but check if exists errors
@@ -244,9 +243,9 @@ Ext.onReady(function () {
         disabled: true,
         width: 100,
         handler: function (This, e) {
-            if (App.user.unidad_id === Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id) {
+            if(App.user.unidad_id === Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id){
                 App.showAlert('Usted no tiene los permisos requeridos para eliminar dicha asignación', 'warning', 3500);
-            } else {
+            }else{
                 var selection = Ext.getCmp('id_grid_asignacion').getSelectionModel().getLastSelected();
                 Ext.Msg.show({
                     title: '¿Eliminar Asignación?',
@@ -257,9 +256,9 @@ Ext.onReady(function () {
                         if (btn === 'yes') {
                             var obj = {};
                             obj.id = selection.data.id;
-                            obj.unidadid = Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id;
+                            obj.unidadid =  Ext.getCmp('arbolunidades').getSelectionModel().getLastSelected().data.id;
                             obj.tipo_combustible_id = selection.data.tipo_combustible_id;
-                            obj.moneda_id = Ext.getCmp('moneda_combo').getValue();
+                            obj.moneda_id=  Ext.getCmp('moneda_combo').getValue();
                             App.request('DELETE', App.buildURL('/portadores/asignacion/del'), obj, null, null, function (response) { // success_callback
                                 if (response && response.hasOwnProperty('success') && response.success) { // success_callback but check if exists errors
                                     Ext.getCmp('id_grid_asignacion').getStore().reload();
@@ -270,6 +269,7 @@ Ext.onReady(function () {
                     }
                 });
             }
+
         }
     });
 

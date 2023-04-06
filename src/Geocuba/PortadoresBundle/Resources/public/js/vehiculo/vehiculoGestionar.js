@@ -418,6 +418,7 @@ Ext.onReady(function () {
                                             ],
                                             allowBlank: false, // requires a non-empty value
                                             maskRe: /[0-9a-zA-Z -]/,
+                                            regex: /^[a-zA-Z]-[0-9]{6}$/,
                                             bodyPadding: 10
                                         },
                                         {
@@ -561,6 +562,15 @@ Ext.onReady(function () {
                                                     });
                                                 }
                                             }
+                                        },
+                                        {
+                                            xtype: 'numberfield',
+                                            name: 'factor',
+                                            id: 'factor',
+                                            fieldLabel: 'Factor',
+                                            minValue: 0,
+                                            decimalSeparator: '.',
+                                            allowBlank: true,
                                         },
                                     ]
                                 },

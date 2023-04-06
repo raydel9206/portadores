@@ -87,7 +87,7 @@ class ComprobanteRecargaController extends Controller
     }
 
     /**
-     * @paramRequest $request
+     * @param Request $request
      * @return Response
      */
     public function exportAction(Request $request)

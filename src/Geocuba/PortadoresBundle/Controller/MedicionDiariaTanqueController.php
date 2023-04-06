@@ -83,6 +83,7 @@ class MedicionDiariaTanqueController extends Controller
 
             if (!$factor)
                 return new JsonResponse(['success' => false, 'message' => sprintf('No esta registrada en el sistema la conversión de litros a <strong>%s</strong>', $tanque->getUnidadMedida()->getNombre())]);
+
             $existencia = round($medicion * $factor, 4);
         }
 

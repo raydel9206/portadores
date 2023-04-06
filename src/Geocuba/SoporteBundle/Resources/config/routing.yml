@@ -61,6 +61,39 @@ app.soporte.anticipoEventos.abrir:
   defaults: { _controller: SoporteBundle:AnticipoEventos:abrir }
   methods: [GET,POST]
 
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Cierre de periodos mal ejecutados
+#-----------------------------------------------------------------------------------------------------------------------
+
+app.soporte.cierrePeriodo:
+    path:     /cierrePeriodo
+    defaults: { _controller: SoporteBundle:CierrePeriodo:view }
+    methods: [GET]
+    options:
+        text: Cierres mensuales
+        module: Soporte
+        dropdown: Período
+        resources:
+            Listado:
+                description: Permite dar soporte a los cierres mensuales mal ejecutados
+                files:
+                - bundles/soporte/js/cierrePeriodo/cierrePeriodoController.js
+                dependencies:
+                - app.portadores.unidad.loadTree
+                - app.soporte.cierrePeriodo.loadCierres
+                - app.soporte.cierrePeriodo.abrir
+#-----------------------------------------------------------------------------------------------------------------------
+app.soporte.cierrePeriodo.loadCierres:
+  path:     /cierrePeriodo/loadCierres
+  defaults: { _controller: SoporteBundle:CierrePeriodo:loadCierres }
+  methods: [GET,POST]
+
+app.soporte.cierrePeriodo.abrir:
+  path:     /cierrePeriodo/abrir
+  defaults: { _controller: SoporteBundle:CierrePeriodo:abrir }
+  methods: [POST]
+
 #-----------------------------------------------------------------------------------------------------------------------
 # Anticipos y recargas eliminados
 #-----------------------------------------------------------------------------------------------------------------------

@@ -36,14 +36,14 @@ class CuentaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $_no_cuenta = trim($request->get('no_cuenta'));
-//        $nunidadid = trim($request->get('unidadid'));
+        $nunidadid = trim($request->get('unidadid'));
 
         $start = $request->get('start');
         $limit = $request->get('limit');
 
-//        $_unidades[0] = $nunidadid;
-        $entities = $em->getRepository('PortadoresBundle:Cuenta')->buscarCuenta($_no_cuenta, null, $start, $limit);
-        $total = $em->getRepository('PortadoresBundle:Cuenta')->buscarCuenta($_no_cuenta, null, $start, $limit, true);
+        $_unidades[0] = $nunidadid;
+        $entities = $em->getRepository('PortadoresBundle:Cuenta')->buscarCuenta($_no_cuenta, $_unidades, $start, $limit);
+        $total = $em->getRepository('PortadoresBundle:Cuenta')->buscarCuenta($_no_cuenta, $_unidades, $start, $limit, true);
 
         $_data = array();
         foreach ($entities as $entity) {
@@ -65,16 +65,16 @@ class CuentaController extends Controller
         $no_cuenta = trim($request->get('no_cuenta'));
         $descripcion = trim($request->get('descripcion'));
         $clasificador = trim($request->get('clasificador'));
-//        $unidad = $request->get('unidad');
+        $unidad = $request->get('unidad');
 
-        $repetido = $em->getRepository('PortadoresBundle:Cuenta')->buscarCuentaRepetido($no_cuenta, null);
+        $repetido = $em->getRepository('PortadoresBundle:Cuenta')->buscarCuentaRepetido($no_cuenta, $unidad);
         if ($repetido > 0)
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Ya existe una cuenta con el mismo número registrada en el sistema.'));
 
         $entity = new Cuenta();
         $entity->setNroCuenta($no_cuenta);
         $entity->setDescripcion($descripcion);
-//        $entity->setUnidad($em->getRepository('PortadoresBundle:Unidad')->find($unidad));
+        $entity->setUnidad($em->getRepository('PortadoresBundle:Unidad')->find($unidad));
         $entity->setClasificador($em->getRepository('PortadoresBundle:Clasificador')->find($clasificador));
         $entity->setVisible(true);
         try {
@@ -94,9 +94,9 @@ class CuentaController extends Controller
         $no_cuenta = trim($request->get('no_cuenta'));
         $descripcion = trim($request->get('descripcion'));
         $clasificador = trim($request->get('clasificador'));
-//        $unidad = $request->get('unidad');
+        $unidad = $request->get('unidad');
 
-        $repetido = $em->getRepository('PortadoresBundle:Cuenta')->buscarCuentaRepetido($no_cuenta, null, $id);
+        $repetido = $em->getRepository('PortadoresBundle:Cuenta')->buscarCuentaRepetido($no_cuenta, $unidad, $id);
         if ($repetido > 0)
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'Ya existe una cuenta con el mismo número de cuenta en la unidad seleccionada.'));
 

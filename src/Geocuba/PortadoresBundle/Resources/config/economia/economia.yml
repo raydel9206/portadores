@@ -506,7 +506,6 @@ app.portadores.comp_anticipo:
                 - bundles/portadores/js/comprobante_anticipo/comprobante_anticipoController.js
                 dependencies:
                 - app.portadores.comp_anticipo.load
-                - app.portadores.comp_anticipo.export
                 - app.portadores.moneda.loadMoneda
                 - app.portadores.unidad.loadTree
 
@@ -514,11 +513,6 @@ app.portadores.comp_anticipo:
 app.portadores.comp_anticipo.load:
     path:     /comp_anticipo/load
     defaults: { _controller: PortadoresBundle:ComprobanteAnticipo:load }
-    methods: [GET, POST]
-
-app.portadores.comp_anticipo.export:
-    path:     /comp_anticipo/export
-    defaults: { _controller: PortadoresBundle:ComprobanteAnticipo:export }
     methods: [GET, POST]
 
 #=======================================================================================================================
@@ -540,7 +534,6 @@ app.portadores.comp_liq:
                 - bundles/portadores/js/comprobante_liquidacion/comprobante_liquidacionController.js
                 dependencies:
                 - app.portadores.comp_liq.load
-                - app.portadores.comp_liq.export
                 - app.portadores.moneda.loadMoneda
                 - app.portadores.unidad.loadTree
 
@@ -548,11 +541,6 @@ app.portadores.comp_liq:
 app.portadores.comp_liq.load:
     path:     /comp_liq/load
     defaults: { _controller: PortadoresBundle:ComprobanteLiquidacion:load }
-    methods: [GET, POST]
-
-app.portadores.comp_liq.export:
-    path:     /comp_liq/export
-    defaults: { _controller: PortadoresBundle:ComprobanteLiquidacion:export }
     methods: [GET, POST]
 
 #=======================================================================================================================

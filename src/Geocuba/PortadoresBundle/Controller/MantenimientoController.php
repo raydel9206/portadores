@@ -100,8 +100,11 @@ class MantenimientoController extends Controller
 
     public function loadVehiculosAction(Request $request)
     {
+
         $_nombre = trim($request->get('nombre'));
         $_tipoCombustible = trim($request->get('tipoCombustible'));
+        $session = $request->getSession();
+        $year = $session->get('current_year');
 
         $nunidadid = $request->get('unidadid');
         $start = $request->get('start');
@@ -111,33 +114,15 @@ class MantenimientoController extends Controller
         $_unidades = [];
         Utiles::findDomainByChildren($em, $em->getRepository('PortadoresBundle:Unidad')->find($nunidadid), $_unidades);
 
-        $entities = $em->getRepository('PortadoresBundle:Vehiculo')->buscarVehiculo($_nombre, '', $_unidades, $start, $limit);
-        $total = $em->getRepository('PortadoresBundle:Vehiculo')->buscarVehiculo($_nombre, '', $_unidades, $start, $limit, true);
+        $entities = $em->getRepository('PortadoresBundle:Vehiculo')->buscarVehiculo($_nombre, '', '', $_unidades, $start, $limit);
+        $total = $em->getRepository('PortadoresBundle:Vehiculo')->buscarVehiculo($_nombre, '', '', $_unidades, $start, $limit, true);
 
         $datos = array();
-        if(!$entities){
+        if (!$entities) {
             return new JsonResponse(array('success' => false, 'cls' => 'danger', 'message' => 'No hay vehículos registrados'));
         }
         foreach ($entities as $entity) {
             $idvehiculo = $entity->getId();
-            $sql = "select max(v.matricula) as matricula,
-                           max(rc.id) as registroid,
-                           max(rc.fecha) as fecha,
-                           v.id as vehiculoid,
-                           max(rca.km) as km
-
-                    from datos.registro_combustible as rc
-                    join nomencladores.vehiculo as v on v.id = rc.vehiculoid
-                    join datos.registro_combustible_analisis as rca on rca.registro_combustible_id = rc.id
-                    join  (SELECT max(rca1.numerosemana) AS numerosemana,
-                                  max(rc1.fecha) as fecha,
-                                  rc1.id
-                           FROM datos.registro_combustible_analisis rca1
-                           join datos.registro_combustible as rc1 on rc1.id = rca1.registro_combustible_id
-                           GROUP BY rc1.id) as semanalast ON semanalast.id::text = rc.id::text 
-                    where rca.conceptoid = '4' and v.id = '$idvehiculo'
-                    group by v.id";
-            $sql_result = $this->getDoctrine()->getConnection()->fetchAll($sql);
 
             $sql2 = "select tm.id as tm_id,
                             tm.nombre, 
@@ -161,16 +146,81 @@ class MantenimientoController extends Controller
                 where v.id = '$idvehiculo'
                 group by v.id";
             $sql_result3 = $this->getDoctrine()->getConnection()->fetchAll($sql3);
-            $mants = array();
-            if(count($sql_result) > 0){
-                foreach ($sql_result2 as $item2){
-                    if($item2['km_to_mant'] > 0){
-                        $tonext= (count($sql_result3) > 0) ? intval($sql_result3[0]['kilometraje']) + intval($item2['km_to_mant']): 0;
 
-                        $dif = ($tonext !== 0 ) ?  intval($tonext) - intval($sql_result[0]['km']): 0;
+            //Inicial
+            $fecha = $year . '-01-01';
+            $kInicial = 0;
+            $sql4 = "select v.matricula as matricula,
+                           rc.id,
+                           v.id as vehiculoid,
+						   rc.fecha 
+
+                    from datos.registro_combustible as rc
+                    join nomencladores.vehiculo as v on v.id = rc.vehiculoid
+                    where v.id = '$idvehiculo' and rc.fecha < '$fecha'
+					order by rc.fecha DESC";
+            $sql_result4 = $this->getDoctrine()->getConnection()->fetchAll($sql4);
+
+            if (count($sql_result4) > 0) {
+                for ($i = 0; $i < count($sql_result4); $i++) {
+                    $id = $sql_result4[$i]['id'];
+                    $sql5 = "select rca.km
+
+                    from datos.registro_combustible_analisis as rca
+                    join datos.registro_combustible as rc on rc.id = rca.registro_combustible_id
+                    where rca.registro_combustible_id = '$id' and rca.visible = TRUE and rca.conceptoid = '4'
+					order by rca.numerosemana ASC";
+                    $sql_result5 = $this->getDoctrine()->getConnection()->fetchAll($sql5);
+
+                    if (count($sql_result5) > 0) {
+                        $kInicial = $sql_result5[count($sql_result5) - 1]['km'];
+                        break;
+                    }
+                }
+            }
+
+
+            //Final
+            $kFinal = 0;
+            $sql6 = "select v.matricula as matricula,
+                           rc.id,
+                           v.id as vehiculoid,
+						   rc.fecha 
+
+                    from datos.registro_combustible as rc
+                    join nomencladores.vehiculo as v on v.id = rc.vehiculoid
+                    where v.id = '$idvehiculo'
+					order by rc.fecha DESC";
+            $sql_result6 = $this->getDoctrine()->getConnection()->fetchAll($sql6);
+
+            if (count($sql_result6) > 0) {
+                for ($j = 0; $j < count($sql_result6); $j++) {
+                    $id = $sql_result6[$j]['id'];
+                    $sql7 = "select rca.km
+
+                    from datos.registro_combustible_analisis as rca
+                    join datos.registro_combustible as rc on rc.id = rca.registro_combustible_id
+                    where rca.registro_combustible_id = '$id' and rca.visible = TRUE and rca.conceptoid = '4'
+					order by rca.numerosemana ASC";
+                    $sql_result7 = $this->getDoctrine()->getConnection()->fetchAll($sql7);
+
+                    if (count($sql_result7) > 0) {
+                        $kFinal = $sql_result7[count($sql_result7) - 1]['km'];
+                        break;
+                    }
+                }
+            }
+
+            $mants = array();
+            if ($kFinal !== 0) {
+                foreach ($sql_result2 as $item2) {
+                    if ($item2['km_to_mant'] > 0) {
+                        $tonext = (count($sql_result3) > 0) ? intval($sql_result3[0]['kilometraje']) + intval($item2['km_to_mant']) : 0;
+
+                        $dif = ($tonext !== 0) ? intval($tonext) - intval($kFinal) : 0;
                         $mants[] = array(
                             'mantenimiento' => $item2['nombre'],
-                            'proximo' => (count($sql_result3) > 0) ? intval($sql_result3[0]['kilometraje']) + intval($item2['km_to_mant']): 'Realice el primer mantenimiento',
+                            'proximo' => (count($sql_result3) > 0) ? intval($sql_result3[0]['kilometraje']) + intval($item2['km_to_mant']) : 'Realice el primer mantenimiento',
                             'dif' => ($dif > 0) ? $dif : 'Pasado',
                         );
                     }
@@ -180,7 +230,8 @@ class MantenimientoController extends Controller
             $datos[] = array(
                 'id' => $entity->getId(),
                 'matricula' => $entity->getMatricula(),
-                'odometro' => (count($sql_result) > 0) ? intval($sql_result[0]['km']) : 'Sin registro disponible',
+                'odometro_inicio' => ($kInicial !== 0) ? intval($kInicial) : 'Sin registro disponible',
+                'odometro' => ($kFinal !== 0) ? intval($kFinal) : 'Sin registro disponible',
                 'kms_to_mant' => (count($sql_result2) > 0) ? intval($sql_result2[0]['km_to_mant']) : 0,
                 'proximo_mant' => $mants
             );
@@ -293,15 +344,15 @@ class MantenimientoController extends Controller
 
     public function loadTipoMantAction(Request $request)
     {
-        $vehiculoid  = $request->get('vehiculoid');
+        $vehiculoid = $request->get('vehiculoid');
 
-        /**@var Vehiculo $vehiculo*/
+        /**@var Vehiculo $vehiculo */
         $vehiculo = $this->getDoctrine()->getManager()->getRepository('PortadoresBundle:Vehiculo')->findOneBy(array('id' => $vehiculoid));
         $entities = $this->getDoctrine()->getManager()->getRepository('PortadoresBundle:Norma')->findBy(array('marca' => $vehiculo->getNmodeloid()->getMarcaVehiculoid()->getId()));
         $_data = array();
         foreach ($entities as $entity) {
             /**@var Norma $entity */
-            if(intval($entity->getCantHoras()) > 0){
+            if (intval($entity->getCantHoras()) > 0) {
                 $_data[] = array(
                     'id' => $entity->getTipoMantenimiento()->getId(),
                     'nombre' => $entity->getTipoMantenimiento()->getNombre()
@@ -322,7 +373,7 @@ class MantenimientoController extends Controller
 
         $entities = $em->getRepository('PortadoresBundle:Vehiculo')->buscarVehiculo('', '', $_unidades);
 
-        if($entities){
+        if ($entities) {
             foreach ($entities as $entity) {
                 $idvehiculo = $entity->getId();
                 $matricula = $entity->getMatricula();
@@ -367,20 +418,20 @@ class MantenimientoController extends Controller
                 where v.id = '$idvehiculo'
                 group by v.id";
                 $sql_result3 = $this->getDoctrine()->getConnection()->fetchAll($sql3);
-                if(count($sql_result) > 0){
-                    foreach ($sql_result2 as $item2){
-                        if($item2['km_to_mant'] > 0){
-                            $tonext= (count($sql_result3) > 0) ? intval($sql_result3[0]['kilometraje']) + intval($item2['km_to_mant']): 0;
-                            $dif = ($tonext !== 0 ) ?  abs($tonext - intval($sql_result[0]['km'])): 0;
+                if (count($sql_result) > 0) {
+                    foreach ($sql_result2 as $item2) {
+                        if ($item2['km_to_mant'] > 0) {
+                            $tonext = (count($sql_result3) > 0) ? intval($sql_result3[0]['kilometraje']) + intval($item2['km_to_mant']) : 0;
+                            $dif = ($tonext !== 0) ? abs($tonext - intval($sql_result[0]['km'])) : 0;
 
-                            if($dif <= 100){
+                            if ($dif <= 100) {
                                 $not = "select * from admin.notificacion as n
                                         where n.mensaje like '%$matricula%' and n.fecha_aceptacion is null";
                                 $sql_not = $this->getDoctrine()->getConnection()->fetchAll($not);
-                                if(count($sql_not) === 0){
+                                if (count($sql_not) === 0) {
                                     $notnew = new Notificacion();
                                     $notnew->setFechaCreacion(new \DateTime());
-                                    $notnew->setMensaje('El vehículo '. $matricula. ' esta próximo a mantenimiento. Por favor verifique');
+                                    $notnew->setMensaje('El vehículo ' . $matricula . ' esta próximo a mantenimiento. Por favor verifique');
                                     $notnew->setTipo(Constants::NOTIFICACION_USUARIO);
                                     $em->persist($entity);
                                 }

@@ -1149,7 +1149,7 @@ class AutolecturaTresescalasController extends Controller
 
         $valores = array();
         $entities_auto = $this->getDoctrine()->getManager()->getRepository('PortadoresBundle:AutolecturaTresescalas')->getAutolecturbyMesAbierto($servicio_id, $fecha, $fechaFin);
-
+        
         /**@var AutolecturaTresescalas $entities_auto */
         for ($i = 0, $iMax = sizeof($entities_auto); $i < $iMax; $i++) {
             $servicio = $em->getRepository('PortadoresBundle:Servicio')->find($servicio_id);
